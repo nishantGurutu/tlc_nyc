@@ -1,9 +1,8 @@
 import 'package:get/get.dart';
+import 'package:tlc_nyc/view/screens/authenticated/test_intro.dart';
 
 class HomeController extends GetxController {
   void onTestSelected(int testNumber) {
-    // Navigate to Test Screen or Quiz Screen with testNumber
-    print("Selected Test $testNumber");
-    // TODO: Implement Get.to(QuizScreen(testNumber))
+    Get.to(() => TestIntroScreen(testNumber));
   }
 }

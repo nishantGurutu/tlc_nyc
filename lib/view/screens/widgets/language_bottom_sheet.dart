@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/utils.dart';
 import 'package:tlc_nyc/constant/color_constant.dart';
 
 class LanguageBottomSheet extends StatelessWidget {
@@ -19,7 +18,7 @@ class LanguageBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 300.h,
+      height: 340.h,
       width: double.infinity,
       decoration: BoxDecoration(
         color: background,
@@ -57,7 +56,6 @@ class LanguageBottomSheet extends StatelessWidget {
                   ),
                 ],
               ),
-              // SizedBox(height: 5.h),
               Expanded(
                 child: ListView.builder(
                   itemCount: languageList.length,
@@ -65,26 +63,36 @@ class LanguageBottomSheet extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: EdgeInsets.symmetric(vertical: 3.h),
-                      child: Container(
-                        height: 30.h,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: whiteColor,
-                          borderRadius: BorderRadius.all(Radius.circular(8.r)),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 8.w),
-                          child: Row(
-                            children: [
-                              Text(
-                                languageList[index],
-                                style: TextStyle(
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w500,
-                                  color: blackColor,
+                      child: GestureDetector(
+                        onTap: () {
+                          void changeLanguage(var param1, var param2) {
+                            var local = Locale(param1, param2);
+                            Get.updateLocale(local);
+                          }//'[]
+                        },
+                        child: Container(
+                          height: 30.h,
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: whiteColor,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(8.r),
+                            ),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 8.w),
+                            child: Row(
+                              children: [
+                                Text(
+                                  languageList[index],
+                                  style: TextStyle(
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w500,
+                                    color: blackColor,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),

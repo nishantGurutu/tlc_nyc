@@ -37,6 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: () {
                     Get.to(() => BottomNavigationBarScreen());
                   },
+                  color: primary,
                   text: Text(
                     'sendOtp'.tr,
                     style: TextStyle(

@@ -1,0 +1,176 @@
+[
+  {
+    "id": 1,
+    "question": "A new applicant must submit A(DDC) certificate of a defensive driving course that was take within the following time frame.",
+    "options": {
+      "A": "3 Years",
+      "B": "1 Year",
+      "C": "2 Years",
+      "D": "12 months"
+    },
+    "correctAnswer": "A"
+  },
+  {
+    "id": 2,
+    "question": "The Fatigue driving rule establist. How many hour in 24 hours are TLC drivers permitted to transport pasanger ?",
+    "options": {
+      "A": "8 Hours",
+      "B": "10 Hours",
+      "C": "12 Hours",
+      "D": "15 Hours"
+    },
+    "correctAnswer": "B"
+  }
+  ,
+  {
+    "id": 3,
+    "question": "The Vision TRUE-Initiative in NYC Rule out a state speed limit to make a left turn ?",
+    "options": {
+      "A": "12 MPH",
+      "B": "10 MPH",
+      "C": "5 MPH",
+      "D": "3 MPH"
+    },
+    "correctAnswer": "C"
+  },
+  {
+    "id": 4,
+    "question": "In NYC what is the TE Speed limit",
+    "options": {
+      "A": "25 MPH",
+      "B": "30 MPH",
+      "C": "35 MPH",
+      "D": "15 MPH"
+    },
+    "correctAnswer": "A"
+  },
+  {
+    "id": 5,
+    "question": "Which of the following TLC cars not a (FHB) For-hire BASE",
+    "options": {
+      "A": "Luxure Limosine NYC Base",
+      "B": "Livery car service NYC Base",
+      "C": "Black Car NYC Base",
+      "D": "Yellow Taxi medallon (Cabs) garage."
+    },
+    "correctAnswer": "D"
+  },
+  {
+    "id": 6,
+    "question": "A new applicant for a TLC driver license must be.",
+    "options": {
+      "A": "21 year old",
+      "B": "19 year old",
+      "C": "A new york city resident",
+      "D": "Must be able to speak english"
+    },
+    "correctAnswer": "B"
+  },
+  {
+    "id": 7,
+    "question": "Which borough has the three neighborhoods of york",
+    "options": {
+      "A": "21 year old",
+      "B": "19 year old",
+      "C": "A new york city resident",
+      "D": "Must be able to speak english"
+    },
+    "correctAnswer": "D"
+  },
+  {
+    "id": 8,
+    "question": "In how days the TLC driver have to report criminal conviction to the commision.",
+    "options": {
+      "A": "10 days",
+      "B": "15 days",
+      "C": "30 days",
+      "D": "60 days"
+    },
+    "correctAnswer": "B"
+  },
+  {
+    "id": 9,
+    "question": "Which destination can a TLC driver refuse a passenger",
+    "options": {
+      "A": "River Nead",
+      "B": "Yonker",
+      "C": "Park Hill",
+      "D": "Lake Success"
+    },
+    "correctAnswer": "A"
+  }, {
+    "id": 10,
+    "question": "A TLC car may not be IDLE for longer than one minute in front of A.",
+    "options": {
+      "A": "Hospital",
+      "B": "Bridge",
+      "C": "School",
+      "D": "Goverment Building"
+    },
+    "correctAnswer": "B"
+  },{
+    "id": 11,
+    "question": "Bellow 59th streat In Manhaman, which way does broadway travel?",
+    "options": {
+      "A": "Southwest",
+      "B": "SouthEast",
+      "C": "Northwest",
+      "D": "Northeast"
+    },
+    "correctAnswer": "B"
+  },{
+    "id": 12,
+    "question": "If a passenger wants to go to newark airport, new jersey from NYC penn station building which one is the nearest watercrossing you are going to take?",
+    "options": {
+      "A": "Holland Tunnel",
+      "B": "Lincon Tunnel",
+      "C": "George wasnington bridge",
+      "D": "Wasington Bridge"
+    },
+    "correctAnswer": "B"
+  },
+  {
+    "id": 13,
+    "question": "If manhattan which street is parallel to west broadway",
+    "options": {
+      "A": "Canal Streat",
+      "B": "Church Streat",
+      "C": "Chambers streat",
+      "D": "Vesey Streat"
+    },
+    "correctAnswer": "B"
+  },
+  {
+    "id": 14,
+    "question": "How many securements for a passenger in a WAV TLC car.",
+    "options": {
+      "A": "6",
+      "B": "2",
+      "C": "4",
+      "D": "5"
+    },
+    "correctAnswer": "B"
+  },
+   {
+    "id": 15,
+    "question": "When can a TLC driver ask for a tip to a customer",
+    "options": {
+      "A": "Before the trip start if the driver nelpeol with language.",
+      "B": "After the trip ended.",
+      "C": "During the  trip if is a night time",
+      "D": "Never"
+    },
+    "correctAnswer": "D"
+  },{
+    "id": 16,
+    "question": "When can TLC a driver (FHV) for-hired vehical driver pickup a family member?",
+    "options": {
+      "A": "When the police permit",
+      "B": "After the trip ended.",
+      "C": "During the  trip if is a night time",
+      "D": "Never"
+    },
+    "correctAnswer": "D"
+  }
+
+]
