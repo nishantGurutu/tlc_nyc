@@ -7,6 +7,7 @@ class TextTranslation extends Translations {
       "enterMobileNumber": "Enter Mobile Number",
       "login": "Login",
       "sendOtp": "Send OTP",
+      "verifyOtp": "Verify OTP",
     },
     // 'te_IN': {"brandImage": "బ్రాండ్ చిత్రం"},
     // 'ta_IN': {"signUp": "பதிவு"},

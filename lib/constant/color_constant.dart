@@ -7,6 +7,7 @@ Color purple = Colors.deepPurple;
 Color background = Color(0xFFF5F5F5);
 Color darkGreyColor = Color.fromARGB(255, 134, 132, 132);
 Color lightBorderColor = Color.fromARGB(255, 137, 134, 134);
+Color mildBorderColor = Color.fromARGB(255, 198, 195, 195);
 Color whiteColor = Color(0xFFFFFFFF);
 Color blackColor = Color(0xFF000000);
 Color lightPink = Color(0xFFFFEEEE);
