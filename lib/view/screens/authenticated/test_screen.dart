@@ -44,56 +44,6 @@ class TestScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 20.h),
-
-                // ...question.options.entries.map((entry) {
-                //   return Padding(
-                //     padding: EdgeInsets.symmetric(vertical: 4.h),
-                //     child: Container(
-                //       width: double.infinity,
-                //       decoration: BoxDecoration(
-                //         border: Border.all(color: lightBorderColor),
-                //       ),
-                //       child: Padding(
-                //         padding: EdgeInsets.symmetric(
-                //           vertical: 10.h,
-                //           horizontal: 10.w,
-                //         ),
-                //         child: Row(
-                //           children: [
-                //             Text(
-                //               '${entry.key}.',
-                //               style: TextStyle(
-                //                 fontSize: 14.sp,
-                //                 fontWeight: FontWeight.w500,
-                //                 color: blackColor,
-                //               ),
-                //             ),
-                //             SizedBox(width: 8.w),
-                //             Expanded(
-                //               child: Text(
-                //                 entry.value,
-                //                 style: TextStyle(
-                //                   fontSize: 14.sp,
-                //                   fontWeight: FontWeight.w500,
-                //                   color: blackColor,
-                //                 ),
-                //               ),
-                //             ),
-                //           ],
-                //         ),
-                //       ),
-                //     ),
-                //   );
-
-                //   // ListTile(
-                //   //   title: Text('${entry.key}. ${entry.value}'),
-                //   //   leading: Radio<String>(
-                //   //     value: entry.key,
-                //   //     groupValue: null,
-                //   //     onChanged: (val) {},
-                //   //   ),
-                //   // );
-                // }).toList(),
                 ...question.options.entries.map((entry) {
                   final isSelected =
                       controller.selectedAnswers[controller
@@ -115,7 +65,7 @@ class TestScreen extends StatelessWidget {
                         decoration: BoxDecoration(
                           border: Border.all(
                             color: isSelected ? Colors.green : lightBorderColor,
-                            width: 2,
+                            width: isSelected ? 2 : 1,
                           ),
                           borderRadius: BorderRadius.circular(8.r),
                         ),

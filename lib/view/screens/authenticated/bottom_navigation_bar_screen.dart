@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tlc_nyc/constant/color_constant.dart';
-import 'package:tlc_nyc/view/screens/authenticated/home_screen.dart';
+import 'package:tlc_nyc/view/screens/authenticated/dash_board_screen.dart';
 import 'package:tlc_nyc/view/screens/unauthentication/setting_screen%20.dart';
 
 class BottomNavigationBarScreen extends StatefulWidget {
@@ -19,7 +19,7 @@ class _BottomNavigationBarScreenState extends State<BottomNavigationBarScreen> {
     fontWeight: FontWeight.bold,
   );
   static const List<Widget> _widgetOptions = <Widget>[
-    HomeScreen(),
+    DashBoardScreen(),
     Text('Index 1: Business', style: optionStyle),
     SettingScreen(),
   ];
