@@ -30,48 +30,51 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 12.w),
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 100.h),
-            child: Container(
-              decoration: BoxDecoration(
-                color: whiteColor,
-                borderRadius: BorderRadius.all(Radius.circular(10.r)),
-              ),
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 12.w),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 70.h),
-                    Image.asset(appLogo, height: 120.h),
-                    SizedBox(height: 50.h),
-                    TaskCustomTextField(
-                      controller: mobileController,
-                      textCapitalization: TextCapitalization.sentences,
-                      hintText: "enterMobileNumber".tr,
-                    ),
-                    SizedBox(height: 15.h),
-                    CustomButton(
-                      padding: EdgeInsets.symmetric(vertical: 8.h),
-                      onPressed: () {
-                        Get.to(() => BottomNavigationBarScreen());
-                      },
-                      color: primary,
-                      text: Text(
-                        'sendOtp'.tr,
-                        style: TextStyle(
-                          fontSize: 12.sp,
-                          color: whiteColor,
-                          fontWeight: FontWeight.w500,
-                        ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                height: 500.h,
+                decoration: BoxDecoration(
+                  color: whiteColor,
+                  borderRadius: BorderRadius.all(Radius.circular(10.r)),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 12.w),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 70.h),
+                      Image.asset(appLogo, height: 120.h),
+                      SizedBox(height: 50.h),
+                      TaskCustomTextField(
+                        controller: mobileController,
+                        textCapitalization: TextCapitalization.sentences,
+                        hintText: "enterMobileNumber".tr,
                       ),
-                      width: double.infinity,
-                      height: 35.h,
-                    ),
-                  ],
+                      SizedBox(height: 15.h),
+                      CustomButton(
+                        padding: EdgeInsets.symmetric(vertical: 8.h),
+                        onPressed: () {
+                          Get.to(() => BottomNavigationBarScreen());
+                        },
+                        color: primary,
+                        text: Text(
+                          'sendOtp'.tr,
+                          style: TextStyle(
+                            fontSize: 12.sp,
+                            color: whiteColor,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        width: double.infinity,
+                        height: 35.h,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
+            ],
           ),
         ),
       ),
