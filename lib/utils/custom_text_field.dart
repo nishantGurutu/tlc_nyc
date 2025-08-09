@@ -46,6 +46,7 @@ class _TaskCustomTextFieldState extends State<TaskCustomTextField> {
       controller: widget.controller,
       readOnly: widget.readOnly ?? false,
       onTap: widget.onTap,
+      style: TextStyle(color: darkGreyColor),
       textCapitalization: widget.textCapitalization,
       maxLines: widget.obscureText == true ? 1 : widget.maxLine,
       maxLength: widget.maxLength,
@@ -71,6 +72,7 @@ class _TaskCustomTextFieldState extends State<TaskCustomTextField> {
         fillColor: whiteColor,
         prefixIcon: widget.prefixIcon,
         filled: true,
+
         labelStyle: TextStyle(color: darkGreyColor),
         counterText: "",
         border: OutlineInputBorder(

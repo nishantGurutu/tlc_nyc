@@ -49,7 +49,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(height: 50.h),
                       TaskCustomTextField(
                         controller: mobileController,
-                        textCapitalization: TextCapitalization.sentences,
+                        textCapitalization: TextCapitalization.none,
+                        keyboardType: TextInputType.number,
+
                         hintText: "enterMobileNumber".tr,
                       ),
                       SizedBox(height: 15.h),
