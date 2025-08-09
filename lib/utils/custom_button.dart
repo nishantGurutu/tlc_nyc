@@ -28,7 +28,6 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: width,
-      height: height,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(
@@ -39,6 +38,7 @@ class CustomButton extends StatelessWidget {
           elevation: elevation,
         ),
         onPressed: onPressed,
+
         child: text,
       ),
     );

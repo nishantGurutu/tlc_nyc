@@ -31,43 +31,52 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         backgroundColor: primary,
       ),
       backgroundColor: background,
-      body: ListView.builder(
-        itemCount: colorList.length,
-        itemBuilder: (context, index) {
-          return GestureDetector(
-            onTap: () {
-              controller.onTestSelected(index + 1);
-            },
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 5.h, horizontal: 12.w),
-              child: Container(
-                width: double.infinity,
-                height: 40.h,
-                decoration: BoxDecoration(
-                  color: colorList[index],
-                  borderRadius: BorderRadius.all(Radius.circular(8.r)),
-                ),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10.w),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'Test ${index + 1}',
-                        style: TextStyle(
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w500,
-                          color: blackColor,
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              itemCount: colorList.length,
+              itemBuilder: (context, index) {
+                return GestureDetector(
+                  onTap: () {
+                    controller.onTestSelected(index + 1);
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: 5.h,
+                      horizontal: 12.w,
+                    ),
+                    child: Container(
+                      width: double.infinity,
+                      height: 40.h,
+                      decoration: BoxDecoration(
+                        color: colorList[index],
+                        borderRadius: BorderRadius.all(Radius.circular(8.r)),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 10.w),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Test ${index + 1}',
+                              style: TextStyle(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w500,
+                                color: blackColor,
+                              ),
+                            ),
+                            Icon(Icons.arrow_right),
+                          ],
                         ),
                       ),
-                      Icon(Icons.arrow_right),
-                    ],
+                    ),
                   ),
-                ),
-              ),
+                );
+              },
             ),
-          );
-        },
+          ),
+        ],
       ),
     );
   }
