@@ -31,26 +31,124 @@ class TestScreen extends StatelessWidget {
           final question =
               controller.questions[controller.currentQuestionIndex.value];
           return Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: EdgeInsets.all(16.sp),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'Q${controller.currentQuestionIndex.value + 1}. ${question.question}',
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 18.sp,
                     fontWeight: FontWeight.bold,
                     color: blackColor,
                   ),
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: 20.h),
+
+                // ...question.options.entries.map((entry) {
+                //   return Padding(
+                //     padding: EdgeInsets.symmetric(vertical: 4.h),
+                //     child: Container(
+                //       width: double.infinity,
+                //       decoration: BoxDecoration(
+                //         border: Border.all(color: lightBorderColor),
+                //       ),
+                //       child: Padding(
+                //         padding: EdgeInsets.symmetric(
+                //           vertical: 10.h,
+                //           horizontal: 10.w,
+                //         ),
+                //         child: Row(
+                //           children: [
+                //             Text(
+                //               '${entry.key}.',
+                //               style: TextStyle(
+                //                 fontSize: 14.sp,
+                //                 fontWeight: FontWeight.w500,
+                //                 color: blackColor,
+                //               ),
+                //             ),
+                //             SizedBox(width: 8.w),
+                //             Expanded(
+                //               child: Text(
+                //                 entry.value,
+                //                 style: TextStyle(
+                //                   fontSize: 14.sp,
+                //                   fontWeight: FontWeight.w500,
+                //                   color: blackColor,
+                //                 ),
+                //               ),
+                //             ),
+                //           ],
+                //         ),
+                //       ),
+                //     ),
+                //   );
+
+                //   // ListTile(
+                //   //   title: Text('${entry.key}. ${entry.value}'),
+                //   //   leading: Radio<String>(
+                //   //     value: entry.key,
+                //   //     groupValue: null,
+                //   //     onChanged: (val) {},
+                //   //   ),
+                //   // );
+                // }).toList(),
                 ...question.options.entries.map((entry) {
-                  return ListTile(
-                    title: Text('${entry.key}. ${entry.value}'),
-                    leading: Radio<String>(
-                      value: entry.key,
-                      groupValue: null,
-                      onChanged: (val) {},
+                  final isSelected =
+                      controller.selectedAnswers[controller
+                          .currentQuestionIndex
+                          .value] ==
+                      entry.key;
+
+                  return Padding(
+                    padding: EdgeInsets.symmetric(vertical: 4.h),
+                    child: GestureDetector(
+                      onTap: () {
+                        controller.selectOption(
+                          controller.currentQuestionIndex.value,
+                          entry.key,
+                        );
+                      },
+                      child: Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: isSelected ? Colors.green : lightBorderColor,
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(8.r),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            vertical: 10.h,
+                            horizontal: 10.w,
+                          ),
+                          child: Row(
+                            children: [
+                              Text(
+                                '${entry.key}.',
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: blackColor,
+                                ),
+                              ),
+                              SizedBox(width: 8.w),
+                              Expanded(
+                                child: Text(
+                                  entry.value,
+                                  style: TextStyle(
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w500,
+                                    color: blackColor,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
                   );
                 }).toList(),
@@ -82,11 +180,7 @@ class TestScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                    // ElevatedButton(
-                    //   style: ButtonStyle(backgroundColor: ),
-                    //   onPressed: controller.goToPreviousQuestion,
-                    //   child: Text("Previous"),
-                    // ),
+
                     if (controller.currentQuestionIndex.value == 0) Container(),
                     GestureDetector(
                       onTap: () {
@@ -168,6 +262,7 @@ class TestScreen extends StatelessWidget {
                         children: [
                           InkWell(
                             onTap: () {
+                              Get.back();
                               Get.to(() => TestResultScreen(testNumber));
                             },
                             child: Container(
