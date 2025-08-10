@@ -14,6 +14,11 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final HomeController controller = Get.put(HomeController());
+  @override
+  void initState() {
+    controller.groupListApi();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -6,12 +7,18 @@ import 'package:pinput/pinput.dart';
 import 'package:tlc_nyc/constant/color_constant.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:tlc_nyc/controller/login_controller.dart';
 import 'package:tlc_nyc/utils/custom_button.dart';
 import 'package:tlc_nyc/view/screens/authenticated/bottom_navigation_bar_screen.dart';
 
 class OtpScreen extends StatefulWidget {
   final String mobileNumber;
-  const OtpScreen({super.key, required this.mobileNumber});
+  final String verificationId;
+  const OtpScreen({
+    super.key,
+    required this.mobileNumber,
+    required this.verificationId,
+  });
 
   @override
   State<OtpScreen> createState() => _OtpScreenState();
@@ -21,6 +28,8 @@ class _OtpScreenState extends State<OtpScreen> {
   late final TextEditingController pinController;
   late final FocusNode focusNode;
   late final GlobalKey<FormState> formKey;
+
+  final LoginController loginController = Get.find();
 
   @override
   void initState() {
@@ -151,9 +160,25 @@ class _OtpScreenState extends State<OtpScreen> {
                       SizedBox(height: 80.h),
                       CustomButton(
                         padding: EdgeInsets.symmetric(vertical: 8.h),
-                        onPressed: () {
+                        onPressed: () async {
                           if (formKey.currentState!.validate()) {
-                            Get.to(() => BottomNavigationBarScreen());
+                            try {
+                              PhoneAuthCredential credential =
+                                  PhoneAuthProvider.credential(
+                                    verificationId:
+                                        widget.verificationId, // correct value
+                                    smsCode: pinController.text.trim(),
+                                  );
+
+                              await FirebaseAuth.instance.signInWithCredential(
+                                credential,
+                              );
+
+                              // Navigate after success
+                              Get.offAll(() => BottomNavigationBarScreen());
+                            } catch (e) {
+                              debugPrint("OTP verification failed: $e");
+                            }
                           }
                         },
                         color: primary,
@@ -168,6 +193,29 @@ class _OtpScreenState extends State<OtpScreen> {
                         width: double.infinity,
                         height: 35.h,
                       ),
+                      // CustomButton(
+                      //   padding: EdgeInsets.symmetric(vertical: 8.h),
+                      //   onPressed: () {
+                      //     if (formKey.currentState!.validate()) {
+                      //       loginController.verifyOtp(
+                      //         verificationId: widget.mobileNumber,
+                      //         otp: pinController.text.trim(),
+                      //       );
+                      //       // Get.to(() => BottomNavigationBarScreen());
+                      //     }
+                      //   },
+                      //   color: primary,
+                      //   text: Text(
+                      //     'verifyOtp'.tr,
+                      //     style: TextStyle(
+                      //       fontSize: 12.sp,
+                      //       color: whiteColor,
+                      //       fontWeight: FontWeight.w500,
+                      //     ),
+                      //   ),
+                      //   width: double.infinity,
+                      //   height: 35.h,
+                      // ),
                     ],
                   ),
                 ),
