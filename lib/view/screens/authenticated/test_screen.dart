@@ -44,12 +44,24 @@ class TestScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 20.h),
+
                 ...question.options.entries.map((entry) {
-                  final isSelected =
+                  final selectedAnswer =
                       controller.selectedAnswers[controller
                           .currentQuestionIndex
-                          .value] ==
-                      entry.key;
+                          .value];
+                  final correctAnswer = question.correctAnswer;
+
+                  Color borderColor = lightBorderColor;
+
+                  if (selectedAnswer != null) {
+                    if (entry.key == correctAnswer) {
+                      borderColor = Colors.green;
+                    } else if (entry.key == selectedAnswer &&
+                        selectedAnswer != correctAnswer) {
+                      borderColor = Colors.red;
+                    }
+                  }
 
                   return Padding(
                     padding: EdgeInsets.symmetric(vertical: 4.h),
@@ -63,10 +75,7 @@ class TestScreen extends StatelessWidget {
                       child: Container(
                         width: double.infinity,
                         decoration: BoxDecoration(
-                          border: Border.all(
-                            color: isSelected ? Colors.green : lightBorderColor,
-                            width: isSelected ? 2 : 1,
-                          ),
+                          border: Border.all(color: borderColor, width: 2),
                           borderRadius: BorderRadius.circular(8.r),
                         ),
                         child: Padding(
