@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -163,18 +162,6 @@ class _OtpScreenState extends State<OtpScreen> {
                         onPressed: () async {
                           if (formKey.currentState!.validate()) {
                             try {
-                              PhoneAuthCredential credential =
-                                  PhoneAuthProvider.credential(
-                                    verificationId:
-                                        widget.verificationId, // correct value
-                                    smsCode: pinController.text.trim(),
-                                  );
-
-                              await FirebaseAuth.instance.signInWithCredential(
-                                credential,
-                              );
-
-                              // Navigate after success
                               Get.offAll(() => BottomNavigationBarScreen());
                             } catch (e) {
                               debugPrint("OTP verification failed: $e");
@@ -193,29 +180,6 @@ class _OtpScreenState extends State<OtpScreen> {
                         width: double.infinity,
                         height: 35.h,
                       ),
-                      // CustomButton(
-                      //   padding: EdgeInsets.symmetric(vertical: 8.h),
-                      //   onPressed: () {
-                      //     if (formKey.currentState!.validate()) {
-                      //       loginController.verifyOtp(
-                      //         verificationId: widget.mobileNumber,
-                      //         otp: pinController.text.trim(),
-                      //       );
-                      //       // Get.to(() => BottomNavigationBarScreen());
-                      //     }
-                      //   },
-                      //   color: primary,
-                      //   text: Text(
-                      //     'verifyOtp'.tr,
-                      //     style: TextStyle(
-                      //       fontSize: 12.sp,
-                      //       color: whiteColor,
-                      //       fontWeight: FontWeight.w500,
-                      //     ),
-                      //   ),
-                      //   width: double.infinity,
-                      //   height: 35.h,
-                      // ),
                     ],
                   ),
                 ),

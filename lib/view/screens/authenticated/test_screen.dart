@@ -44,7 +44,6 @@ class TestScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 20.h),
-
                 ...question.options.entries.map((entry) {
                   final selectedAnswer =
                       controller.selectedAnswers[controller
@@ -53,13 +52,19 @@ class TestScreen extends StatelessWidget {
                   final correctAnswer = question.correctAnswer;
 
                   Color borderColor = lightBorderColor;
+                  IconData? icon;
+                  Color iconColor = Colors.transparent; // default invisible
 
                   if (selectedAnswer != null) {
                     if (entry.key == correctAnswer) {
                       borderColor = Colors.green;
+                      icon = Icons.check_circle;
+                      iconColor = Colors.green;
                     } else if (entry.key == selectedAnswer &&
                         selectedAnswer != correctAnswer) {
                       borderColor = Colors.red;
+                      icon = Icons.cancel;
+                      iconColor = Colors.red;
                     }
                   }
 
@@ -104,6 +109,10 @@ class TestScreen extends StatelessWidget {
                                   ),
                                 ),
                               ),
+                              if (icon != null) ...[
+                                SizedBox(width: 8.w),
+                                Icon(icon, color: iconColor, size: 20.sp),
+                              ],
                             ],
                           ),
                         ),

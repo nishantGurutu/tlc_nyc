@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -21,6 +23,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final LoginController loginController = Get.put(LoginController());
   @override
   Widget build(BuildContext context) {
+    bool isDesktop = Platform.isWindows || Platform.isMacOS || Platform.isLinux;
+
     return Scaffold(
       backgroundColor: whiteColor,
       body: Container(
@@ -32,116 +36,202 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 12.w),
+          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 20.h),
           child: Form(
             key: _key,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  height: 500.h,
-                  decoration: BoxDecoration(
-                    color: whiteColor,
-                    borderRadius: BorderRadius.all(Radius.circular(10.r)),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 12.w),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
+            child:
+                isDesktop
+                    ? Row(
                       children: [
-                        SizedBox(height: 70.h),
-                        Image.asset(appLogo, height: 120.h),
-                        SizedBox(height: 50.h),
-                        TaskCustomTextField(
-                          controller: mobileController,
-                          textCapitalization: TextCapitalization.none,
-                          keyboardType: TextInputType.number,
-                          data: "mobile number",
-                          hintText: "enterMobileNumber".tr,
-                        ),
-                        SizedBox(height: 15.h),
-                        // CustomButton(
-                        //   padding: EdgeInsets.symmetric(vertical: 8.h),
-                        //   onPressed: () {
-                        //     if (_key.currentState!.validate()) {
-                        //       Get.to(
-                        //         () => OtpScreen(
-                        //           mobileNumber: mobileController.text.trim(),
-                        //         ),
-                        //       );
-                        //     }
-                        //   },
-                        //   color: primary,
-                        //   text: Text(
-                        //     'sendOtp'.tr,
-                        //     style: TextStyle(
-                        //       fontSize: 12.sp,
-                        //       color: whiteColor,
-                        //       fontWeight: FontWeight.w500,
-                        //     ),
-                        //   ),
-                        //   width: double.infinity,
-                        //   height: 35.h,
-                        // ),
-                        CustomButton(
-                          padding: EdgeInsets.symmetric(vertical: 8.h),
-                          onPressed: () {
-                            if (_key.currentState!.validate()) {
-                              // FirebaseAuth.instance.verifyPhoneNumber(
-                              //   phoneNumber:
-                              //       "+91${mobileController.text.trim()}",
-                              //   timeout: const Duration(seconds: 60),
-                              //   verificationCompleted: (
-                              //     PhoneAuthCredential credential,
-                              //   ) async {
-                              //     // Auto verification for some devices
-                              //     await FirebaseAuth.instance
-                              //         .signInWithCredential(credential);
-                              //   },
-                              //   verificationFailed: (FirebaseAuthException e) {
-                              //     debugPrint("OTP send failed: ${e.message}");
-                              //   },
-                              //   codeSent: (
-                              //     String verificationId,
-                              //     int? resendToken,
-                              //   ) {
-                              //     Get.to(
-                              //       () => OtpScreen(
-                              //         mobileNumber:
-                              //             mobileController.text.trim(),
-                              //         verificationId:
-                              //             verificationId, // pass verificationId, not mobile number
-                              //       ),
-                              //     );
-                              //   },
-                              //   codeAutoRetrievalTimeout: (
-                              //     String verificationId,
-                              //   ) {
-                              //     debugPrint("Auto retrieval timeout");
-                              //   },
-                              // );
-
-                              Get.offAll(() => BottomNavigationBarScreen());
-                            }
-                          },
-                          color: primary,
-                          text: Text(
-                            'sendOtp'.tr,
-                            style: TextStyle(
-                              fontSize: 12.sp,
-                              color: whiteColor,
-                              fontWeight: FontWeight.w500,
+                        Expanded(
+                          flex: 1,
+                          child: Center(
+                            child: Image.asset(
+                              appLogo,
+                              height: 200.h,
+                              fit: BoxFit.contain,
                             ),
                           ),
-                          width: double.infinity,
-                          height: 35.h,
+                        ),
+
+                        Expanded(
+                          flex: 1,
+                          child: Container(
+                            height: 400.h,
+                            width: 400.w,
+                            decoration: BoxDecoration(
+                              color: whiteColor,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10.r),
+                              ),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black12,
+                                  blurRadius: 8,
+                                  offset: Offset(2, 2),
+                                ),
+                              ],
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 20.w,
+                                vertical: 30.h,
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    height: 50.h,
+                                    width: 300.w,
+                                    child: TextField(
+                                      obscureText: true,
+                                      cursorHeight: 20.h,
+                                      style: TextStyle(fontSize: 14.sp),
+                                      decoration: InputDecoration(
+                                        contentPadding: EdgeInsets.symmetric(
+                                          vertical: 8.h,
+                                          horizontal: 5.w,
+                                        ),
+                                        label: Text('Enter your mobile number'),
+                                        labelStyle: TextStyle(
+                                          fontSize: 4.sp,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                        hintStyle: TextStyle(fontSize: 8.sp),
+                                        border: OutlineInputBorder(),
+                                        isCollapsed: true,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: 10.h),
+                                  SizedBox(
+                                    height: 50.h,
+                                    width: 300.w,
+                                    child: TextField(
+                                      obscureText: true,
+                                      cursorHeight: 20.h,
+                                      style: TextStyle(fontSize: 14.sp),
+                                      decoration: InputDecoration(
+                                        contentPadding: EdgeInsets.symmetric(
+                                          vertical: 8.h,
+                                          horizontal: 5.w,
+                                        ),
+                                        label: Text('Enter your password'),
+                                        labelStyle: TextStyle(
+                                          fontSize: 4.sp,
+                                          fontWeight: FontWeight.w400,
+                                        ),
+                                        hintStyle: TextStyle(fontSize: 8.sp),
+                                        border: OutlineInputBorder(),
+                                        isCollapsed: true,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(height: 20.h),
+                                  Container(
+                                    height: 50.h,
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      color: primary,
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(10.r),
+                                      ),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        'Login',
+                                        style: TextStyle(
+                                          fontSize: 6.sp,
+                                          fontWeight: FontWeight.w500,
+                                          color: whiteColor,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  // CustomButton(
+                                  //   padding: EdgeInsets.symmetric(
+                                  //     vertical: 12.h,
+                                  //   ),
+                                  //   onPressed: () {
+                                  //     if (_key.currentState!.validate()) {
+                                  //       Get.offAll(
+                                  //         () => BottomNavigationBarScreen(),
+                                  //       );
+                                  //     }
+                                  //   },
+                                  //   color: primary,
+                                  //   text: Text(
+                                  //     'sendOtp'.tr,
+                                  //     style: TextStyle(
+                                  //       fontSize: 14.sp,
+                                  //       color: whiteColor,
+                                  //       fontWeight: FontWeight.w600,
+                                  //     ),
+                                  //   ),
+                                  //   width: double.infinity,
+                                  //   height: 45.h,
+                                  // ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                    : Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          height: 500.h,
+                          decoration: BoxDecoration(
+                            color: whiteColor,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(10.r),
+                            ),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 12.w),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                SizedBox(height: 70.h),
+                                Image.asset(appLogo, height: 120.h),
+                                SizedBox(height: 50.h),
+                                TaskCustomTextField(
+                                  controller: mobileController,
+                                  textCapitalization: TextCapitalization.none,
+                                  keyboardType: TextInputType.number,
+                                  data: "mobile number",
+                                  hintText: "enterMobileNumber".tr,
+                                ),
+                                SizedBox(height: 15.h),
+                                CustomButton(
+                                  padding: EdgeInsets.symmetric(vertical: 8.h),
+                                  onPressed: () {
+                                    if (_key.currentState!.validate()) {
+                                      Get.offAll(
+                                        () => BottomNavigationBarScreen(),
+                                      );
+                                    }
+                                  },
+                                  color: primary,
+                                  text: Text(
+                                    'sendOtp'.tr,
+                                    style: TextStyle(
+                                      fontSize: 12.sp,
+                                      color: whiteColor,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  width: double.infinity,
+                                  height: 35.h,
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                       ],
                     ),
-                  ),
-                ),
-              ],
-            ),
           ),
         ),
       ),

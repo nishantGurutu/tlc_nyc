@@ -29,93 +29,129 @@ class _TestIntroScreenState extends State<TestIntroScreen> {
           ),
         ),
       ),
-      body: Padding(
-        padding: EdgeInsets.all(16.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              height: 180.h,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("assets/images/test_intro.png"),
-                  fit: BoxFit.contain,
-                ),
-              ),
-            ),
-            SizedBox(height: 20.h),
-            Text(
-              'Please read the instructions carefully before starting the test.',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 17.sp,
-                fontWeight: FontWeight.w500,
-                color: blackColor,
-              ),
-            ),
-            SizedBox(height: 20.h),
-            Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12.r),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 5,
-                    offset: Offset(0, 3),
-                  ),
-                ],
-              ),
-              child: Column(
-                children: [
-                  _buildInfoRow(Icons.list_alt_rounded, "Total MCQs", "80"),
-                  Divider(),
-                  _buildInfoRow(
-                    Icons.access_time_rounded,
-                    "Total Time",
-                    "120 minutes",
-                  ),
-                  Divider(),
-                  _buildInfoRow(
-                    Icons.percent_rounded,
-                    "Passing Percentage",
-                    "70%",
-                  ),
-                ],
-              ),
-            ),
-            Spacer(),
 
-            // 📌 Start Button
-            SizedBox(
-              width: double.infinity,
-              height: 50.h,
-              child: ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: primary,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.r),
-                  ),
-                ),
-                icon: Icon(
-                  Icons.play_arrow_rounded,
-                  size: 24.sp,
-                  color: Colors.white,
-                ),
-                label: Text(
-                  "Start Test",
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(16.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Please read the instructions carefully before starting the test.',
+                  textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 16.sp,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                    color: blackColor,
                   ),
                 ),
-                onPressed: () {
-                  Get.to(() => TestScreen(widget.testNumber));
-                },
-              ),
+                SizedBox(height: 15.h),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12.r),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius: 5.r,
+                        offset: Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    children: [
+                      _buildInfoRow(Icons.list_alt_rounded, "Total MCQs", "80"),
+                      Divider(),
+                      _buildInfoRow(
+                        Icons.access_time_rounded,
+                        "Total Time",
+                        "120 minutes",
+                      ),
+                      Divider(),
+                      _buildInfoRow(
+                        Icons.percent_rounded,
+                        "Passing Percentage",
+                        "70%",
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 20.h),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12.r),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius: 5,
+                        offset: Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 9.w,
+                      vertical: 8.h,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Test Guidance",
+                          style: TextStyle(
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.bold,
+                            color: primary,
+                          ),
+                        ),
+                        SizedBox(height: 8.h),
+                        Text(
+                          """This study guide test is a simulation of the TLC Exam with a duration of 120 minutes and 80 multiple-choice questions. You need a score of 70% or higher to pass.\nWe advise all students to:\n• Read and memorize the most important points of Chapter 80 – Rules and Regulations for drivers.  • Always study the latest version from the TLC (NYC) official website, as rules and regulations change frequently.  • Note: Chapter 80 is around 60 pages, and most exam questions come from here.\nWe recommend practicing all the tests we provide. ⚠️ We do not guarantee a passing score — But if you study hard, if you practice all ours test, You will pass the Exam in the first tried.""",
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            height: 1.4,
+                            color: blackColor,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(height: 15.h),
+                SizedBox(
+                  width: double.infinity,
+                  height: 40.h,
+                  child: ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: primary,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.r),
+                      ),
+                    ),
+                    icon: Icon(
+                      Icons.play_arrow_rounded,
+                      size: 24.sp,
+                      color: Colors.white,
+                    ),
+                    label: Text(
+                      "Start Test",
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white,
+                      ),
+                    ),
+                    onPressed: () {
+                      Get.to(() => TestScreen(widget.testNumber));
+                    },
+                  ),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
@@ -131,7 +167,11 @@ class _TestIntroScreenState extends State<TestIntroScreen> {
           Expanded(
             child: Text(
               title,
-              style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w500),
+              style: TextStyle(
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w500,
+                color: blackColor,
+              ),
             ),
           ),
           Text(

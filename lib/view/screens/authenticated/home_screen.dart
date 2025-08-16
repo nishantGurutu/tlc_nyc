@@ -36,24 +36,26 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: primary,
       ),
       backgroundColor: background,
-      body: GridView.builder(
-        itemCount: 12,
-        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-          crossAxisSpacing: 16,
-          mainAxisSpacing: 16,
-          childAspectRatio: 1.1,
+      body: SafeArea(
+        child: GridView.builder(
+          itemCount: 12,
+          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+            crossAxisSpacing: 16,
+            mainAxisSpacing: 16,
+            childAspectRatio: 1.1,
+          ),
+          itemBuilder: (context, index) {
+            return HomeButton(
+              title: 'Test ${index + 1}',
+              icon: Icons.assignment,
+              onTap: () {
+                controller.onTestSelected(index + 1);
+              },
+            );
+          },
         ),
-        itemBuilder: (context, index) {
-          return HomeButton(
-            title: 'Test ${index + 1}',
-            icon: Icons.assignment,
-            onTap: () {
-              controller.onTestSelected(index + 1);
-            },
-          );
-        },
       ),
     );
   }
