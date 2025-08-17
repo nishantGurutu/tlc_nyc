@@ -10,6 +10,8 @@ class HomeController extends GetxController {
 
   RxList<TestTypeModel> groupListData = <TestTypeModel>[].obs;
   var isGroupLoading = false.obs;
+  var indexOneSelected = true.obs;
+  var indexTwoSelected = true.obs;
   Future<void> groupListApi() async {
     isGroupLoading.value = true;
 

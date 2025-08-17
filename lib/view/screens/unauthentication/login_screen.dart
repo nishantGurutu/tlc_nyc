@@ -9,6 +9,7 @@ import 'package:tlc_nyc/controller/login_controller.dart';
 import 'package:tlc_nyc/utils/custom_button.dart';
 import 'package:tlc_nyc/utils/custom_text_field.dart';
 import 'package:tlc_nyc/view/screens/authenticated/bottom_navigation_bar_screen.dart';
+import 'package:tlc_nyc/view/screens/widgets/windows_plateform/side_drawer.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -128,49 +129,31 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ),
                                   ),
                                   SizedBox(height: 20.h),
-                                  Container(
-                                    height: 50.h,
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                      color: primary,
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(10.r),
+                                  GestureDetector(
+                                    onTap: () {
+                                      Get.offAll(() => DashBoardScreen());
+                                    },
+                                    child: Container(
+                                      height: 50.h,
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        color: primary,
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(10.r),
+                                        ),
                                       ),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        'Login',
-                                        style: TextStyle(
-                                          fontSize: 6.sp,
-                                          fontWeight: FontWeight.w500,
-                                          color: whiteColor,
+                                      child: Center(
+                                        child: Text(
+                                          'Login',
+                                          style: TextStyle(
+                                            fontSize: 6.sp,
+                                            fontWeight: FontWeight.w500,
+                                            color: whiteColor,
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                  // CustomButton(
-                                  //   padding: EdgeInsets.symmetric(
-                                  //     vertical: 12.h,
-                                  //   ),
-                                  //   onPressed: () {
-                                  //     if (_key.currentState!.validate()) {
-                                  //       Get.offAll(
-                                  //         () => BottomNavigationBarScreen(),
-                                  //       );
-                                  //     }
-                                  //   },
-                                  //   color: primary,
-                                  //   text: Text(
-                                  //     'sendOtp'.tr,
-                                  //     style: TextStyle(
-                                  //       fontSize: 14.sp,
-                                  //       color: whiteColor,
-                                  //       fontWeight: FontWeight.w600,
-                                  //     ),
-                                  //   ),
-                                  //   width: double.infinity,
-                                  //   height: 45.h,
-                                  // ),
                                 ],
                               ),
                             ),
