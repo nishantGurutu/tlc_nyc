@@ -56,15 +56,16 @@ class TestScreen extends StatelessWidget {
                   Color iconColor = Colors.transparent; // default invisible
 
                   if (selectedAnswer != null) {
-                    if (entry.key == correctAnswer) {
-                      borderColor = Colors.green;
-                      icon = Icons.check_circle;
-                      iconColor = Colors.green;
-                    } else if (entry.key == selectedAnswer &&
-                        selectedAnswer != correctAnswer) {
-                      borderColor = Colors.red;
-                      icon = Icons.cancel;
-                      iconColor = Colors.red;
+                    if (entry.key == selectedAnswer) {
+                      if (selectedAnswer == correctAnswer) {
+                        borderColor = Colors.green;
+                        icon = Icons.check_circle;
+                        iconColor = Colors.green;
+                      } else {
+                        borderColor = Colors.red;
+                        icon = Icons.cancel;
+                        iconColor = Colors.red;
+                      }
                     }
                   }
 
