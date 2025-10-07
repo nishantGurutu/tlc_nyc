@@ -79,7 +79,6 @@ class _AddQuestionAnswerBottomSheetState extends State<AddQuestionAnswerBottomSh
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Header
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -101,10 +100,7 @@ class _AddQuestionAnswerBottomSheetState extends State<AddQuestionAnswerBottomSh
                   ),
                 ],
               ),
-              
               SizedBox(height: 20.h),
-              
-              // Form
               Expanded(
                 child: Form(
                   key: _formKey,
@@ -112,7 +108,6 @@ class _AddQuestionAnswerBottomSheetState extends State<AddQuestionAnswerBottomSh
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // Question Type Dropdown
                          Text(
                            'Question Type',
                            style: TextStyle(
@@ -197,7 +192,6 @@ class _AddQuestionAnswerBottomSheetState extends State<AddQuestionAnswerBottomSh
                            }),
                          ),
                         SizedBox(height: 16.h),
-                        // Question Name
                         Text(
                           'Question Name',
                           style: TextStyle(
@@ -207,18 +201,13 @@ class _AddQuestionAnswerBottomSheetState extends State<AddQuestionAnswerBottomSh
                           ),
                         ),
                         SizedBox(height: 8.h),
-      
                          CustomTextField(
                           controller: questionController,
                           hintText: 'Enter question text',
                           keyboardType: TextInputType.number,
                           textCapitalization: TextCapitalization.none,
                         ),
-                        
-                        
                         SizedBox(height: 16.h),
-                         
-                        // Answers Section
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -259,8 +248,6 @@ class _AddQuestionAnswerBottomSheetState extends State<AddQuestionAnswerBottomSh
                         ),
                         
                         SizedBox(height: 12.h),
-                        
-                        // Answer Fields
                         ...List.generate(answerControllers.length, (index) {
                           return Padding(
                             padding: EdgeInsets.only(bottom: 12.h),
@@ -319,8 +306,6 @@ class _AddQuestionAnswerBottomSheetState extends State<AddQuestionAnswerBottomSh
                         }),
                         
                         SizedBox(height: 20.h),
-                        
-                         // Submit Button
                          Obx(() => CustomButton(
                            onPressed: ()async {
                                    if (_formKey.currentState!.validate()) {
@@ -332,8 +317,6 @@ class _AddQuestionAnswerBottomSheetState extends State<AddQuestionAnswerBottomSh
                                        );
                                        return;
                                      }
-                                     
-                                     // Prepare answers data
                                      final answersData = <Map<String, dynamic>>[];
                                      for (int i = 0; i < answerControllers.length; i++) {
                                        answersData.add({
