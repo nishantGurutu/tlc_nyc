@@ -3,4 +3,8 @@ class ApiConstant {
   static const String questypeList = "Master/GetAllQuestionType";
   static const String questionAnswerBytypeid =
       "Master/GetQuestionTypeById";
+  static const String addQuestionType =
+      "Master/AddQuestionType";
+  static const String addQuestionWithAnswers =
+      "OnlineExam/AddQuestionWithAnswers";
 }
