@@ -217,7 +217,7 @@ class TestScreen extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        'Are you sure\n want to exist',
+                        'Are you sure want to\ncomplete the test?',
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 16.sp,

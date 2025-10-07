@@ -31,10 +31,8 @@ class _BottomNavigationBarScreenState extends State<BottomNavigationBarScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Obx(
-          () => Center(child: _widgetOptions.elementAt(_selectedIndex.value)),
-        ),
+      body: Obx(
+        () => _widgetOptions.elementAt(_selectedIndex.value),
       ),
       bottomNavigationBar: Obx(() {
         return BottomNavigationBar(
