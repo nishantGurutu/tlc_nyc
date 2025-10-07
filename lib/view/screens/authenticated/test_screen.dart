@@ -16,7 +16,7 @@ class TestScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          '${'test'.tr} $testNumber',
+          testNumber,
           style: const TextStyle(color: Colors.white),
         ),
         centerTitle: true,
