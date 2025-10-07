@@ -17,6 +17,11 @@ class _AddScreenState extends State<AddScreen> {
   final AddQuestionController controller = Get.put(AddQuestionController());
 
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

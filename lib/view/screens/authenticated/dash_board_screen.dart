@@ -106,6 +106,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                         ),
                                       ),
                                       Icon(Icons.arrow_right),
+                                      
                                     ],
                                   ),
                                 ),

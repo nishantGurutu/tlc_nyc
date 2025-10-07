@@ -17,25 +17,28 @@ class _AddQuestionAnswerBottomSheetState extends State<AddQuestionAnswerBottomSh
   final AddQuestionController controller = Get.find<AddQuestionController>();
   final TextEditingController questionController = TextEditingController();
   final TextEditingController groupCodeController = TextEditingController();
-  final TextEditingController questionTypeCodeController = TextEditingController();
   
   final List<Map<String, dynamic>> answers = [];
   final List<TextEditingController> answerControllers = [];
   final List<bool> isCorrectList = [];
   
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  String? selectedQuestionType;
+  int? selectedQuestionTypeCode;
 
   @override
   void initState() {
     super.initState();
     _addAnswerField();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.homeController.groupListApi();
+    });
   }
 
   @override
   void dispose() {
     questionController.dispose();
     groupCodeController.dispose();
-    questionTypeCodeController.dispose();
     for (var controller in answerControllers) {
       controller.dispose();
     }
@@ -109,6 +112,91 @@ class _AddQuestionAnswerBottomSheetState extends State<AddQuestionAnswerBottomSh
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        // Question Type Dropdown
+                         Text(
+                           'Question Type',
+                           style: TextStyle(
+                             fontSize: 14.sp,
+                             fontWeight: FontWeight.w500,
+                             color: blackColor,
+                           ),
+                         ),
+                         SizedBox(height: 8.h),
+                         Container(
+                           decoration: BoxDecoration(
+                             border: Border.all(color: lightBorderColor),
+                             borderRadius: BorderRadius.circular(10.r),
+                           ),
+                           child: Obx(() {
+                             if (controller.homeController.isGroupLoading.value) {
+                               return Padding(
+                                 padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 16.h),
+                                 child: Row(
+                                   children: [
+                                     SizedBox(
+                                       width: 16.w,
+                                       height: 16.h,
+                                       child: CircularProgressIndicator(
+                                         strokeWidth: 2,
+                                         color: primary,
+                                       ),
+                                     ),
+                                     SizedBox(width: 8.w),
+                                     Text(
+                                       'Loading question types...',
+                                       style: TextStyle(
+                                         color: Colors.grey.shade600,
+                                         fontSize: 14.sp,
+                                       ),
+                                     ),
+                                   ],
+                                 ),
+                               );
+                             }
+                             return DropdownButtonHideUnderline(
+                               child: DropdownButton<String>(
+                                 value: selectedQuestionType,
+                                 hint: Padding(
+                                   padding: EdgeInsets.symmetric(horizontal: 12.w),
+                                   child: Text(
+                                     'Select Question Type',
+                                     style: TextStyle(
+                                       color: Colors.grey.shade600,
+                                       fontSize: 14.sp,
+                                     ),
+                                   ),
+                                 ),
+                                 isExpanded: true,
+                                 dropdownColor: whiteColor,
+                                 items: controller.homeController.groupListData.map((item) {
+                                   return DropdownMenuItem<String>(
+                                     value: item.qtypENAME,
+                                     child: Padding(
+                                       padding: EdgeInsets.symmetric(horizontal: 12.w),
+                                       child: Text(
+                                         item.qtypENAME ?? '',
+                                         style: TextStyle(
+                                           fontSize: 14.sp,
+                                           color: blackColor,
+                                         ),
+                                       ),
+                                     ),
+                                   );
+                                 }).toList(),
+                                 onChanged: (String? newValue) {
+                                   setState(() {
+                                     selectedQuestionType = newValue;
+                                     final selectedItem = controller.homeController.groupListData.firstWhere(
+                                       (item) => item.qtypENAME == newValue,
+                                     );
+                                     selectedQuestionTypeCode = selectedItem.qtypECODE;
+                                   });
+                                 },
+                               ),
+                             );
+                           }),
+                         ),
+                        SizedBox(height: 16.h),
                         // Question Name
                         Text(
                           'Question Name',
@@ -129,46 +217,7 @@ class _AddQuestionAnswerBottomSheetState extends State<AddQuestionAnswerBottomSh
                         
                         
                         SizedBox(height: 16.h),
-                        
-                        // Group Code
-                        Text(
-                          'Group Code',
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w500,
-                            color: blackColor,
-                          ),
-                        ),
-                        SizedBox(height: 8.h),
-                        CustomTextField(
-                          controller: groupCodeController,
-                          hintText: 'Enter group code',
-                          keyboardType: TextInputType.number,
-                          textCapitalization: TextCapitalization.none,
-                        ),
-                        
-                        SizedBox(height: 16.h),
-                        
-                        // Question Type Code
-                        Text(
-                          'Question Type Code',
-                          style: TextStyle(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w500,
-                            color: blackColor,
-                          ),
-                        ),
-                        SizedBox(height: 8.h),
-                        CustomTextField(
-                          controller: questionTypeCodeController,
-                          hintText: 'Enter question type code',
-                          keyboardType: TextInputType.number,
-                          textCapitalization: TextCapitalization.none,
-                        ),
-                        
-                        
-                        SizedBox(height: 20.h),
-                        
+                         
                         // Answers Section
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -271,32 +320,41 @@ class _AddQuestionAnswerBottomSheetState extends State<AddQuestionAnswerBottomSh
                         
                         SizedBox(height: 20.h),
                         
-                        // Submit Button
-                        Obx(() => CustomButton(
-                          onPressed: ()async {
-                                  if (_formKey.currentState!.validate()) {
-                                    // Prepare answers data
-                                    final answersData = <Map<String, dynamic>>[];
-                                    for (int i = 0; i < answerControllers.length; i++) {
-                                      answersData.add({
-                                        'name': answerControllers[i].text.trim(),
-                                        'isCorrect': isCorrectList[i],
-                                      });
-                                    }
-                                    
-                                    final success = await controller.addQuestionWithAnswers(
-                                      questionName: questionController.text.trim(),
-                                      groupCode: int.parse(groupCodeController.text),
-                                      questionTypeCode: int.parse(questionTypeCodeController.text),
-                                      answers: answersData,
-                                    );
-                                    
-                                    if (success) {
-                                      Get.back();
-                                      _clearForm();
-                                    }
-                                  }
-                                },
+                         // Submit Button
+                         Obx(() => CustomButton(
+                           onPressed: ()async {
+                                   if (_formKey.currentState!.validate()) {
+                                     if (selectedQuestionTypeCode == null) {
+                                       Get.snackbar(
+                                         'Error',
+                                         'Please select a question type',
+                                         snackPosition: SnackPosition.BOTTOM,
+                                       );
+                                       return;
+                                     }
+                                     
+                                     // Prepare answers data
+                                     final answersData = <Map<String, dynamic>>[];
+                                     for (int i = 0; i < answerControllers.length; i++) {
+                                       answersData.add({
+                                         'name': answerControllers[i].text.trim(),
+                                         'isCorrect': isCorrectList[i],
+                                       });
+                                     }
+                                     
+                                     final success = await controller.addQuestionWithAnswers(
+                                       questionName: questionController.text.trim(),
+                                       groupCode: int.parse(groupCodeController.text),
+                                       questionTypeCode: selectedQuestionTypeCode!,
+                                       answers: answersData,
+                                     );
+                                     
+                                     if (success) {
+                                       Get.back();
+                                       _clearForm();
+                                     }
+                                   }
+                                 },
                           color: primary,
                           text: controller.isLoading.value
                               ? CircularProgressIndicator(color: whiteColor)
@@ -326,7 +384,10 @@ class _AddQuestionAnswerBottomSheetState extends State<AddQuestionAnswerBottomSh
   void _clearForm() {
     questionController.clear();
     groupCodeController.clear();
-    questionTypeCodeController.clear();
+    setState(() {
+      selectedQuestionType = null;
+      selectedQuestionTypeCode = null;
+    });
     for (var controller in answerControllers) {
       controller.dispose();
     }
