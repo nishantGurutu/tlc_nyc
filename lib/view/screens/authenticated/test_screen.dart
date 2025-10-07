@@ -6,7 +6,7 @@ import 'package:tlc_nyc/controller/test_controller.dart';
 import 'package:tlc_nyc/view/screens/authenticated/test_result_screen.dart';
 
 class TestScreen extends StatelessWidget {
-  final int testNumber;
+  final String testNumber;
   TestScreen(this.testNumber, {super.key});
 
   final TestController controller = Get.put(TestController());
@@ -192,7 +192,7 @@ class TestScreen extends StatelessWidget {
     );
   }
 
-  Future<void> confirmDialog(BuildContext context, int testNumber) async {
+  Future<void> confirmDialog(BuildContext context, String testNumber) async {
     return showDialog(
       barrierDismissible: false,
       context: context,

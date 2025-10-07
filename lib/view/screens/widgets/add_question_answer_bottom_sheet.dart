@@ -5,7 +5,6 @@ import 'package:tlc_nyc/constant/color_constant.dart';
 import 'package:tlc_nyc/controller/add_question_controller.dart';
 import 'package:tlc_nyc/utils/customTextField.dart';
 import 'package:tlc_nyc/utils/custom_button.dart';
-import 'package:tlc_nyc/utils/custom_text_field.dart';
 
 class AddQuestionAnswerBottomSheet extends StatefulWidget {
   const AddQuestionAnswerBottomSheet({super.key});

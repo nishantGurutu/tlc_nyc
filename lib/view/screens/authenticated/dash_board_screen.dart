@@ -73,7 +73,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         itemBuilder: (context, index) {
                           return GestureDetector(
                             onTap: () {
-                              controller.onTestSelected(index + 1);
+                              controller.onTestSelected(controller.groupListData[index].qtypENAME??"");
                             },
                             child: Padding(
                               padding: EdgeInsets.symmetric(
@@ -98,7 +98,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        '${'test'.tr} ${index + 1}',
+                                        controller.groupListData[index].qtypENAME??"",
                                         style: TextStyle(
                                           fontSize: 16.sp,
                                           fontWeight: FontWeight.w500,

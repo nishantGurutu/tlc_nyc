@@ -5,7 +5,7 @@ import 'package:tlc_nyc/constant/color_constant.dart';
 import 'package:tlc_nyc/view/screens/authenticated/test_result_screen.dart';
 
 class ShowDialogclass {
-  Future<void> confirmDialog(BuildContext context, int testNumber) async {
+  Future<void> confirmDialog(BuildContext context, String testNumber) async {
     return showDialog(
       barrierDismissible: false,
       context: context,

@@ -4,7 +4,7 @@ import 'package:tlc_nyc/service/home_service.dart';
 import 'package:tlc_nyc/view/screens/authenticated/test_intro.dart';
 
 class HomeController extends GetxController {
-  void onTestSelected(int testNumber) {
+  void onTestSelected(String testNumber) {
     Get.to(() => TestIntroScreen(testNumber));
   }
 

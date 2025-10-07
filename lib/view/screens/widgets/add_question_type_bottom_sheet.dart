@@ -97,7 +97,7 @@ class _AddQuestionTypeBottomSheetState extends State<AddQuestionTypeBottomSheet>
                       CustomTextField(
                           controller: questionTypeController,
                           hintText: 'Enter question type name',
-                          keyboardType: TextInputType.number,
+                          keyboardType: TextInputType.emailAddress,
                           textCapitalization: TextCapitalization.none,
                         ),
                       

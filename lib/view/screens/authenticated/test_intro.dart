@@ -5,7 +5,7 @@ import 'package:tlc_nyc/constant/color_constant.dart';
 import 'package:tlc_nyc/view/screens/authenticated/test_screen.dart';
 
 class TestIntroScreen extends StatefulWidget {
-  final int testNumber;
+  final String testNumber;
   const TestIntroScreen(this.testNumber, {super.key});
 
   @override

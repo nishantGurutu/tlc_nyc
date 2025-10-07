@@ -6,7 +6,7 @@ import 'package:tlc_nyc/constant/image_constant.dart';
 import 'package:tlc_nyc/controller/test_controller.dart';
 
 class TestResultScreen extends StatelessWidget {
-  final int testNumber;
+  final String testNumber;
   const TestResultScreen(this.testNumber, {super.key});
 
   @override
