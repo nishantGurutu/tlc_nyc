@@ -1,20 +1,20 @@
-class TestTypeModel {
-  int? grPCODE;
-  String? grPNAME;
+class QuestionTypeListModel {
+  int? qtypECODE;
+  String? qtypENAME;
   bool? isactive;
 
-  TestTypeModel({this.grPCODE, this.grPNAME, this.isactive});
+  QuestionTypeListModel({this.qtypECODE, this.qtypENAME, this.isactive});
 
-  TestTypeModel.fromJson(Map<String, dynamic> json) {
-    grPCODE = json['grP_CODE'];
-    grPNAME = json['grP_NAME'];
+  QuestionTypeListModel.fromJson(Map<String, dynamic> json) {
+    qtypECODE = json['qtypE_CODE'];
+    qtypENAME = json['qtypE_NAME'];
     isactive = json['isactive'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['grP_CODE'] = this.grPCODE;
-    data['grP_NAME'] = this.grPNAME;
+    data['qtypE_CODE'] = this.qtypECODE;
+    data['qtypE_NAME'] = this.qtypENAME;
     data['isactive'] = this.isactive;
     return data;
   }

@@ -25,8 +25,8 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text(
-          'TLC Test Prep',
+        title: Text(
+          'tlcTestPrep'.tr,
           style: TextStyle(
             color: Colors.white,
             fontSize: 20,
@@ -48,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           itemBuilder: (context, index) {
             return HomeButton(
-              title: 'Test ${index + 1}',
+              title: '${'test'.tr} ${index + 1}',
               icon: Icons.assignment,
               onTap: () {
                 controller.onTestSelected(index + 1);

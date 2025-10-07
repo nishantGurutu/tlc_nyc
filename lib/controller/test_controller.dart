@@ -41,7 +41,6 @@ class TestController extends GetxController {
     }
   }
 
-  // Calculate test results
   int getCorrectAnswers() {
     int correct = 0;
     for (int i = 0; i < questions.length; i++) {
@@ -76,16 +75,16 @@ class TestController extends GetxController {
   }
 
   bool hasPassed() {
-    return getPercentage() >= 70.0; // 70% passing threshold
+    return getPercentage() >= 70.0;  
   }
 
-  RxList<TestTypeModel> groupListData = <TestTypeModel>[].obs;
+  RxList<QuestionTypeListModel> groupListData = <QuestionTypeListModel>[].obs;
   var isQuestionLoading = false.obs;
   Future<void> qusetionAnswerByid() async {
     isQuestionLoading.value = true;
 
     try {
-      final result = await TestService().groupList();
+      final result = await TestService().questionList();
       if (result != null) {
         groupListData.assignAll(result);
         isQuestionLoading.value = false;

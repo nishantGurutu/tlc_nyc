@@ -22,7 +22,7 @@ class _TestIntroScreenState extends State<TestIntroScreen> {
         backgroundColor: primary,
         centerTitle: true,
         title: Text(
-          'Test Introduction',
+          'testIntroduction'.tr,
           style: const TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
@@ -39,7 +39,7 @@ class _TestIntroScreenState extends State<TestIntroScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  'Please read the instructions carefully before starting the test.',
+                  'pleaseReadInstructions'.tr,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 16.sp,
@@ -62,17 +62,17 @@ class _TestIntroScreenState extends State<TestIntroScreen> {
                   ),
                   child: Column(
                     children: [
-                      _buildInfoRow(Icons.list_alt_rounded, "Total MCQs", "80"),
+                      _buildInfoRow(Icons.list_alt_rounded, "totalMcqs".tr, "80"),
                       Divider(),
                       _buildInfoRow(
                         Icons.access_time_rounded,
-                        "Total Time",
-                        "120 minutes",
+                        "totalTime".tr,
+                        "120 ${'minutes'.tr}",
                       ),
                       Divider(),
                       _buildInfoRow(
                         Icons.percent_rounded,
-                        "Passing Percentage",
+                        "passingPercentage".tr,
                         "70%",
                       ),
                     ],
@@ -100,7 +100,7 @@ class _TestIntroScreenState extends State<TestIntroScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Test Guidance",
+                          "testGuidance".tr,
                           style: TextStyle(
                             fontSize: 16.sp,
                             fontWeight: FontWeight.bold,
@@ -109,7 +109,7 @@ class _TestIntroScreenState extends State<TestIntroScreen> {
                         ),
                         SizedBox(height: 8.h),
                         Text(
-                          """This study guide test is a simulation of the TLC Exam with a duration of 120 minutes and 80 multiple-choice questions. You need a score of 70% or higher to pass.\nWe advise all students to:\n• Read and memorize the most important points of Chapter 80 – Rules and Regulations for drivers.  • Always study the latest version from the TLC (NYC) official website, as rules and regulations change frequently.  • Note: Chapter 80 is around 60 pages, and most exam questions come from here.\nWe recommend practicing all the tests we provide. ⚠️ We do not guarantee a passing score — But if you study hard, if you practice all ours test, You will pass the Exam in the first tried.""",
+                          "testGuidanceText".tr,
                           style: TextStyle(
                             fontSize: 14.sp,
                             height: 1.4,
@@ -137,7 +137,7 @@ class _TestIntroScreenState extends State<TestIntroScreen> {
                       color: Colors.white,
                     ),
                     label: Text(
-                      "Start Test",
+                      "startTest".tr,
                       style: TextStyle(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.w600,

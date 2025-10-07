@@ -84,7 +84,7 @@ class _OtpScreenState extends State<OtpScreen> {
                     children: [
                       SizedBox(height: 130.h),
                       Text(
-                        "OTP Verification",
+                        "otpVerification".tr,
                         style: TextStyle(
                           fontSize: 18.sp,
                           fontWeight: FontWeight.w500,
@@ -93,7 +93,7 @@ class _OtpScreenState extends State<OtpScreen> {
                       ),
                       SizedBox(height: 10.h),
                       Text(
-                        "Enter the code send to the number",
+                        "enterCodeSendToNumber".tr,
                         style: TextStyle(
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w400,

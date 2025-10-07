@@ -16,7 +16,7 @@ class TestScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Test $testNumber',
+          '${'test'.tr} $testNumber',
           style: const TextStyle(color: Colors.white),
         ),
         centerTitle: true,
@@ -139,7 +139,7 @@ class TestScreen extends StatelessWidget {
                           ),
                           child: Center(
                             child: Text(
-                              "Privious",
+                              "previous".tr,
                               style: TextStyle(
                                 fontSize: 16.sp,
                                 fontWeight: FontWeight.w500,
@@ -171,8 +171,8 @@ class TestScreen extends StatelessWidget {
                           child: Text(
                             controller.currentQuestionIndex.value ==
                                     controller.questions.length - 1
-                                ? "Submit"
-                                : "Next",
+                                ? "submit".tr
+                                : "next".tr,
                             style: TextStyle(
                               fontSize: 16.sp,
                               fontWeight: FontWeight.w500,
@@ -217,7 +217,7 @@ class TestScreen extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        'Are you sure want to\ncomplete the test?',
+                        'areYouSure'.tr,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 16.sp,
@@ -245,7 +245,7 @@ class TestScreen extends StatelessWidget {
                               ),
                               child: Center(
                                 child: Text(
-                                  'Yes',
+                                  'yes'.tr,
                                   style: TextStyle(
                                     fontSize: 14.sp,
                                     fontWeight: FontWeight.w500,
@@ -270,7 +270,7 @@ class TestScreen extends StatelessWidget {
                               ),
                               child: Center(
                                 child: Text(
-                                  'No',
+                                  'no'.tr,
                                   style: TextStyle(
                                     fontSize: 14.sp,
                                     fontWeight: FontWeight.w500,

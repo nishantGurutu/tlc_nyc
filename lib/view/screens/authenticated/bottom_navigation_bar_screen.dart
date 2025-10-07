@@ -37,15 +37,15 @@ class _BottomNavigationBarScreenState extends State<BottomNavigationBarScreen> {
       bottomNavigationBar: Obx(() {
         return BottomNavigationBar(
           backgroundColor: whiteColor,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'home'.tr),
             BottomNavigationBarItem(
               icon: Icon(Icons.business),
-              label: 'Business',
+              label: 'business'.tr,
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.settings),
-              label: 'Setting',
+              label: 'setting'.tr,
             ),
           ],
           currentIndex: _selectedIndex.value,

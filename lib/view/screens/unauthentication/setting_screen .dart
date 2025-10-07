@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:tlc_nyc/constant/color_constant.dart';
 import 'package:tlc_nyc/view/screens/widgets/language_bottom_sheet.dart';
 
@@ -16,8 +17,8 @@ class _SettingScreenState extends State<SettingScreen> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text(
-          'Setting',
+        title: Text(
+          'setting'.tr,
           style: TextStyle(
             color: Colors.white,
             fontSize: 20,
@@ -59,7 +60,7 @@ class _SettingScreenState extends State<SettingScreen> {
                   child: Row(
                     children: [
                       Text(
-                        'Change Language',
+                        'changeLanguage'.tr,
                         style: TextStyle(
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w500,
@@ -84,7 +85,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 child: Row(
                   children: [
                     Text(
-                      'Privacy & Policy',
+                      'privacyPolicy'.tr,
                       style: TextStyle(
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w500,
@@ -108,7 +109,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 child: Row(
                   children: [
                     Text(
-                      'Terms & Uses',
+                      'termsUses'.tr,
                       style: TextStyle(
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w500,

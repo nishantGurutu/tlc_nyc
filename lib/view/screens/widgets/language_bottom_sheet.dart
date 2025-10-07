@@ -5,15 +5,25 @@ import 'package:tlc_nyc/constant/color_constant.dart';
 
 class LanguageBottomSheet extends StatelessWidget {
   LanguageBottomSheet({super.key});
-  List<String> languageList = [
-    'Arabic',
-    "Bangali",
-    "Chinese",
-    "English",
-    "Russion",
-    "Spanish",
-    "Urdu",
+  
+  // Language list with proper mapping
+  final List<Map<String, String>> languageList = [
+    {'name': 'English', 'code': 'en_US'},
+    {'name': 'Arabic', 'code': 'ar_SA'},
+    {'name': 'Bengali', 'code': 'bn_BD'},
+    {'name': 'Chinese', 'code': 'zh_CN'},
+    {'name': 'Russian', 'code': 'ru_RU'},
+    {'name': 'Spanish', 'code': 'es_ES'},
+    {'name': 'Urdu', 'code': 'ur_PK'},
   ];
+
+  void _changeLanguage(String languageCode) {
+    // Split the language code (e.g., 'en_US' -> 'en', 'US')
+    final parts = languageCode.split('_');
+    final locale = Locale(parts[0], parts[1]);
+    Get.updateLocale(locale);
+    Get.back(); // Close the bottom sheet
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +47,7 @@ class LanguageBottomSheet extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "Select Language",
+                    "selectLanguage".tr,
                     style: TextStyle(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w500,
@@ -65,10 +75,7 @@ class LanguageBottomSheet extends StatelessWidget {
                       padding: EdgeInsets.symmetric(vertical: 3.h),
                       child: GestureDetector(
                         onTap: () {
-                          void changeLanguage(var param1, var param2) {
-                            var local = Locale(param1, param2);
-                            Get.updateLocale(local);
-                          }
+                          _changeLanguage(languageList[index]['code']!);
                         },
                         child: Container(
                           height: 30.h,
@@ -84,7 +91,7 @@ class LanguageBottomSheet extends StatelessWidget {
                             child: Row(
                               children: [
                                 Text(
-                                  languageList[index],
+                                  languageList[index]['name']!,
                                   style: TextStyle(
                                     fontSize: 14.sp,
                                     fontWeight: FontWeight.w500,

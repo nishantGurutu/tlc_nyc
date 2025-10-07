@@ -8,7 +8,7 @@ class HomeController extends GetxController {
     Get.to(() => TestIntroScreen(testNumber));
   }
 
-  RxList<TestTypeModel> groupListData = <TestTypeModel>[].obs;
+  RxList<QuestionTypeListModel> groupListData = <QuestionTypeListModel>[].obs;
   var isGroupLoading = false.obs;
   var indexOneSelected = true.obs;
   var indexTwoSelected = true.obs;

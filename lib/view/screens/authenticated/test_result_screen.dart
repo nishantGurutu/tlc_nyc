@@ -14,7 +14,7 @@ class TestResultScreen extends StatelessWidget {
     final TestController controller = Get.find<TestController>();
     return Scaffold(
       appBar: AppBar(
-        title: Text('Test Result', style: const TextStyle(color: Colors.white)),
+        title: Text('testResult'.tr, style: const TextStyle(color: Colors.white)),
         centerTitle: true,
         backgroundColor: primary,
       ),
@@ -37,7 +37,7 @@ class TestResultScreen extends StatelessWidget {
                       Image.asset(winnerImage, height: 130.h),
                       SizedBox(height: 10.h),
                       Text(
-                        "You got ${percentage.toStringAsFixed(0)}%",
+                        "${'youGot'.tr} ${percentage.toStringAsFixed(0)}%",
                         style: TextStyle(
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w500,
@@ -46,7 +46,7 @@ class TestResultScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 10.h),
                       Text(
-                        hasPassed ? "You passed the test." : "You failed the test.",
+                        hasPassed ? 'youPassed'.tr : 'youFailed'.tr,
                         style: TextStyle(
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w500,
@@ -65,7 +65,7 @@ class TestResultScreen extends StatelessWidget {
                               ),
                               SizedBox(width: 5.w),
                               Text(
-                                'Correct $correctAnswers',
+                                '${'correct'.tr} $correctAnswers',
                                 style: TextStyle(
                                   fontSize: 14.sp,
                                   fontWeight: FontWeight.w500,
@@ -83,7 +83,7 @@ class TestResultScreen extends StatelessWidget {
                               ),
                               SizedBox(width: 5.w),
                               Text(
-                                'Incorrect $wrongAnswers',
+                                '${'incorrect'.tr} $wrongAnswers',
                                 style: TextStyle(
                                   fontSize: 14.sp,
                                   fontWeight: FontWeight.w500,
