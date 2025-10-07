@@ -41,6 +41,44 @@ class TestController extends GetxController {
     }
   }
 
+  // Calculate test results
+  int getCorrectAnswers() {
+    int correct = 0;
+    for (int i = 0; i < questions.length; i++) {
+      if (selectedAnswers.containsKey(i)) {
+        if (selectedAnswers[i] == questions[i].correctAnswer) {
+          correct++;
+        }
+      }
+    }
+    return correct;
+  }
+
+  int getWrongAnswers() {
+    int wrong = 0;
+    for (int i = 0; i < questions.length; i++) {
+      if (selectedAnswers.containsKey(i)) {
+        if (selectedAnswers[i] != questions[i].correctAnswer) {
+          wrong++;
+        }
+      }
+    }
+    return wrong;
+  }
+
+  int getUnansweredQuestions() {
+    return questions.length - selectedAnswers.length;
+  }
+
+  double getPercentage() {
+    if (questions.isEmpty) return 0.0;
+    return (getCorrectAnswers() / questions.length) * 100;
+  }
+
+  bool hasPassed() {
+    return getPercentage() >= 70.0; // 70% passing threshold
+  }
+
   RxList<TestTypeModel> groupListData = <TestTypeModel>[].obs;
   var isQuestionLoading = false.obs;
   Future<void> qusetionAnswerByid() async {

@@ -53,7 +53,7 @@ class TestScreen extends StatelessWidget {
 
                   Color borderColor = lightBorderColor;
                   IconData? icon;
-                  Color iconColor = Colors.transparent; // default invisible
+                  Color iconColor = Colors.transparent;  
 
                   if (selectedAnswer != null) {
                     if (entry.key == selectedAnswer) {
@@ -150,7 +150,7 @@ class TestScreen extends StatelessWidget {
                         ),
                       ),
 
-                    if (controller.currentQuestionIndex.value == 0) Container(),
+                    if (controller.currentQuestionIndex.value == 0) SizedBox(),
                     GestureDetector(
                       onTap: () {
                         if (controller.currentQuestionIndex.value ==

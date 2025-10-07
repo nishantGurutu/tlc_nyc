@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:tlc_nyc/constant/color_constant.dart';
 import 'package:tlc_nyc/constant/image_constant.dart';
+import 'package:tlc_nyc/controller/test_controller.dart';
 
 class TestResultScreen extends StatelessWidget {
   final int testNumber;
@@ -9,6 +11,7 @@ class TestResultScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TestController controller = Get.find<TestController>();
     return Scaffold(
       appBar: AppBar(
         title: Text('Test Result', style: const TextStyle(color: Colors.white)),
@@ -20,75 +23,82 @@ class TestResultScreen extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 12.w),
           child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(
-                  children: [
-                    Image.asset(winnerImage, height: 130.h),
-                    SizedBox(height: 10.h),
-                    Text(
-                      "You got 75%",
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w500,
-                        color: blackColor,
-                      ),
-                    ),
-                    SizedBox(height: 10.h),
-                    Text(
-                      "You passed the test.",
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        fontWeight: FontWeight.w500,
-                        color: blackColor,
-                      ),
-                    ),
-                    SizedBox(height: 10.h),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Row(
-                          children: [
-                            Image.asset(
-                              'assets/images/correct.png',
-                              height: 15.h,
-                            ),
-                            SizedBox(width: 5.w),
-                            Text(
-                              'Correct 75',
-                              style: TextStyle(
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w500,
-                                color: blackColor,
-                              ),
-                            ),
-                          ],
+            child: Obx(() {
+              final correctAnswers = controller.getCorrectAnswers();
+              final wrongAnswers = controller.getWrongAnswers();
+              final percentage = controller.getPercentage();
+              final hasPassed = controller.hasPassed();
+              
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Column(
+                    children: [
+                      Image.asset(winnerImage, height: 130.h),
+                      SizedBox(height: 10.h),
+                      Text(
+                        "You got ${percentage.toStringAsFixed(0)}%",
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w500,
+                          color: blackColor,
                         ),
-                        SizedBox(width: 12.w),
-                        Row(
-                          children: [
-                            Image.asset(
-                              'assets/images/wrong.png',
-                              height: 15.h,
-                            ),
-                            SizedBox(width: 5.w),
-                            Text(
-                              'Incorrect 5',
-                              style: TextStyle(
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w500,
-                                color: blackColor,
-                              ),
-                            ),
-                          ],
+                      ),
+                      SizedBox(height: 10.h),
+                      Text(
+                        hasPassed ? "You passed the test." : "You failed the test.",
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w500,
+                          color: hasPassed ? Colors.green : Colors.red,
                         ),
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                      ),
+                      SizedBox(height: 10.h),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Row(
+                            children: [
+                              Image.asset(
+                                'assets/images/correct.png',
+                                height: 15.h,
+                              ),
+                              SizedBox(width: 5.w),
+                              Text(
+                                'Correct $correctAnswers',
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: blackColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(width: 12.w),
+                          Row(
+                            children: [
+                              Image.asset(
+                                'assets/images/wrong.png',
+                                height: 15.h,
+                              ),
+                              SizedBox(width: 5.w),
+                              Text(
+                                'Incorrect $wrongAnswers',
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w500,
+                                  color: blackColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              );
+            }),
           ),
         ),
       ),
