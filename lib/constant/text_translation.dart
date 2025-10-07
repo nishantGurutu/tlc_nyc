@@ -25,7 +25,7 @@ class TextTranslation extends Translations {
       "youFailed": "You failed the test.",
       "correct": "Correct",
       "incorrect": "Incorrect",
-      "areYouSure": "Are you sure\n want to exist",
+      "areYouSure": "Are you sure want to\nsubmit the test?",
       "yes": "Yes",
       "no": "No",
       "tlcTestPrep": "TLC Test Prep",

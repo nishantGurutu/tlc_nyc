@@ -30,7 +30,7 @@ class ShowDialogclass {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        'Are you sure\n want to exist',
+                        'areYouSure'.tr,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                           fontSize: 16.sp,
@@ -50,7 +50,7 @@ class ShowDialogclass {
                             ),
                           ),
                           child: Text(
-                            'Submit',
+                            'submit'.tr,
                             style: TextStyle(
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w500,
