@@ -14,6 +14,25 @@ class TestResultScreen extends StatelessWidget {
     final TestController controller = Get.find<TestController>();
     return Scaffold(
       appBar: AppBar(
+        leading: GestureDetector(
+          onTap: () {
+            Get.back();
+          },
+          child: Container(
+            margin: EdgeInsets.all(10.w),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(20.r)),
+              color: whiteColor,
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(20.r)),
+                color: whiteColor,
+              ),
+              child: Icon(Icons.arrow_back, color: primary),
+            ),
+          ),
+        ),
         title: Text('testResult'.tr, style: const TextStyle(color: Colors.white)),
         centerTitle: true,
         backgroundColor: primary,

@@ -19,6 +19,25 @@ class _TestIntroScreenState extends State<TestIntroScreen> {
     return Scaffold(
       backgroundColor: background,
       appBar: AppBar(
+         leading: GestureDetector(
+          onTap: () {
+            Get.back();
+          },
+          child: Container(
+            margin: EdgeInsets.all(10.w),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(20.r)),
+              color: whiteColor,
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(20.r)),
+                color: whiteColor,
+              ),
+              child: Icon(Icons.arrow_back, color: primary),
+            ),
+          ),
+        ),
         elevation: 0,
         backgroundColor: primary,
         centerTitle: true,

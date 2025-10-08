@@ -21,6 +21,25 @@ class TestScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        leading: GestureDetector(
+          onTap: () {
+            Get.back();
+          },
+          child: Container(
+            margin: EdgeInsets.all(10.w),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(20.r)),
+              color: whiteColor,
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(20.r)),
+                color: whiteColor,
+              ),
+              child: Icon(Icons.arrow_back, color: primary),
+            ),
+          ),
+        ),
         title: Text(
           testNumber,
           style: const TextStyle(color: Colors.white),
@@ -76,10 +95,6 @@ class TestScreen extends StatelessWidget {
                     style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                   ),
                   SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: () => Get.back(),
-                    child: Text('Go Back'),
-                  ),
                 ],
               ),
             );
