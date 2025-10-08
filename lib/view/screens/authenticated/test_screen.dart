@@ -4,20 +4,32 @@ import 'package:get/get.dart';
 import 'package:tlc_nyc/constant/color_constant.dart';
 import 'package:tlc_nyc/controller/test_controller.dart';
 import 'package:tlc_nyc/view/screens/authenticated/test_result_screen.dart';
-
-class TestScreen extends StatelessWidget {
+class TestScreen extends StatefulWidget {
   final String testNumber;
-  final int? testTypeId;
-  TestScreen(this.testNumber, {super.key, this.testTypeId});
+  final int testTypeId;
+  const TestScreen({super.key, required this.testNumber, required this.testTypeId});
+
+  @override
+  State<TestScreen> createState() => _TestScreenState();
+}
+
+class _TestScreenState extends State<TestScreen> {
+    
 
   final TestController controller = Get.put(TestController());
+  // loadQuestionsForTestType
+  @override
+  initState(){
+    controller.loadQuestionsForTestType(widget.testTypeId);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     // Set the test type when the screen is built
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      controller.setTestType(testNumber, testTypeId: testTypeId);
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   controller.setTestType(widget.testNumber, testTypeId: widget.testTypeId);
+    // });
 
     return Scaffold(
       appBar: AppBar(
@@ -41,7 +53,7 @@ class TestScreen extends StatelessWidget {
           ),
         ),
         title: Text(
-          testNumber,
+          widget.testNumber,
           style: const TextStyle(color: Colors.white),
         ),
         centerTitle: true,
@@ -69,7 +81,7 @@ class TestScreen extends StatelessWidget {
                   Text(controller.errorMessage.value),
                   SizedBox(height: 16),
                   ElevatedButton(
-                    onPressed: () => controller.loadQuestionsForTestType(),
+                    onPressed: () => controller.loadQuestionsForTestType(widget.testTypeId),
                     child: Text('Retry'),
                   ),
                 ],
@@ -90,7 +102,7 @@ class TestScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'This test type "${testNumber}" does not have any questions yet.',
+                    'This test type "${widget.testNumber}" does not have any questions yet.',
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                   ),
@@ -226,7 +238,7 @@ class TestScreen extends StatelessWidget {
                       onTap: () {
                         if (controller.currentQuestionIndex.value ==
                             controller.questions.length - 1) {
-                          confirmDialog(context, testNumber);
+                          confirmDialog(context, widget.testNumber);
                         } else {
                           controller.goToNextQuestion();
                         }

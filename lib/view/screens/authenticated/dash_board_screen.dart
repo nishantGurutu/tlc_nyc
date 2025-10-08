@@ -75,7 +75,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                             onTap: () {
                               controller.onTestSelected(
                                 controller.groupListData[index].qtypENAME??"",
-                                testTypeId: controller.groupListData[index].qtypECODE,
+                                testTypeId: controller.groupListData[index].qtypECODE??0,
                               );
                             },
                             child: Padding(

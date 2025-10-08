@@ -6,8 +6,8 @@ import 'package:tlc_nyc/view/screens/authenticated/test_screen.dart';
 
 class TestIntroScreen extends StatefulWidget {
   final String testNumber;
-  final int? testTypeId;
-  const TestIntroScreen(this.testNumber, {super.key, this.testTypeId});
+  final int testTypeId;
+  const TestIntroScreen(this.testNumber, {super.key, required this.testTypeId});
 
   @override
   State<TestIntroScreen> createState() => _TestIntroScreenState();
@@ -165,7 +165,7 @@ class _TestIntroScreenState extends State<TestIntroScreen> {
                       ),
                     ),
                     onPressed: () {
-                      Get.to(() => TestScreen(widget.testNumber, testTypeId: widget.testTypeId));
+                      Get.to(() => TestScreen(testNumber: widget.testNumber, testTypeId: widget.testTypeId));
                     },
                   ),
                 ),

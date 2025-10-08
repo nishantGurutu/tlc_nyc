@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:tlc_nyc/model/question_model.dart';
-import 'package:tlc_nyc/model/test_type_model.dart';
 import 'package:tlc_nyc/service/test_service.dart';
 
 class TestController extends GetxController {
@@ -20,12 +19,12 @@ class TestController extends GetxController {
     super.onInit();
   }
 
-  void setTestType(String testType, {int? testTypeId}) {
-    testTypeName = testType;
-    loadQuestionsForTestType(testTypeId: testTypeId);
-  }
+  // void setTestType(String testType, {required int testTypeId}) {
+  //   testTypeName = testType;
+  //   loadQuestionsForTestType(testTypeId: testTypeId);
+  // }
 
-  Future<void> loadQuestionsForTestType({int? testTypeId}) async {
+  Future<void> loadQuestionsForTestType(int testTypeId) async {
     isLoading.value = true;
     hasError.value = false;
     errorMessage.value = '';
@@ -112,23 +111,23 @@ class TestController extends GetxController {
     return getPercentage() >= 70.0;  
   }
 
-  RxList<QuestionTypeListModel> groupListData = <QuestionTypeListModel>[].obs;
-  var isQuestionLoading = false.obs;
-  Future<void> qusetionAnswerByid() async {
-    isQuestionLoading.value = true;
+  // RxList<QuestionTypeListModel> groupListData = <QuestionTypeListModel>[].obs;
+  // var isQuestionLoading = false.obs;
+  // Future<void> qusetionAnswerByid() async {
+  //   isQuestionLoading.value = true;
 
-    try {
-      final result = await TestService().questionList();
-      if (result != null) {
-        groupListData.assignAll(result);
-        isQuestionLoading.value = false;
-        isQuestionLoading.refresh();
-      }
-      print('API response: ${groupListData.length} items loaded');
-    } catch (e) {
-      print('Error fetching or caching data: $e');
-    } finally {
-      isQuestionLoading.value = false;
-    }
-  }
+  //   try {
+  //     final result = await TestService().questionList();
+  //     if (result != null) {
+  //       groupListData.assignAll(result);
+  //       isQuestionLoading.value = false;
+  //       isQuestionLoading.refresh();
+  //     }
+  //     print('API response: ${groupListData.length} items loaded');
+  //   } catch (e) {
+  //     print('Error fetching or caching data: $e');
+  //   } finally {
+  //     isQuestionLoading.value = false;
+  //   }
+  // }
 }

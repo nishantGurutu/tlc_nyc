@@ -5,10 +5,9 @@ import 'package:tlc_nyc/model/test_type_model.dart';
 class TestService {
   final Dio _dio = Dio();
   
-  Future<List<QuestionTypeListModel>?> questionList({int? testTypeId}) async {
+  Future<List<QuestionTypeListModel>?> questionList({required int testTypeId}) async {
     try {
-      // Use provided testTypeId or default to 2 for backward compatibility
-      int qtypeCode = testTypeId ?? 2;
+      int qtypeCode = testTypeId;
       var url =
           "${ApiConstant.baseUrl + ApiConstant.questionAnswerBytypeid}?QTYPE_CODE=$qtypeCode";
       final response = await _dio.get(url);
