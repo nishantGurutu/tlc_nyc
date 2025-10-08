@@ -73,7 +73,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         itemBuilder: (context, index) {
                           return GestureDetector(
                             onTap: () {
-                              controller.onTestSelected(controller.groupListData[index].qtypENAME??"");
+                              controller.onTestSelected(
+                                controller.groupListData[index].qtypENAME??"",
+                                testTypeId: controller.groupListData[index].qtypECODE,
+                              );
                             },
                             child: Padding(
                               padding: EdgeInsets.symmetric(

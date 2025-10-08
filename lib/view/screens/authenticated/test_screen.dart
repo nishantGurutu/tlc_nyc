@@ -7,12 +7,18 @@ import 'package:tlc_nyc/view/screens/authenticated/test_result_screen.dart';
 
 class TestScreen extends StatelessWidget {
   final String testNumber;
-  TestScreen(this.testNumber, {super.key});
+  final int? testTypeId;
+  TestScreen(this.testNumber, {super.key, this.testTypeId});
 
   final TestController controller = Get.put(TestController());
 
   @override
   Widget build(BuildContext context) {
+    // Set the test type when the screen is built
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      controller.setTestType(testNumber, testTypeId: testTypeId);
+    });
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -25,8 +31,58 @@ class TestScreen extends StatelessWidget {
       backgroundColor: background,
       body: SafeArea(
         child: Obx(() {
-          if (controller.questions.isEmpty) {
+          if (controller.isLoading.value) {
             return const Center(child: CircularProgressIndicator());
+          }
+          
+          if (controller.hasError.value) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.error_outline, size: 64, color: Colors.red),
+                  SizedBox(height: 16),
+                  Text(
+                    'Error loading questions',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 8),
+                  Text(controller.errorMessage.value),
+                  SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: () => controller.loadQuestionsForTestType(),
+                    child: Text('Retry'),
+                  ),
+                ],
+              ),
+            );
+          }
+          
+          if (controller.questions.isEmpty) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.quiz_outlined, size: 64, color: Colors.grey),
+                  SizedBox(height: 16),
+                  Text(
+                    'No Questions Available',
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 8),
+                  Text(
+                    'This test type "${testNumber}" does not have any questions yet.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                  ),
+                  SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: () => Get.back(),
+                    child: Text('Go Back'),
+                  ),
+                ],
+              ),
+            );
           }
           final question =
               controller.questions[controller.currentQuestionIndex.value];
