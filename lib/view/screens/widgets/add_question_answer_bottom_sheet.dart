@@ -317,6 +317,7 @@ class _AddQuestionAnswerBottomSheetState extends State<AddQuestionAnswerBottomSh
                                        );
                                        return;
                                      }
+                                     // Prepare answers data
                                      final answersData = <Map<String, dynamic>>[];
                                      for (int i = 0; i < answerControllers.length; i++) {
                                        answersData.add({
