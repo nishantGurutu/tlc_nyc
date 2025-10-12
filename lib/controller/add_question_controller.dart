@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:tlc_nyc/controller/home_controller.dart';
 import 'package:tlc_nyc/model/add_question_type_model.dart';
 import 'package:tlc_nyc/model/add_question_with_answers_model.dart';
+import 'package:tlc_nyc/model/question_answer_model.dart';
 import 'package:tlc_nyc/service/add_question_service.dart';
 
 class AddQuestionController extends GetxController {
@@ -49,17 +50,17 @@ class AddQuestionController extends GetxController {
     isLoading.value = true;
     try {
       final questionMast = QuestionMast(
-        questioNCODE: 0, // Static value as requested
+        questioNCODE: 0,  
         questioNNAME: questionName,
-        grPCODE: 0, // Static value as requested
+        grPCODE: 0,  
         qtypECODE: questionTypeCode,
-        isactive: true, // Static value as requested
+        isactive: true, 
       );
 
       final answersList = answers.map((answer) => Answer(
-        answerCode: 0, // Static value as requested
+        answerCode: 0,  
         answerName: answer['name'],
-        isCorrect: true, // Static value as requested (true by default)
+        isCorrect: true,  
       )).toList();
 
       final questionWithAnswers = AddQuestionWithAnswersModel(
@@ -70,11 +71,23 @@ class AddQuestionController extends GetxController {
       final result = await _addQuestionService.addQuestionWithAnswers(questionWithAnswers);
       
       if (result) {
-        Get.snackbar(
-          'Success',
-          'Question with answers added successfully',
-          snackPosition: SnackPosition.BOTTOM,
-        );
+        // Call GetQuestionWithAnswersByTypeCode API after successful add
+        final questions = await _addQuestionService.getQuestionWithAnswersByTypeCode(questionTypeCode);
+        
+        if (questions != null) {
+          Get.snackbar(
+            'Success',
+            'Question with answers added successfully. Retrieved ${questions.length} questions.',
+            snackPosition: SnackPosition.BOTTOM,
+          );
+          print('Retrieved questions: ${questions.length}');
+        } else {
+          Get.snackbar(
+            'Success',
+            'Question with answers added successfully, but failed to retrieve updated questions.',
+            snackPosition: SnackPosition.BOTTOM,
+          );
+        }
       } else {
         Get.snackbar(
           'Error',
@@ -93,6 +106,58 @@ class AddQuestionController extends GetxController {
       return false;
     } finally {
       isLoading.value = false;
+    }
+  }
+
+  var isLoadingQuestion = false.obs;
+  RxList<QuestionAnswerModel> questionAnswerList = <QuestionAnswerModel>[].obs;
+  
+  // Test navigation properties
+  var currentQuestionIndex = 0.obs;
+  var selectedAnswers = <int, int>{}.obs;
+  
+  Future<void> questionAnswerListApi(int testTypeId) async {
+    print('🔄 Starting questionAnswerListApi with testTypeId: $testTypeId');
+    isLoadingQuestion.value = true;
+    try {
+      final result = await AddQuestionService().getQuestionWithAnswersByTypeCode(testTypeId);
+      print('📊 API Result: $result');
+      print('📊 Result Type: ${result.runtimeType}');
+      print('📊 Result Length: ${result?.length ?? 'null'}');
+      
+      if (result != null) {
+        print('✅ Successfully got ${result.length} questions');
+        questionAnswerList.assignAll(result);
+        // Reset test state when loading new questions
+        currentQuestionIndex.value = 0;
+        selectedAnswers.clear();
+        print('📝 Updated questionAnswerList with ${questionAnswerList.length} items');
+      } else {
+        print('❌ API returned null result');
+      }
+    } catch (e) {
+      isLoadingQuestion.value = false;
+      print('❌ Error fetching or caching data: $e');
+      print('❌ Error type: ${e.runtimeType}');
+    } finally {
+      isLoadingQuestion.value = false;
+      print('🏁 Finished questionAnswerListApi');
+    }
+  }
+  
+  void selectOption(int questionIndex, int answerIndex) {
+    selectedAnswers[questionIndex] = answerIndex;
+  }
+  
+  void goToNextQuestion() {
+    if (currentQuestionIndex.value < questionAnswerList.length - 1) {
+      currentQuestionIndex.value++;
+    }
+  }
+  
+  void goToPreviousQuestion() {
+    if (currentQuestionIndex.value > 0) {
+      currentQuestionIndex.value--;
     }
   }
 }

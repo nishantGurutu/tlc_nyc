@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tlc_nyc/constant/color_constant.dart';
-import 'package:tlc_nyc/controller/test_controller.dart';
+import 'package:tlc_nyc/controller/add_question_controller.dart';
 import 'package:tlc_nyc/view/screens/authenticated/test_result_screen.dart';
 class TestScreen extends StatefulWidget {
   final String testNumber;
@@ -16,11 +16,11 @@ class TestScreen extends StatefulWidget {
 class _TestScreenState extends State<TestScreen> {
     
 
-  final TestController controller = Get.put(TestController());
+  final AddQuestionController controller = Get.put(AddQuestionController());
   // loadQuestionsForTestType
   @override
   initState(){
-    controller.loadQuestionsForTestType(widget.testTypeId);
+    controller.questionAnswerListApi(widget.testTypeId);
     super.initState();
   }
 
@@ -62,34 +62,13 @@ class _TestScreenState extends State<TestScreen> {
       backgroundColor: background,
       body: SafeArea(
         child: Obx(() {
-          if (controller.isLoading.value) {
+          if (controller.isLoadingQuestion.value) {
             return const Center(child: CircularProgressIndicator());
           }
           
-          if (controller.hasError.value) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.error_outline, size: 64, color: Colors.red),
-                  SizedBox(height: 16),
-                  Text(
-                    'Error loading questions',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                  ),
-                  SizedBox(height: 8),
-                  Text(controller.errorMessage.value),
-                  SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: () => controller.loadQuestionsForTestType(widget.testTypeId),
-                    child: Text('Retry'),
-                  ),
-                ],
-              ),
-            );
-          }
           
-          if (controller.questions.isEmpty) {
+          
+          if (controller.questionAnswerList.isEmpty) {
             return Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -111,15 +90,15 @@ class _TestScreenState extends State<TestScreen> {
               ),
             );
           }
-          final question =
-              controller.questions[controller.currentQuestionIndex.value];
+          final questionData =
+              controller.questionAnswerList[controller.currentQuestionIndex.value];
           return Padding(
             padding: EdgeInsets.all(16.sp),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Q${controller.currentQuestionIndex.value + 1}. ${question.question}',
+                  'Q${controller.currentQuestionIndex.value + 1}. ${questionData.questionMast?.questioNNAME ?? ''}',
                   style: TextStyle(
                     fontSize: 18.sp,
                     fontWeight: FontWeight.bold,
@@ -127,20 +106,20 @@ class _TestScreenState extends State<TestScreen> {
                   ),
                 ),
                 SizedBox(height: 20.h),
-                ...question.options.entries.map((entry) {
+                ...(questionData.answers ?? []).asMap().entries.map((entry) {
+                  final answerIndex = entry.key;
+                  final answer = entry.value;
                   final selectedAnswer =
                       controller.selectedAnswers[controller
                           .currentQuestionIndex
                           .value];
-                  final correctAnswer = question.correctAnswer;
-
                   Color borderColor = lightBorderColor;
                   IconData? icon;
                   Color iconColor = Colors.transparent;  
 
                   if (selectedAnswer != null) {
-                    if (entry.key == selectedAnswer) {
-                      if (selectedAnswer == correctAnswer) {
+                    if (answerIndex == selectedAnswer) {
+                      if (answer.isCorrect == true) {
                         borderColor = Colors.green;
                         icon = Icons.check_circle;
                         iconColor = Colors.green;
@@ -158,11 +137,15 @@ class _TestScreenState extends State<TestScreen> {
                       onTap: () {
                         controller.selectOption(
                           controller.currentQuestionIndex.value,
-                          entry.key,
+                          answerIndex,
                         );
                       },
                       child: Container(
                         width: double.infinity,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: borderColor),
+                          borderRadius: BorderRadius.circular(8.r),
+                        ),
                         child: Padding(
                           padding: EdgeInsets.symmetric(
                             vertical: 10.h,
@@ -171,7 +154,7 @@ class _TestScreenState extends State<TestScreen> {
                           child: Row(
                             children: [
                               Text(
-                                '${entry.key}.',
+                                '${String.fromCharCode(65 + answerIndex)}.',
                                 style: TextStyle(
                                   fontSize: 14.sp,
                                   fontWeight: FontWeight.w500,
@@ -181,7 +164,7 @@ class _TestScreenState extends State<TestScreen> {
                               SizedBox(width: 8.w),
                               Expanded(
                                 child: Text(
-                                  entry.value,
+                                  answer.answerName ?? '',
                                   style: TextStyle(
                                     fontSize: 14.sp,
                                     fontWeight: FontWeight.w500,
@@ -233,7 +216,7 @@ class _TestScreenState extends State<TestScreen> {
                     GestureDetector(
                       onTap: () {
                         if (controller.currentQuestionIndex.value ==
-                            controller.questions.length - 1) {
+                            controller.questionAnswerList.length - 1) {
                           confirmDialog(context, widget.testNumber);
                         } else {
                           controller.goToNextQuestion();
@@ -249,7 +232,7 @@ class _TestScreenState extends State<TestScreen> {
                         child: Center(
                           child: Text(
                             controller.currentQuestionIndex.value ==
-                                    controller.questions.length - 1
+                                    controller.questionAnswerList.length - 1
                                 ? "submit".tr
                                 : "next".tr,
                             style: TextStyle(
