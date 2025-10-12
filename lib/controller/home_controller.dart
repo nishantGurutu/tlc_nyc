@@ -12,11 +12,11 @@ class HomeController extends GetxController {
   var isGroupLoading = false.obs;
   var indexOneSelected = true.obs;
   var indexTwoSelected = true.obs;
-  Future<void> groupListApi() async {
+  Future<void> questionTypeListApi() async {
     isGroupLoading.value = true;
 
     try {
-      final result = await HomeService().groupList();
+      final result = await HomeService().questionTypeList();
       if (result != null) {
         groupListData.assignAll(result);
       }

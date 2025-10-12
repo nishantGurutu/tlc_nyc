@@ -32,12 +32,13 @@ class TestController extends GetxController {
     try {
       final result = await TestService().questionList(testTypeId: testTypeId);
       if (result != null && result.isNotEmpty) {
-        questions.value = result.map((item) => Question(
-          id: item.qtypECODE ?? 0,
-          question: item.qtypENAME ?? '',
-          options: {},  
-          correctAnswer: '',  
-        )).toList();
+        questions.value = result;
+        // .map((item) => Question(
+        //   id: item.qtypECODE ?? 0,
+        //   question: item.qtypENAME ?? '',
+        //   options: {},  
+        //   correctAnswer: '',  
+        // )).toList();
       } else {
         questions.value = [];
       }

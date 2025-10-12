@@ -98,7 +98,7 @@ class _AddQuestionTypeBottomSheetState extends State<AddQuestionTypeBottomSheet>
                           controller: questionTypeController,
                           hintText: 'Enter question type name',
                           keyboardType: TextInputType.emailAddress,
-                          textCapitalization: TextCapitalization.none,
+                          textCapitalization: TextCapitalization.sentences,
                         ),
                       
                       

@@ -163,10 +163,6 @@ class _TestScreenState extends State<TestScreen> {
                       },
                       child: Container(
                         width: double.infinity,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: borderColor, width: 2),
-                          borderRadius: BorderRadius.circular(8.r),
-                        ),
                         child: Padding(
                           padding: EdgeInsets.symmetric(
                             vertical: 10.h,

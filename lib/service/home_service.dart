@@ -4,7 +4,7 @@ import 'package:tlc_nyc/model/test_type_model.dart';
 
 class HomeService {
   final Dio _dio = Dio();
-  Future<List<QuestionTypeListModel>?> groupList() async {
+  Future<List<QuestionTypeListModel>?> questionTypeList() async {
     try {
       var url = ApiConstant.baseUrl + ApiConstant.questypeList;
       final response = await _dio.get(url);

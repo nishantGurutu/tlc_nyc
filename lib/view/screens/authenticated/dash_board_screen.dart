@@ -19,7 +19,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
 
   @override
   void initState() {
-    controller.groupListApi();
+    controller.questionTypeListApi();
     super.initState();
   }
 

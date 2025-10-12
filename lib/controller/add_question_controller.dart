@@ -24,7 +24,7 @@ class AddQuestionController extends GetxController {
       final result = await _addQuestionService.addQuestionType(questionType);
       
       if (result) {
-       await homeController.groupListApi();
+       await homeController.questionTypeListApi();
         
       }  
       
@@ -43,7 +43,6 @@ class AddQuestionController extends GetxController {
 
   Future<bool> addQuestionWithAnswers({
     required String questionName,
-    required int groupCode,
     required int questionTypeCode,
     required List<Map<String, dynamic>> answers,
   }) async {
@@ -52,7 +51,7 @@ class AddQuestionController extends GetxController {
       final questionMast = QuestionMast(
         questioNCODE: 0,
         questioNNAME: questionName,
-        grPCODE: groupCode,
+        grPCODE: 0,
         qtypECODE: questionTypeCode,
         isactive: true,
       );

@@ -31,7 +31,7 @@ class _AddQuestionAnswerBottomSheetState extends State<AddQuestionAnswerBottomSh
     super.initState();
     _addAnswerField();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      controller.homeController.groupListApi();
+      controller.homeController.questionTypeListApi();
     });
   }
 
@@ -204,8 +204,8 @@ class _AddQuestionAnswerBottomSheetState extends State<AddQuestionAnswerBottomSh
                          CustomTextField(
                           controller: questionController,
                           hintText: 'Enter question text',
-                          keyboardType: TextInputType.number,
-                          textCapitalization: TextCapitalization.none,
+                          keyboardType: TextInputType.emailAddress,
+                          textCapitalization: TextCapitalization.sentences,
                         ),
                         SizedBox(height: 16.h),
                         Row(
@@ -257,8 +257,8 @@ class _AddQuestionAnswerBottomSheetState extends State<AddQuestionAnswerBottomSh
                                   child: CustomTextField(
                           controller: answerControllers[index],
                           hintText: 'Enter answer ${index + 1}',
-                          keyboardType: TextInputType.number,
-                          textCapitalization: TextCapitalization.none,
+                          keyboardType: TextInputType.emailAddress,
+                          textCapitalization: TextCapitalization.sentences,
                         ),
                         
                                    
@@ -328,7 +328,7 @@ class _AddQuestionAnswerBottomSheetState extends State<AddQuestionAnswerBottomSh
                                      
                                      final success = await controller.addQuestionWithAnswers(
                                        questionName: questionController.text.trim(),
-                                       groupCode: int.parse(groupCodeController.text),
+                                       
                                        questionTypeCode: selectedQuestionTypeCode!,
                                        answers: answersData,
                                      );
