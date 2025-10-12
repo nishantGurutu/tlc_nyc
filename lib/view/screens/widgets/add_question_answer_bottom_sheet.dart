@@ -30,6 +30,10 @@ class _AddQuestionAnswerBottomSheetState extends State<AddQuestionAnswerBottomSh
   void initState() {
     super.initState();
     _addAnswerField();
+    // Set the first answer as correct by default
+    if (isCorrectList.isNotEmpty) {
+      isCorrectList[0] = true;
+    }
     WidgetsBinding.instance.addPostFrameCallback((_) {
       controller.homeController.questionTypeListApi();
     });
@@ -267,7 +271,12 @@ class _AddQuestionAnswerBottomSheetState extends State<AddQuestionAnswerBottomSh
                                 GestureDetector(
                                   onTap: () {
                                     setState(() {
-                                      isCorrectList[index] = !isCorrectList[index];
+                                      // First, set all answers to false
+                                      for (int i = 0; i < isCorrectList.length; i++) {
+                                        isCorrectList[i] = false;
+                                      }
+                                      // Then set only the selected answer to true
+                                      isCorrectList[index] = true;
                                     });
                                   },
                                   child: Container(
@@ -377,5 +386,9 @@ class _AddQuestionAnswerBottomSheetState extends State<AddQuestionAnswerBottomSh
     answerControllers.clear();
     isCorrectList.clear();
     _addAnswerField();
+    // Set the first answer as correct by default
+    if (isCorrectList.isNotEmpty) {
+      isCorrectList[0] = true;
+    }
   }
 }
