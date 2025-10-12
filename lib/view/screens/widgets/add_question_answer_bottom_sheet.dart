@@ -317,7 +317,6 @@ class _AddQuestionAnswerBottomSheetState extends State<AddQuestionAnswerBottomSh
                                        );
                                        return;
                                      }
-                                     // Prepare answers data
                                      final answersData = <Map<String, dynamic>>[];
                                      for (int i = 0; i < answerControllers.length; i++) {
                                        answersData.add({
@@ -343,7 +342,7 @@ class _AddQuestionAnswerBottomSheetState extends State<AddQuestionAnswerBottomSh
                           text: controller.isLoading.value
                               ? CircularProgressIndicator(color: whiteColor)
                               : Text(
-                                  'Add Question with Answers',
+                                  'Add Question with answers',
                                   style: TextStyle(
                                     fontSize: 16.sp,
                                     fontWeight: FontWeight.w600,

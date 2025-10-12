@@ -19,11 +19,7 @@ class TestController extends GetxController {
     super.onInit();
   }
 
-  // void setTestType(String testType, {required int testTypeId}) {
-  //   testTypeName = testType;
-  //   loadQuestionsForTestType(testTypeId: testTypeId);
-  // }
-
+   
   Future<void> loadQuestionsForTestType(int testTypeId) async {
     isLoading.value = true;
     hasError.value = false;
@@ -33,12 +29,6 @@ class TestController extends GetxController {
       final result = await TestService().questionList(testTypeId: testTypeId);
       if (result != null && result.isNotEmpty) {
         questions.value = result;
-        // .map((item) => Question(
-        //   id: item.qtypECODE ?? 0,
-        //   question: item.qtypENAME ?? '',
-        //   options: {},  
-        //   correctAnswer: '',  
-        // )).toList();
       } else {
         questions.value = [];
       }
@@ -111,24 +101,4 @@ class TestController extends GetxController {
   bool hasPassed() {
     return getPercentage() >= 70.0;  
   }
-
-  // RxList<QuestionTypeListModel> groupListData = <QuestionTypeListModel>[].obs;
-  // var isQuestionLoading = false.obs;
-  // Future<void> qusetionAnswerByid() async {
-  //   isQuestionLoading.value = true;
-
-  //   try {
-  //     final result = await TestService().questionList();
-  //     if (result != null) {
-  //       groupListData.assignAll(result);
-  //       isQuestionLoading.value = false;
-  //       isQuestionLoading.refresh();
-  //     }
-  //     print('API response: ${groupListData.length} items loaded');
-  //   } catch (e) {
-  //     print('Error fetching or caching data: $e');
-  //   } finally {
-  //     isQuestionLoading.value = false;
-  //   }
-  // }
 }

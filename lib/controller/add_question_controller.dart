@@ -49,17 +49,17 @@ class AddQuestionController extends GetxController {
     isLoading.value = true;
     try {
       final questionMast = QuestionMast(
-        questioNCODE: 0,
+        questioNCODE: 0, // Static value as requested
         questioNNAME: questionName,
-        grPCODE: 0,
+        grPCODE: 0, // Static value as requested
         qtypECODE: questionTypeCode,
-        isactive: true,
+        isactive: true, // Static value as requested
       );
 
       final answersList = answers.map((answer) => Answer(
-        answerCode: 0,
+        answerCode: 0, // Static value as requested
         answerName: answer['name'],
-        isCorrect: answer['isCorrect'],
+        isCorrect: true, // Static value as requested (true by default)
       )).toList();
 
       final questionWithAnswers = AddQuestionWithAnswersModel(

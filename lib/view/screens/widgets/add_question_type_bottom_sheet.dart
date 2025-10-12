@@ -75,10 +75,7 @@ class _AddQuestionTypeBottomSheetState extends State<AddQuestionTypeBottomSheet>
                   ),
                 ],
               ),
-              
               SizedBox(height: 20.h),
-              
-              // Form
               Expanded(
                 child: Form(
                   key: _formKey,
@@ -112,10 +109,7 @@ class _AddQuestionTypeBottomSheetState extends State<AddQuestionTypeBottomSheet>
                           fontStyle: FontStyle.italic,
                         ),
                       ),
-                      
                       Spacer(),
-                      
-                      // Submit Button
                       Obx(() => CustomButton(
                         onPressed: _handleSubmit,
                         color: primary,
@@ -131,7 +125,8 @@ class _AddQuestionTypeBottomSheetState extends State<AddQuestionTypeBottomSheet>
                               ),
                         width: double.infinity,
                         height: 50.h,
-                      )),
+                      ),
+                    ),
                     ],
                   ),
                 ),
