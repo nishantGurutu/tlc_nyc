@@ -3,15 +3,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tlc_nyc/constant/color_constant.dart';
 import 'package:tlc_nyc/constant/image_constant.dart';
-import 'package:tlc_nyc/controller/test_controller.dart';
+import 'package:tlc_nyc/controller/add_question_controller.dart';
 
 class TestResultScreen extends StatelessWidget {
   final String testNumber;
-  const TestResultScreen(this.testNumber, {super.key});
-
+  TestResultScreen(this.testNumber, {super.key});
+  final AddQuestionController controller = Get.find<AddQuestionController>();
   @override
   Widget build(BuildContext context) {
-    final TestController controller = Get.find<TestController>();
+    
     return Scaffold(
       appBar: AppBar(
         leading: GestureDetector(
@@ -47,6 +47,15 @@ class TestResultScreen extends StatelessWidget {
               final wrongAnswers = controller.getWrongAnswers();
               final percentage = controller.getPercentage();
               final hasPassed = controller.hasPassed();
+              
+              // Debug logging
+              print('📊 Test Result Debug:');
+              print('📊 Total Questions: ${controller.questionAnswerList.length}');
+              print('📊 Selected Answers: ${controller.selectedAnswers}');
+              print('📊 Correct Answers: $correctAnswers');
+              print('📊 Wrong Answers: $wrongAnswers');
+              print('📊 Percentage: $percentage%');
+              print('📊 Has Passed: $hasPassed');
               
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,

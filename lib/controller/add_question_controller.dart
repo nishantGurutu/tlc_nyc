@@ -160,4 +160,64 @@ class AddQuestionController extends GetxController {
       currentQuestionIndex.value--;
     }
   }
+
+  // Result calculation methods
+  int getCorrectAnswers() {
+    int correct = 0;
+    print('🔍 Calculating correct answers...');
+    print('🔍 Total questions: ${questionAnswerList.length}');
+    print('🔍 Selected answers: $selectedAnswers');
+    
+    for (int i = 0; i < questionAnswerList.length; i++) {
+      if (selectedAnswers.containsKey(i)) {
+        final questionData = questionAnswerList[i];
+        final selectedAnswerIndex = selectedAnswers[i]!;
+        final selectedAnswer = questionData.answers?[selectedAnswerIndex];
+        
+        print('🔍 Question $i: Selected index $selectedAnswerIndex');
+        print('🔍 Selected answer: ${selectedAnswer?.answerName}');
+        print('🔍 Is correct: ${selectedAnswer?.isCorrect}');
+        
+        if (selectedAnswer?.isCorrect == true) {
+          correct++;
+          print('✅ Question $i is correct!');
+        } else {
+          print('❌ Question $i is wrong');
+        }
+      } else {
+        print('⚠️ Question $i not answered');
+      }
+    }
+    print('🔍 Total correct: $correct');
+    return correct;
+  }
+
+  int getWrongAnswers() {
+    int wrong = 0;
+    for (int i = 0; i < questionAnswerList.length; i++) {
+      if (selectedAnswers.containsKey(i)) {
+        final questionData = questionAnswerList[i];
+        final selectedAnswerIndex = selectedAnswers[i]!;
+        final selectedAnswer = questionData.answers?[selectedAnswerIndex];
+        
+        if (selectedAnswer?.isCorrect != true) {
+          wrong++;
+        }
+      }
+    }
+    return wrong;
+  }
+
+  int getUnansweredQuestions() {
+    return questionAnswerList.length - selectedAnswers.length;
+  }
+
+  double getPercentage() {
+    if (questionAnswerList.isEmpty) return 0.0;
+    return (getCorrectAnswers() / questionAnswerList.length) * 100;
+  }
+
+  bool hasPassed() {
+    return getPercentage() >= 70.0;
+  }
 }
