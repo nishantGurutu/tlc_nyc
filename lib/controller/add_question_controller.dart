@@ -56,7 +56,7 @@ class AddQuestionController extends GetxController {
         qtypECODE: questionTypeCode,
         isactive: true, 
       );
-print('Preparing to add question: $questionName with type code: $questionTypeCode and answers: $answers');
+      print('Preparing to add question: $questionName with type code: $questionTypeCode and answers: $answers');
       final answersList = answers.map((answer) => Answer(
         answerCode: 0,  
         answerName: answer['name'],
