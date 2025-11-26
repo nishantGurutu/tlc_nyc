@@ -126,6 +126,7 @@ class _TestScreenState extends State<TestScreen> {
                     padding: EdgeInsets.symmetric(vertical: 4.h),
                     child: GestureDetector(
                       onTap: () {
+                        if (isAnswerRevealed) return;
                         controller.selectOption(
                           controller.currentQuestionIndex.value,
                           answerIndex,
