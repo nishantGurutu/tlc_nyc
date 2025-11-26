@@ -102,7 +102,8 @@ class _TestScreenState extends State<TestScreen> {
                 ...(questionData.answers ?? []).asMap().entries.map((entry) {
                   final answerIndex = entry.key;
                   final answer = entry.value;
-                  final selectedAnswer = controller.selectedAnswers[currentIndex];
+                  final selectedAnswer =
+                      controller.selectedAnswers[currentIndex];
                   final bool isSelected = selectedAnswer == answerIndex;
                   final bool isCorrectAnswer = answer.isCorrect == true;
                   Color borderColor = isSelected ? primary : lightBorderColor;
@@ -209,20 +210,20 @@ class _TestScreenState extends State<TestScreen> {
                             controller.currentQuestionIndex.value;
                         final hasRevealed =
                             controller.revealedAnswers[currentIndex] ?? false;
-                        final isLastQuestion = currentIndex ==
+                        final isLastQuestion =
+                            currentIndex ==
                             controller.questionAnswerList.length - 1;
 
                         if (!hasRevealed) {
-                          final hasSelection = controller
-                              .selectedAnswers
+                          final hasSelection = controller.selectedAnswers
                               .containsKey(currentIndex);
 
                           if (!hasSelection) {
-                            Get.snackbar(
-                              'Please select an answer',
-                              'Pick an option before continuing.',
-                              snackPosition: SnackPosition.BOTTOM,
-                            );
+                            if (isLastQuestion) {
+                              confirmDialog(context, widget.testType);
+                            } else {
+                              controller.goToNextQuestion();
+                            }
                             return;
                           }
 
