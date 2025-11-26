@@ -6,20 +6,10 @@ import 'package:tlc_nyc/controller/add_question_controller.dart';
 import 'package:tlc_nyc/view/screens/widgets/add_question_type_bottom_sheet.dart';
 import 'package:tlc_nyc/view/screens/widgets/add_question_answer_bottom_sheet.dart';
 
-class AddScreen extends StatefulWidget {
-  const AddScreen({super.key});
+class AddScreen extends StatelessWidget {
+  AddScreen({super.key});
 
-  @override
-  State<AddScreen> createState() => _AddScreenState();
-}
-
-class _AddScreenState extends State<AddScreen> {
   final AddQuestionController controller = Get.put(AddQuestionController());
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,11 +58,11 @@ class _AddScreenState extends State<AddScreen> {
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 30.h),
-              
+
               // Add Question Type Option
               GestureDetector(
                 onTap: () {
-                  _showAddQuestionTypeBottomSheet();
+                  _showAddQuestionTypeBottomSheet(context);
                 },
                 child: Container(
                   height: 120.h,
@@ -92,11 +82,7 @@ class _AddScreenState extends State<AddScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(
-                          Icons.category,
-                          size: 40.sp,
-                          color: primary,
-                        ),
+                        Icon(Icons.category, size: 40.sp, color: primary),
                         SizedBox(height: 8.h),
                         Text(
                           'Add Question Type',
@@ -120,13 +106,13 @@ class _AddScreenState extends State<AddScreen> {
                   ),
                 ),
               ),
-              
+
               SizedBox(height: 20.h),
-              
+
               // Add Question Answer Option
               GestureDetector(
                 onTap: () {
-                  _showAddQuestionAnswerBottomSheet();
+                  _showAddQuestionAnswerBottomSheet(context);
                 },
                 child: Container(
                   height: 120.h,
@@ -146,11 +132,7 @@ class _AddScreenState extends State<AddScreen> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(
-                          Icons.quiz,
-                          size: 40.sp,
-                          color: primary,
-                        ),
+                        Icon(Icons.quiz, size: 40.sp, color: primary),
                         SizedBox(height: 8.h),
                         Text(
                           'Add Question Answer',
@@ -181,7 +163,7 @@ class _AddScreenState extends State<AddScreen> {
     );
   }
 
-  void _showAddQuestionTypeBottomSheet() {
+  void _showAddQuestionTypeBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -190,7 +172,7 @@ class _AddScreenState extends State<AddScreen> {
     );
   }
 
-  void _showAddQuestionAnswerBottomSheet() {
+  void _showAddQuestionAnswerBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,

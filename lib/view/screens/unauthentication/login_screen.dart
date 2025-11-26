@@ -11,18 +11,12 @@ import 'package:tlc_nyc/utils/custom_text_field.dart';
 import 'package:tlc_nyc/view/screens/authenticated/bottom_navigation_bar_screen.dart';
 import 'package:tlc_nyc/view/screens/authenticated/dash_board_screen.dart';
 
-
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
-
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
+class LoginScreen extends StatelessWidget {
+  LoginScreen({super.key});
+  final LoginController loginController = Get.find<LoginController>();
   final TextEditingController mobileController = TextEditingController();
   final GlobalKey<FormState> _key = GlobalKey();
-  final LoginController loginController = Get.put(LoginController());
+
   @override
   Widget build(BuildContext context) {
     bool isDesktop = Platform.isWindows || Platform.isMacOS || Platform.isLinux;

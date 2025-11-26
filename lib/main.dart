@@ -1,14 +1,11 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:tlc_nyc/constant/text_translation.dart';
-import 'package:tlc_nyc/view/screens/unauthentication/login_screen.dart';
-import 'package:tlc_nyc/view/screens/widgets/windows_plateform/login_screen.dart';
+import 'package:tlc_nyc/routes/app_pages.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -42,20 +39,11 @@ class MyApp extends StatelessWidget {
               primarySwatch: Colors.blue,
               textTheme: Typography.englishLike2018.apply(fontSizeFactor: 1.sp),
             ),
-            home: child,
+            initialRoute: AppPages.INITIAL,
+            getPages: AppPages.routes,
           );
         },
-        child: _getInitialScreen(),
       ),
     );
-  }
-
-  Widget _getInitialScreen() {
-    // Check if running on Windows platform
-    if (Platform.isWindows) {
-      return WindowsLoginScreen();
-    } else {
-      return LoginScreen();
-    }
   }
 }
