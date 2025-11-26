@@ -39,16 +39,14 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         backgroundColor: primary,
         actions: [
           Padding(
-            padding:  EdgeInsets.only(right: 12.w),
+            padding: EdgeInsets.only(right: 12.w),
             child: GestureDetector(
-              onTap: (){
-                Get.to(()=> AddScreen());
+              onTap: () {
+                Get.to(() => AddScreen());
               },
               child: Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(20.r)
-                  ),
+                  borderRadius: BorderRadius.all(Radius.circular(20.r)),
                   color: whiteColor,
                 ),
                 child: Padding(
@@ -57,7 +55,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                 ),
               ),
             ),
-          )
+          ),
         ],
       ),
       backgroundColor: background,
@@ -74,8 +72,12 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                           return GestureDetector(
                             onTap: () {
                               controller.onTestSelected(
-                                controller.groupListData[index].qtypENAME??"",
-                                testTypeId: controller.groupListData[index].qtypECODE??0,
+                                testType:
+                                    controller.groupListData[index].qtypENAME ??
+                                    "",
+                                testTypeId:
+                                    controller.groupListData[index].qtypECODE ??
+                                    0,
                               );
                             },
                             child: Padding(
@@ -101,7 +103,10 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        controller.groupListData[index].qtypENAME??"",
+                                        controller
+                                                .groupListData[index]
+                                                .qtypENAME ??
+                                            "",
                                         style: TextStyle(
                                           fontSize: 16.sp,
                                           fontWeight: FontWeight.w500,
@@ -109,7 +114,6 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                         ),
                                       ),
                                       Icon(Icons.arrow_right),
-                                      
                                     ],
                                   ),
                                 ),

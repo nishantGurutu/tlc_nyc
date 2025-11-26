@@ -4,33 +4,29 @@ import 'package:get/get.dart';
 import 'package:tlc_nyc/constant/color_constant.dart';
 import 'package:tlc_nyc/controller/add_question_controller.dart';
 import 'package:tlc_nyc/view/screens/authenticated/test_result_screen.dart';
+
 class TestScreen extends StatefulWidget {
-  final String testNumber;
-  final int testTypeId;
-  const TestScreen({super.key, required this.testNumber, required this.testTypeId});
+  final String testType =
+      Get.arguments['testNumber']; // Get the testType from arguments
+  final int testTypeId = Get.arguments['testTypeId'];
+  TestScreen({super.key});
 
   @override
   State<TestScreen> createState() => _TestScreenState();
 }
 
 class _TestScreenState extends State<TestScreen> {
-    
-
-  final AddQuestionController controller = Get.put(AddQuestionController());
+  final AddQuestionController controller = Get.find<AddQuestionController>();
   // loadQuestionsForTestType
   @override
-  initState(){
+  initState() {
+    print('gfyt7 yt78898 ${widget.testTypeId}');
     controller.questionAnswerListApi(widget.testTypeId);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    // Set the test type when the screen is built
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   controller.setTestType(widget.testNumber, testTypeId: widget.testTypeId);
-    // });
-
     return Scaffold(
       appBar: AppBar(
         leading: GestureDetector(
@@ -53,7 +49,7 @@ class _TestScreenState extends State<TestScreen> {
           ),
         ),
         title: Text(
-          widget.testNumber,
+          widget.testType,
           style: const TextStyle(color: Colors.white),
         ),
         centerTitle: true,
@@ -65,9 +61,7 @@ class _TestScreenState extends State<TestScreen> {
           if (controller.isLoadingQuestion.value) {
             return const Center(child: CircularProgressIndicator());
           }
-          
-          
-          
+
           if (controller.questionAnswerList.isEmpty) {
             return Center(
               child: Column(
@@ -81,7 +75,7 @@ class _TestScreenState extends State<TestScreen> {
                   ),
                   SizedBox(height: 8),
                   Text(
-                    'This test type "${widget.testNumber}" does not have any questions yet.',
+                    'This test type "${widget.testType}" does not have any questions yet.',
                     textAlign: TextAlign.center,
                     style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                   ),
@@ -91,7 +85,9 @@ class _TestScreenState extends State<TestScreen> {
             );
           }
           final questionData =
-              controller.questionAnswerList[controller.currentQuestionIndex.value];
+              controller.questionAnswerList[controller
+                  .currentQuestionIndex
+                  .value];
           return Padding(
             padding: EdgeInsets.all(16.sp),
             child: Column(
@@ -115,7 +111,7 @@ class _TestScreenState extends State<TestScreen> {
                           .value];
                   Color borderColor = lightBorderColor;
                   IconData? icon;
-                  Color iconColor = Colors.transparent;  
+                  Color iconColor = Colors.transparent;
 
                   if (selectedAnswer != null) {
                     if (answerIndex == selectedAnswer) {
@@ -217,7 +213,7 @@ class _TestScreenState extends State<TestScreen> {
                       onTap: () {
                         if (controller.currentQuestionIndex.value ==
                             controller.questionAnswerList.length - 1) {
-                          confirmDialog(context, widget.testNumber);
+                          confirmDialog(context, widget.testType);
                         } else {
                           controller.goToNextQuestion();
                         }

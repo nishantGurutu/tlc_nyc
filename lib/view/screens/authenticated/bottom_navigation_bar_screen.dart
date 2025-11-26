@@ -22,10 +22,6 @@ class BottomNavigationBarScreen extends StatelessWidget {
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(icon: Icon(Icons.home), label: 'home'.tr),
             BottomNavigationBarItem(
-              icon: Icon(Icons.business),
-              label: 'business'.tr,
-            ),
-            BottomNavigationBarItem(
               icon: Icon(Icons.settings),
               label: 'setting'.tr,
             ),

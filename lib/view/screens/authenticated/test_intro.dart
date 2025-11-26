@@ -2,24 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tlc_nyc/constant/color_constant.dart';
-import 'package:tlc_nyc/view/screens/authenticated/test_screen.dart';
+import 'package:tlc_nyc/routes/app_pages.dart';
 
-class TestIntroScreen extends StatefulWidget {
-  final String testNumber;
-  final int testTypeId;
-  const TestIntroScreen(this.testNumber, {super.key, required this.testTypeId});
+class TestIntroScreen extends StatelessWidget {
+  final String testType =
+      Get.arguments['testNumber']; // Get the testType from arguments
+  final int testTypeId = Get.arguments['testTypeId'];
+  TestIntroScreen({super.key});
 
-  @override
-  State<TestIntroScreen> createState() => _TestIntroScreenState();
-}
-
-class _TestIntroScreenState extends State<TestIntroScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: background,
       appBar: AppBar(
-         leading: GestureDetector(
+        leading: GestureDetector(
           onTap: () {
             Get.back();
           },
@@ -82,7 +78,11 @@ class _TestIntroScreenState extends State<TestIntroScreen> {
                   ),
                   child: Column(
                     children: [
-                      _buildInfoRow(Icons.list_alt_rounded, "totalMcqs".tr, "80"),
+                      _buildInfoRow(
+                        Icons.list_alt_rounded,
+                        "totalMcqs".tr,
+                        "80",
+                      ),
                       Divider(),
                       _buildInfoRow(
                         Icons.access_time_rounded,
@@ -165,7 +165,20 @@ class _TestIntroScreenState extends State<TestIntroScreen> {
                       ),
                     ),
                     onPressed: () {
-                      Get.to(() => TestScreen(testNumber: widget.testNumber, testTypeId: widget.testTypeId));
+                      Get.toNamed(
+                        Routes.TEST,
+                        arguments: {
+                          'testNumber': testType,
+                          'testTypeId': testTypeId,
+                        },
+                      );
+
+                      // Get.to(
+                      //   () => TestScreen(
+                      //     testNumber: testNumber,
+                      //     testTypeId: testTypeId,
+                      //   ),
+                      // );
                     },
                   ),
                 ),
