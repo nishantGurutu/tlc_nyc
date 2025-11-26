@@ -1,16 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:tlc_nyc/constant/color_constant.dart';
+import 'package:tlc_nyc/controller/home_controller.dart';
+import 'package:tlc_nyc/view/screens/widgets/windows_plateform/add_question.dart';
+import 'package:tlc_nyc/view/screens/widgets/windows_plateform/settings_screen.dart';
 
-class DashBoardScreen extends StatefulWidget {
-  const DashBoardScreen({super.key});
+class WindowsDashboardScreen extends StatefulWidget {
+  const WindowsDashboardScreen({super.key});
 
   @override
-  State<DashBoardScreen> createState() => _DashBoardScreenState();
+  State<WindowsDashboardScreen> createState() => _WindowsDashboardScreenState();
 }
 
-class _DashBoardScreenState extends State<DashBoardScreen> {
+class _WindowsDashboardScreenState extends State<WindowsDashboardScreen> {
+  final HomeController controller = Get.put(HomeController());
   int selectedIndex = 0;
+  int selectedTestIndex = -1;
+
+  @override
+  void initState() {
+    super.initState();
+    controller.questionTypeListApi();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,189 +30,134 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
       backgroundColor: const Color(0xfff6f9ff),
       body: Row(
         children: [
+          // Sidebar Navigation
           Container(
-            width: 60.w,
+            width: 280.w,
             color: const Color(0xfff4f7fe),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const SizedBox(height: 30),
-                  CircleAvatar(
-                    radius: 40,
-                    backgroundColor: Colors.purple.shade100,
-                    child: const Icon(
-                      Icons.person,
-                      size: 50,
-                      color: Colors.white,
-                    ),
+            child: Column(
+              children: [
+                // Header with user info
+                Container(
+                  padding: EdgeInsets.all(20.w),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.shade200,
+                        blurRadius: 4,
+                        offset: Offset(0, 2),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 10),
-                  const Text(
-                    "Lindsey Carder",
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  child: Column(
+                    children: [
+                      CircleAvatar(
+                        radius: 35,
+                        backgroundColor: primary,
+                        child: const Icon(
+                          Icons.person,
+                          size: 40,
+                          color: Colors.white,
+                        ),
+                      ),
+                      SizedBox(height: 12.h),
+                      Text(
+                        "TLC NYC User",
+                        style: TextStyle(
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.bold,
+                          color: blackColor,
+                        ),
+                      ),
+                      SizedBox(height: 4.h),
+                      Text(
+                        "Test Preparation Platform",
+                        style: TextStyle(
+                          fontSize: 12.sp,
+                          color: darkGreyColor,
+                        ),
+                      ),
+                    ],
                   ),
-                  Text(
-                    "Your current standing is 32",
-                    style: TextStyle(fontSize: 4.sp, color: Colors.purple),
+                ),
+                
+                // Navigation Menu
+                Expanded(
+                  child: ListView(
+                    padding: EdgeInsets.symmetric(vertical: 20.h),
+                    children: [
+                      _buildNavItem(Icons.dashboard, "Dashboard", 0),
+                      _buildNavItem(Icons.quiz, "Tests", 1),
+                      _buildNavItem(Icons.add_circle, "Add Questions", 2),
+                      _buildNavItem(Icons.analytics, "Analytics", 3),
+                      _buildNavItem(Icons.settings, "Settings", 4),
+                    ],
                   ),
-                  const SizedBox(height: 10),
-
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: LinearProgressIndicator(
-                      value: 32 / 40,
-                      backgroundColor: Colors.grey.shade300,
-                      color: Colors.purple,
-                      minHeight: 8,
-                    ),
-                  ),
-                  const SizedBox(height: 30),
-
-                  sidebarTile(Icons.dashboard, "Dashboard", 0),
-                  sidebarTile(Icons.emoji_events, "Leaderboard", 1),
-                  sidebarTile(Icons.bar_chart, "Stats", 2),
-                  sidebarTile(Icons.shopping_cart, "Shop", 3),
-                  sidebarTile(Icons.developer_board, "Prototype", 4),
-                  sidebarTile(Icons.more_horiz, "More", 5),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
 
+          // Main Content Area
           Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Top AppBar
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const SizedBox(),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Colors.orange,
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(5.r),
-                            ),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 3.w,
-                              vertical: 3.h,
-                            ),
-                            child: Row(
-                              children: [
-                                Icon(
-                                  Icons.workspace_premium,
-                                  color: Colors.white,
-                                ),
-                                Text(
-                                  "TLC NYC",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 6.sp,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 20),
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        color: const Color(0xff6a4dfd),
-                        borderRadius: BorderRadius.circular(16),
+            child: Column(
+              children: [
+                // Top App Bar
+                Container(
+                  height: 60.h,
+                  padding: EdgeInsets.symmetric(horizontal: 20.w),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.shade200,
+                        blurRadius: 4,
+                        offset: Offset(0, 2),
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "Member since Dec 2023",
-                            style: TextStyle(
-                              color: Colors.white70,
-                              fontSize: 3.sp,
-                            ),
-                          ),
-                          SizedBox(height: 4.h),
-                          Text(
-                            "Welcome, Leo George",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 5.sp,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(height: 4.h),
-                          Text(
-                            "Complete 7/80 Test",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 7.sp,
-                            ),
-                          ),
-                          SizedBox(height: 8.h),
-                          LinearProgressIndicator(
-                            value: 7 / 20,
-                            minHeight: 10,
-                            color: Colors.white,
-                            backgroundColor: Colors.white24,
-                            borderRadius: BorderRadius.circular(6),
-                          ),
-                          SizedBox(height: 4.h),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: Text(
-                              "20 Days",
+                    ],
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        _getPageTitle(),
+                        style: TextStyle(
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.bold,
+                          color: blackColor,
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
+                        decoration: BoxDecoration(
+                          color: primary,
+                          borderRadius: BorderRadius.circular(20.r),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(Icons.workspace_premium, color: Colors.white, size: 16.sp),
+                            SizedBox(width: 4.w),
+                            Text(
+                              "TLC NYC",
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 6.sp,
+                                fontSize: 12.sp,
+                                fontWeight: FontWeight.w500,
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 20.h),
-                    Text(
-                      "Your Test",
-                      style: TextStyle(
-                        fontSize: 6.sp,
-                        fontWeight: FontWeight.bold,
-                        color: primary,
-                      ),
-                    ),
-                    const SizedBox(height: 15),
-                    taskTile("Complete Test", 40, 40, completed: true),
-                    Row(
-                      children: [
-                        Container(
-                          height: 30.h,
-                          width: 50.w,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(8.r),
-                            ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: Colors.grey.shade200,
-                                blurRadius: 5,
-                                offset: Offset(0, 3),
-                              ),
-                            ],
-                          ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
+
+                // Content Area
+                Expanded(
+                  child: _buildContent(),
+                ),
+              ],
             ),
           ),
         ],
@@ -208,31 +165,183 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     );
   }
 
-  // ==== Sidebar Widget ====
-  Widget sidebarTile(IconData icon, String title, int index) {
+  Widget _buildNavItem(IconData icon, String title, int index) {
     bool isSelected = selectedIndex == index;
-    return InkWell(
-      onTap: () {
-        setState(() => selectedIndex = index);
-      },
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          color: isSelected ? Colors.white : Colors.transparent,
-          borderRadius: BorderRadius.circular(8),
-          border:
-              isSelected
-                  ? Border.all(color: Colors.purple.shade200, width: 2)
-                  : null,
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 16.w, vertical: 4.h),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () {
+            setState(() {
+              selectedIndex = index;
+              selectedTestIndex = -1;
+            });
+          },
+          borderRadius: BorderRadius.circular(8.r),
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+            decoration: BoxDecoration(
+              color: isSelected ? primary.withOpacity(0.1) : Colors.transparent,
+              borderRadius: BorderRadius.circular(8.r),
+              border: isSelected ? Border.all(color: primary, width: 1) : null,
+            ),
+            child: Row(
+              children: [
+                Icon(
+                  icon,
+                  color: isSelected ? primary : darkGreyColor,
+                  size: 20.sp,
+                ),
+                SizedBox(width: 12.w),
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+                    color: isSelected ? primary : blackColor,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
-        child: Row(
+      ),
+    );
+  }
+
+  String _getPageTitle() {
+    switch (selectedIndex) {
+      case 0:
+        return "Dashboard";
+      case 1:
+        return "Available Tests";
+      case 2:
+        return "Add Questions";
+      case 3:
+        return "Analytics";
+      case 4:
+        return "Settings";
+      default:
+        return "Dashboard";
+    }
+  }
+
+  Widget _buildContent() {
+    switch (selectedIndex) {
+      case 0:
+        return _buildDashboardContent();
+      case 1:
+        return _buildTestsContent();
+      case 2:
+        return WindowsAddQuestionScreen();
+      case 3:
+        return _buildAnalyticsContent();
+      case 4:
+        return WindowsSettingsScreen();
+      default:
+        return _buildDashboardContent();
+    }
+  }
+
+  Widget _buildDashboardContent() {
+    return Padding(
+      padding: EdgeInsets.all(20.w),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Icon(icon, color: Colors.purple),
-            const SizedBox(width: 12),
+            // Welcome Card
+            Container(
+              width: double.infinity,
+              padding: EdgeInsets.all(24.w),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [primary, primary.withOpacity(0.8)],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ),
+                borderRadius: BorderRadius.circular(16.r),
+                boxShadow: [
+                  BoxShadow(
+                    color: primary.withOpacity(0.3),
+                    blurRadius: 10,
+                    offset: Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Welcome to TLC NYC",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: 8.h),
+                  Text(
+                    "Your comprehensive test preparation platform",
+                    style: TextStyle(
+                      color: Colors.white.withOpacity(0.9),
+                      fontSize: 16.sp,
+                    ),
+                  ),
+                  SizedBox(height: 16.h),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _buildStatCard("Total Tests", "12", Icons.quiz),
+                      ),
+                      SizedBox(width: 16.w),
+                      Expanded(
+                        child: _buildStatCard("Completed", "8", Icons.check_circle),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+
+            SizedBox(height: 24.h),
+
+            // Quick Actions
             Text(
-              title,
-              style: const TextStyle(fontSize: 14, color: Colors.black87),
+              "Quick Actions",
+              style: TextStyle(
+                fontSize: 18.sp,
+                fontWeight: FontWeight.bold,
+                color: blackColor,
+              ),
+            ),
+            SizedBox(height: 16.h),
+
+            Row(
+              children: [
+                Expanded(
+                  child: _buildActionCard(
+                    "Start New Test",
+                    Icons.play_arrow,
+                    primary,
+                    () {
+                      setState(() => selectedIndex = 1);
+                    },
+                  ),
+                ),
+                SizedBox(width: 16.w),
+                Expanded(
+                  child: _buildActionCard(
+                    "Add Questions",
+                    Icons.add_circle,
+                    Colors.green,
+                    () {
+                      setState(() => selectedIndex = 2);
+                    },
+                  ),
+                ),
+              ],
             ),
           ],
         ),
@@ -240,53 +349,194 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
     );
   }
 
-  // ==== Task Widget ====
-  Widget taskTile(String name, int done, int total, {bool completed = false}) {
+  Widget _buildTestsContent() {
+    return Padding(
+      padding: EdgeInsets.all(20.w),
+      child: Obx(() {
+        if (controller.isGroupLoading.value) {
+          return Center(child: CircularProgressIndicator());
+        }
+
+        return GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 16.w,
+            mainAxisSpacing: 16.h,
+            childAspectRatio: 1.5,
+          ),
+          itemCount: controller.groupListData.length,
+          itemBuilder: (context, index) {
+            final testType = controller.groupListData[index];
+            return _buildTestCard(testType.qtypENAME ?? "", index);
+          },
+        );
+      }),
+    );
+  }
+
+  Widget _buildTestCard(String testName, int index) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8),
-      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12.r),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.shade200,
-            blurRadius: 5,
-            offset: Offset(0, 3),
+            blurRadius: 8,
+            offset: Offset(0, 2),
           ),
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                name,
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () {
+            setState(() {
+              selectedTestIndex = index;
+            });
+            // Navigate to test screen
+            Get.to(() => WindowsTestScreen(
+              testName: testName,
+              testTypeId: controller.groupListData[index].qtypECODE ?? 0,
+            ));
+          },
+          borderRadius: BorderRadius.circular(12.r),
+          child: Padding(
+            padding: EdgeInsets.all(16.w),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.quiz,
+                  size: 32.sp,
+                  color: primary,
                 ),
+                SizedBox(height: 8.h),
+                Text(
+                  testName,
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w600,
+                    color: blackColor,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(height: 4.h),
+                Text(
+                  "Click to start",
+                  style: TextStyle(
+                    fontSize: 12.sp,
+                    color: darkGreyColor,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAnalyticsContent() {
+    return Padding(
+      padding: EdgeInsets.all(20.w),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.analytics, size: 64.sp, color: primary),
+            SizedBox(height: 16.h),
+            Text(
+              "Analytics Dashboard",
+              style: TextStyle(
+                fontSize: 24.sp,
+                fontWeight: FontWeight.bold,
+                color: blackColor,
               ),
-              if (completed)
-                const Icon(Icons.check_circle, color: Colors.green, size: 22),
-            ],
-          ),
-          const SizedBox(height: 10),
-          LinearProgressIndicator(
-            value: done / total,
-            minHeight: 10,
-            color: Colors.green,
-            backgroundColor: Colors.grey.shade300,
-            borderRadius: BorderRadius.circular(6),
-          ),
-          const SizedBox(height: 6),
+            ),
+            SizedBox(height: 8.h),
+            Text(
+              "Coming Soon",
+              style: TextStyle(
+                fontSize: 16.sp,
+                color: darkGreyColor,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildStatCard(String title, String value, IconData icon) {
+    return Container(
+      padding: EdgeInsets.all(16.w),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.2),
+        borderRadius: BorderRadius.circular(8.r),
+      ),
+      child: Column(
+        children: [
+          Icon(icon, color: Colors.white, size: 24.sp),
+          SizedBox(height: 8.h),
           Text(
-            "$done / $total",
-            style: const TextStyle(fontSize: 12, color: Colors.black54),
+            value,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20.sp,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Text(
+            title,
+            style: TextStyle(
+              color: Colors.white.withOpacity(0.9),
+              fontSize: 12.sp,
+            ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget _buildActionCard(String title, IconData icon, Color color, VoidCallback onTap) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12.r),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.shade200,
+            blurRadius: 8,
+            offset: Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(12.r),
+          child: Padding(
+            padding: EdgeInsets.all(20.w),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(icon, size: 32.sp, color: color),
+                SizedBox(height: 12.h),
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w600,
+                    color: blackColor,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

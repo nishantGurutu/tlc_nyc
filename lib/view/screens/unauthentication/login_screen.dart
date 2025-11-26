@@ -9,7 +9,8 @@ import 'package:tlc_nyc/controller/login_controller.dart';
 import 'package:tlc_nyc/utils/custom_button.dart';
 import 'package:tlc_nyc/utils/custom_text_field.dart';
 import 'package:tlc_nyc/view/screens/authenticated/bottom_navigation_bar_screen.dart';
-import 'package:tlc_nyc/view/screens/widgets/windows_plateform/side_drawer.dart';
+import 'package:tlc_nyc/view/screens/authenticated/dash_board_screen.dart';
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

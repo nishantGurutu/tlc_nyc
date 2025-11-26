@@ -1,6 +1,42 @@
 import 'package:get/get.dart';
 
 class LoginController extends GetxController {
+  var isLoading = false.obs;
+
+  Future<bool> login(String mobile, String password) async {
+    isLoading.value = true;
+    try {
+      // Simulate API call
+      await Future.delayed(Duration(seconds: 2));
+      
+      // For demo purposes, accept any mobile/password combination
+      if (mobile.isNotEmpty && password.isNotEmpty) {
+        Get.snackbar(
+          'Success',
+          'Login successful!',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+        return true;
+      } else {
+        Get.snackbar(
+          'Error',
+          'Please enter valid credentials',
+          snackPosition: SnackPosition.BOTTOM,
+        );
+        return false;
+      }
+    } catch (e) {
+      Get.snackbar(
+        'Error',
+        'Login failed: $e',
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      return false;
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
   // final FirebaseAuth _auth = FirebaseAuth.instance;
   // Future<void> sendOtp({required String mobileNumber}) async {
   //   await _auth.verifyPhoneNumber(
