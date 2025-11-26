@@ -81,10 +81,10 @@ class _TestScreenState extends State<TestScreen> {
               ),
             );
           }
-          final questionData =
-              controller.questionAnswerList[controller
-                  .currentQuestionIndex
-                  .value];
+          final currentIndex = controller.currentQuestionIndex.value;
+          final questionData = controller.questionAnswerList[currentIndex];
+          final isAnswerRevealed =
+              controller.revealedAnswers[currentIndex] ?? false;
           return Padding(
             padding: EdgeInsets.all(16.sp),
             child: Column(
@@ -102,25 +102,22 @@ class _TestScreenState extends State<TestScreen> {
                 ...(questionData.answers ?? []).asMap().entries.map((entry) {
                   final answerIndex = entry.key;
                   final answer = entry.value;
-                  final selectedAnswer =
-                      controller.selectedAnswers[controller
-                          .currentQuestionIndex
-                          .value];
-                  Color borderColor = lightBorderColor;
+                  final selectedAnswer = controller.selectedAnswers[currentIndex];
+                  final bool isSelected = selectedAnswer == answerIndex;
+                  final bool isCorrectAnswer = answer.isCorrect == true;
+                  Color borderColor = isSelected ? primary : lightBorderColor;
                   IconData? icon;
                   Color iconColor = Colors.transparent;
 
-                  if (selectedAnswer != null) {
-                    if (answerIndex == selectedAnswer) {
-                      if (answer.isCorrect == true) {
-                        borderColor = Colors.green;
-                        icon = Icons.check_circle;
-                        iconColor = Colors.green;
-                      } else {
-                        borderColor = Colors.red;
-                        icon = Icons.cancel;
-                        iconColor = Colors.red;
-                      }
+                  if (isAnswerRevealed) {
+                    if (isCorrectAnswer) {
+                      borderColor = Colors.green;
+                      icon = Icons.check_circle;
+                      iconColor = Colors.green;
+                    } else if (isSelected) {
+                      borderColor = Colors.red;
+                      icon = Icons.cancel;
+                      iconColor = Colors.red;
                     }
                   }
 
@@ -165,7 +162,7 @@ class _TestScreenState extends State<TestScreen> {
                                   ),
                                 ),
                               ),
-                              if (icon != null) ...[
+                              if (isAnswerRevealed && icon != null) ...[
                                 SizedBox(width: 8.w),
                                 Icon(icon, color: iconColor, size: 20.sp),
                               ],
@@ -208,8 +205,32 @@ class _TestScreenState extends State<TestScreen> {
                     if (controller.currentQuestionIndex.value == 0) SizedBox(),
                     GestureDetector(
                       onTap: () {
-                        if (controller.currentQuestionIndex.value ==
-                            controller.questionAnswerList.length - 1) {
+                        final currentIndex =
+                            controller.currentQuestionIndex.value;
+                        final hasRevealed =
+                            controller.revealedAnswers[currentIndex] ?? false;
+                        final isLastQuestion = currentIndex ==
+                            controller.questionAnswerList.length - 1;
+
+                        if (!hasRevealed) {
+                          final hasSelection = controller
+                              .selectedAnswers
+                              .containsKey(currentIndex);
+
+                          if (!hasSelection) {
+                            Get.snackbar(
+                              'Please select an answer',
+                              'Pick an option before continuing.',
+                              snackPosition: SnackPosition.BOTTOM,
+                            );
+                            return;
+                          }
+
+                          controller.revealAnswer(currentIndex);
+                          return;
+                        }
+
+                        if (isLastQuestion) {
                           confirmDialog(context, widget.testType);
                         } else {
                           controller.goToNextQuestion();

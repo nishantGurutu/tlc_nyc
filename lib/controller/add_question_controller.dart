@@ -119,6 +119,7 @@ class AddQuestionController extends GetxController {
 
   var currentQuestionIndex = 0.obs;
   var selectedAnswers = <int, int>{}.obs;
+  var revealedAnswers = <int, bool>{}.obs;
 
   Future<void> questionAnswerListApi(int testTypeId) async {
     isLoadingQuestion.value = true;
@@ -130,6 +131,7 @@ class AddQuestionController extends GetxController {
         questionAnswerList.assignAll(result);
         currentQuestionIndex.value = 0;
         selectedAnswers.clear();
+        revealedAnswers.clear();
       }
     } catch (e) {
       isLoadingQuestion.value = false;
@@ -140,6 +142,10 @@ class AddQuestionController extends GetxController {
 
   void selectOption(int questionIndex, int answerIndex) {
     selectedAnswers[questionIndex] = answerIndex;
+  }
+
+  void revealAnswer(int questionIndex) {
+    revealedAnswers[questionIndex] = true;
   }
 
   void goToNextQuestion() {
