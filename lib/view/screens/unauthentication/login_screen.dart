@@ -6,9 +6,9 @@ import 'package:get/get.dart';
 import 'package:tlc_nyc/constant/color_constant.dart';
 import 'package:tlc_nyc/constant/image_constant.dart';
 import 'package:tlc_nyc/controller/login_controller.dart';
+import 'package:tlc_nyc/routes/app_pages.dart';
 import 'package:tlc_nyc/utils/custom_button.dart';
 import 'package:tlc_nyc/utils/custom_text_field.dart';
-import 'package:tlc_nyc/view/screens/authenticated/bottom_navigation_bar_screen.dart';
 import 'package:tlc_nyc/view/screens/authenticated/dash_board_screen.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -187,9 +187,10 @@ class LoginScreen extends StatelessWidget {
                                   padding: EdgeInsets.symmetric(vertical: 8.h),
                                   onPressed: () {
                                     if (_key.currentState!.validate()) {
-                                      Get.offAll(
-                                        () => BottomNavigationBarScreen(),
-                                      );
+                                      // Get.offAll(
+                                      //   () => BottomNavigationBarScreen(),
+                                      // );
+                                      Get.toNamed(Routes.BOTTOMBAR);
                                     }
                                   },
                                   color: primary,
