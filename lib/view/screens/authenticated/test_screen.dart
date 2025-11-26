@@ -6,8 +6,7 @@ import 'package:tlc_nyc/controller/add_question_controller.dart';
 import 'package:tlc_nyc/view/screens/authenticated/test_result_screen.dart';
 
 class TestScreen extends StatefulWidget {
-  final String testType =
-      Get.arguments['testNumber']; // Get the testType from arguments
+  final String testType = Get.arguments['testNumber'];
   final int testTypeId = Get.arguments['testTypeId'];
   TestScreen({super.key});
 
@@ -17,10 +16,8 @@ class TestScreen extends StatefulWidget {
 
 class _TestScreenState extends State<TestScreen> {
   final AddQuestionController controller = Get.find<AddQuestionController>();
-  // loadQuestionsForTestType
   @override
   initState() {
-    print('gfyt7 yt78898 ${widget.testTypeId}');
     controller.questionAnswerListApi(widget.testTypeId);
     super.initState();
   }

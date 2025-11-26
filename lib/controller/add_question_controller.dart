@@ -17,18 +17,17 @@ class AddQuestionController extends GetxController {
     isLoading.value = true;
     try {
       final questionType = AddQuestionTypeModel(
-        qtypECODE: 0,  
+        qtypECODE: 0,
         qtypENAME: questionTypeName,
-        isactive: true, 
+        isactive: true,
       );
 
       final result = await _addQuestionService.addQuestionType(questionType);
-      
+
       if (result) {
-       await homeController.questionTypeListApi();
-        
-      }  
-      
+        await homeController.questionTypeListApi();
+      }
+
       return result;
     } catch (e) {
       Get.snackbar(
@@ -50,37 +49,43 @@ class AddQuestionController extends GetxController {
     isLoading.value = true;
     try {
       final questionMast = QuestionMast(
-        questioNCODE: 0,  
+        questioNCODE: 0,
         questioNNAME: questionName,
-        grPCODE: 0,  
+        grPCODE: 0,
         qtypECODE: questionTypeCode,
-        isactive: true, 
+        isactive: true,
       );
-      print('Preparing to add question: $questionName with type code: $questionTypeCode and answers: $answers');
-      final answersList = answers.map((answer) => Answer(
-        answerCode: 0,  
-        answerName: answer['name'],
-        isCorrect: answer["isCorrect"],  
-      )).toList();
+
+      final answersList =
+          answers
+              .map(
+                (answer) => Answer(
+                  answerCode: 0,
+                  answerName: answer['name'],
+                  isCorrect: answer["isCorrect"],
+                ),
+              )
+              .toList();
 
       final questionWithAnswers = AddQuestionWithAnswersModel(
         questionMast: questionMast,
         answers: answersList,
       );
 
-      final result = await _addQuestionService.addQuestionWithAnswers(questionWithAnswers);
-      
+      final result = await _addQuestionService.addQuestionWithAnswers(
+        questionWithAnswers,
+      );
+
       if (result) {
-        // Call GetQuestionWithAnswersByTypeCode API after successful add
-        final questions = await _addQuestionService.getQuestionWithAnswersByTypeCode(questionTypeCode);
-        
+        final questions = await _addQuestionService
+            .getQuestionWithAnswersByTypeCode(questionTypeCode);
+
         if (questions != null) {
           Get.snackbar(
             'Success',
             'Question with answers added successfully. Retrieved ${questions.length} questions.',
             snackPosition: SnackPosition.BOTTOM,
           );
-          print('Retrieved questions: ${questions.length}');
         } else {
           Get.snackbar(
             'Success',
@@ -95,7 +100,7 @@ class AddQuestionController extends GetxController {
           snackPosition: SnackPosition.BOTTOM,
         );
       }
-      
+
       return result;
     } catch (e) {
       Get.snackbar(
@@ -111,84 +116,58 @@ class AddQuestionController extends GetxController {
 
   var isLoadingQuestion = false.obs;
   RxList<QuestionAnswerModel> questionAnswerList = <QuestionAnswerModel>[].obs;
-  
-  // Test navigation properties
+
   var currentQuestionIndex = 0.obs;
   var selectedAnswers = <int, int>{}.obs;
-  
+
   Future<void> questionAnswerListApi(int testTypeId) async {
-    print('🔄 Starting questionAnswerListApi with testTypeId: $testTypeId');
     isLoadingQuestion.value = true;
     try {
-      final result = await AddQuestionService().getQuestionWithAnswersByTypeCode(testTypeId);
-      print('📊 API Result: $result');
-      print('📊 Result Type: ${result.runtimeType}');
-      print('📊 Result Length: ${result?.length ?? 'null'}');
-      
+      final result = await AddQuestionService()
+          .getQuestionWithAnswersByTypeCode(testTypeId);
+
       if (result != null) {
-        print('✅ Successfully got ${result.length} questions');
         questionAnswerList.assignAll(result);
-        // Reset test state when loading new questions
         currentQuestionIndex.value = 0;
         selectedAnswers.clear();
-        print('📝 Updated questionAnswerList with ${questionAnswerList.length} items');
-      } else {
-        print('❌ API returned null result');
       }
     } catch (e) {
       isLoadingQuestion.value = false;
-      print('❌ Error fetching or caching data: $e');
-      print('❌ Error type: ${e.runtimeType}');
     } finally {
       isLoadingQuestion.value = false;
-      print('🏁 Finished questionAnswerListApi');
     }
   }
-  
+
   void selectOption(int questionIndex, int answerIndex) {
     selectedAnswers[questionIndex] = answerIndex;
   }
-  
+
   void goToNextQuestion() {
     if (currentQuestionIndex.value < questionAnswerList.length - 1) {
       currentQuestionIndex.value++;
     }
   }
-  
+
   void goToPreviousQuestion() {
     if (currentQuestionIndex.value > 0) {
       currentQuestionIndex.value--;
     }
   }
 
-  // Result calculation methods
   int getCorrectAnswers() {
     int correct = 0;
-    print('🔍 Calculating correct answers...');
-    print('🔍 Total questions: ${questionAnswerList.length}');
-    print('🔍 Selected answers: $selectedAnswers');
-    
+
     for (int i = 0; i < questionAnswerList.length; i++) {
       if (selectedAnswers.containsKey(i)) {
         final questionData = questionAnswerList[i];
         final selectedAnswerIndex = selectedAnswers[i]!;
         final selectedAnswer = questionData.answers?[selectedAnswerIndex];
-        
-        print('🔍 Question $i: Selected index $selectedAnswerIndex');
-        print('🔍 Selected answer: ${selectedAnswer?.answerName}');
-        print('🔍 Is correct: ${selectedAnswer?.isCorrect}');
-        
+
         if (selectedAnswer?.isCorrect == true) {
           correct++;
-          print('✅ Question $i is correct!');
-        } else {
-          print('❌ Question $i is wrong');
         }
-      } else {
-        print('⚠️ Question $i not answered');
       }
     }
-    print('🔍 Total correct: $correct');
     return correct;
   }
 
@@ -199,7 +178,7 @@ class AddQuestionController extends GetxController {
         final questionData = questionAnswerList[i];
         final selectedAnswerIndex = selectedAnswers[i]!;
         final selectedAnswer = questionData.answers?[selectedAnswerIndex];
-        
+
         if (selectedAnswer?.isCorrect != true) {
           wrong++;
         }
