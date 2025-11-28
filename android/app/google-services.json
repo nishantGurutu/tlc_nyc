@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "539059064339",
-    "project_id": "tlc-nyc",
-    "storage_bucket": "tlc-nyc.firebasestorage.app"
+    "project_number": "18686812898",
+    "project_id": "tlcapp-1664a",
+    "storage_bucket": "tlcapp-1664a.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:539059064339:android:f6b9d9d3ee5a9bb198b9e6",
+        "mobilesdk_app_id": "1:18686812898:android:55989f38fd4c8abf4674bb",
         "android_client_info": {
           "package_name": "com.tlc.nyc"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDQqKhZPnIuR7AvmkL17fAkV2ZuB0S4HD4"
+          "current_key": "AIzaSyCWiGiI-jRT9w1tmq8uE2je66A2nRidRIU"
         }
       ],
       "services": {
