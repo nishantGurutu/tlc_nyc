@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -10,17 +11,21 @@ import 'package:tlc_nyc/utils/custom_button.dart';
 import 'package:tlc_nyc/utils/custom_text_field.dart';
 import 'package:tlc_nyc/view/screens/authenticated/dash_board_screen.dart';
 
-class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
+
+  @override
+  State<RegisterScreen> createState() => _RegisterScreenState();
+}
+
+class _RegisterScreenState extends State<RegisterScreen> {
   final LoginController loginController = Get.find<LoginController>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> _key = GlobalKey();
-
   @override
   Widget build(BuildContext context) {
     bool isDesktop = Platform.isWindows || Platform.isMacOS || Platform.isLinux;
-
     return Scaffold(
       backgroundColor: whiteColor,
       body: Container(
@@ -170,17 +175,61 @@ class LoginScreen extends StatelessWidget {
                           child: Padding(
                             padding: EdgeInsets.symmetric(horizontal: 12.w),
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                SizedBox(height: 70.h),
-                                Image.asset(appLogo, height: 120.h),
-                                SizedBox(height: 50.h),
+                                Stack(
+                                  children: [
+                                    Container(
+                                      height: 80.h,
+                                      width: 80.w,
+                                      decoration: BoxDecoration(
+                                        color: mildBorderColor,
+                                        shape: BoxShape.circle,
+                                      ),
+                                    ),
+                                    Positioned(
+                                      bottom: 7.h,
+                                      right: 9.w,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: primary,
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(4.0),
+                                          child: Icon(
+                                            Icons.camera_alt,
+                                            size: 12.sp,
+                                            color: whiteColor,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 20.h),
                                 TaskCustomTextField(
                                   controller: emailController,
                                   textCapitalization: TextCapitalization.none,
                                   keyboardType: TextInputType.number,
-                                  data: "email",
+                                  data: "name".tr,
+                                  hintText: "enterName".tr,
+                                ),
+                                SizedBox(height: 15.h),
+                                TaskCustomTextField(
+                                  controller: emailController,
+                                  textCapitalization: TextCapitalization.none,
+                                  keyboardType: TextInputType.number,
+                                  data: "email".tr,
                                   hintText: "enterEmail".tr,
+                                ),
+                                SizedBox(height: 15.h),
+                                TaskCustomTextField(
+                                  controller: emailController,
+                                  textCapitalization: TextCapitalization.none,
+                                  keyboardType: TextInputType.number,
+                                  data: "mobileNumber".tr,
+                                  hintText: "enterMobileNumber".tr,
                                 ),
                                 SizedBox(height: 15.h),
                                 TaskCustomTextField(
@@ -203,7 +252,7 @@ class LoginScreen extends StatelessWidget {
                                   },
                                   color: primary,
                                   text: Text(
-                                    'login'.tr,
+                                    'signup'.tr,
                                     style: TextStyle(
                                       fontSize: 12.sp,
                                       color: whiteColor,
@@ -218,7 +267,7 @@ class LoginScreen extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      "dontHaveAccount".tr,
+                                      "alreadyHaveAccount".tr,
                                       style: TextStyle(
                                         fontSize: 14.sp,
                                         color: blackColor,
@@ -228,10 +277,10 @@ class LoginScreen extends StatelessWidget {
                                     const SizedBox(width: 5),
                                     GestureDetector(
                                       onTap: () {
-                                        Get.toNamed(Routes.SIGNUP);
+                                        Get.offAllNamed(Routes.LOGIN);
                                       },
                                       child: Text(
-                                        "signup".tr,
+                                        "login".tr,
                                         style: TextStyle(
                                           fontSize: 14.sp,
                                           color: blackColor,

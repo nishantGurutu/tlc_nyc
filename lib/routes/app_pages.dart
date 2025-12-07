@@ -9,6 +9,7 @@ import 'package:tlc_nyc/view/screens/authenticated/dash_board_screen.dart';
 import 'package:tlc_nyc/view/screens/authenticated/test_intro.dart';
 import 'package:tlc_nyc/view/screens/authenticated/test_screen.dart';
 import 'package:tlc_nyc/view/screens/unauthentication/login_screen.dart';
+import 'package:tlc_nyc/view/screens/unauthentication/register_screen.dart';
 part 'app_routes.dart';
 
 class AppPages {
@@ -25,6 +26,11 @@ class AppPages {
     GetPage(
       name: _Paths.LOGIN,
       page: () => LoginScreen(),
+      binding: LoginBinding(),
+    ),
+    GetPage(
+      name: _Paths.SIGNUP,
+      page: () => RegisterScreen(),
       binding: LoginBinding(),
     ),
     GetPage(
