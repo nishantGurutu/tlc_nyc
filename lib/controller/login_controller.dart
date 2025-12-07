@@ -1,10 +1,10 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tlc_nyc/constant/color_constant.dart';
+import 'package:tlc_nyc/helper/storage_helper.dart';
+import 'package:tlc_nyc/routes/app_pages.dart';
 import 'package:tlc_nyc/service/login_service.dart';
-import 'package:tlc_nyc/service/network_service.dart';
+import 'package:tlc_nyc/utils/custom_snakbar.dart';
 
 class LoginController extends GetxController {
   var isLoading = false.obs;
@@ -30,25 +30,12 @@ class LoginController extends GetxController {
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
         Get.back();
-        Get.snackbar(
+        CustomSnackBar.success(
           "Success",
           response.data["message"] ?? "Registration Successful",
-          backgroundColor: primary,
-          snackPosition: SnackPosition.BOTTOM,
-          duration: Duration(seconds: 2),
-          colorText: whiteColor,
         );
       }
     } catch (e) {
-      print("REGISTER ERROR → $e");
-
-      Get.snackbar(
-        "Error",
-        "Registration failed",
-        snackPosition: SnackPosition.BOTTOM,
-        colorText: Colors.white,
-        backgroundColor: Colors.red,
-      );
     } finally {
       isLoading.value = false;
     }
@@ -62,19 +49,21 @@ class LoginController extends GetxController {
         email: email,
         password: password,
       );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        StorageHelper.setId(response.data["user"]["_id"]);
+        StorageHelper.setName(response.data["user"]["name"]);
+        StorageHelper.setEmail(response.data["user"]["email"]);
+        StorageHelper.setPhone(response.data["user"]["mobile"]);
+        StorageHelper.setImage(response.data["user"]["image"]);
+        StorageHelper.setRole(response.data["user"]["role"]);
+        StorageHelper.setToken(response.data["token"]);
 
-      print("LOGIN SUCCESS: ${response.data}");
-
-      // OPTIONAL: Save token if backend sends one
-      if (response.data["token"] != null) {
-        NetworkService().setToken(response.data["token"]);
+        CustomSnackBar.success(
+          "Success",
+          response.data["message"] ?? "Login Successful",
+        );
+        Get.offAllNamed(Routes.DASHBOARDSCREEN);
       }
-
-      Get.snackbar(
-        "Success",
-        response.data["message"] ?? "Login Successful",
-        snackPosition: SnackPosition.BOTTOM,
-      );
     } catch (e) {
       print("LOGIN ERROR → $e");
 

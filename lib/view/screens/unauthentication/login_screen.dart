@@ -178,7 +178,7 @@ class LoginScreen extends StatelessWidget {
                                 TaskCustomTextField(
                                   controller: emailController,
                                   textCapitalization: TextCapitalization.none,
-                                  keyboardType: TextInputType.number,
+                                  keyboardType: TextInputType.emailAddress,
                                   data: "email",
                                   hintText: "enterEmail".tr,
                                 ),
@@ -186,7 +186,7 @@ class LoginScreen extends StatelessWidget {
                                 TaskCustomTextField(
                                   controller: passwordController,
                                   textCapitalization: TextCapitalization.none,
-                                  keyboardType: TextInputType.number,
+                                  keyboardType: TextInputType.emailAddress,
                                   data: "password",
                                   hintText: "enterPassword".tr,
                                 ),
