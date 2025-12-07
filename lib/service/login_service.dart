@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:tlc_nyc/api/api_constant.dart';
 import 'package:tlc_nyc/service/network_service.dart';
@@ -10,14 +12,17 @@ class LoginService {
     required String mobile,
     required String email,
     required String password,
-    required String imagePath,
+    required File imagePath,
   }) async {
     final formData = {
       "name": name,
       "mobile": mobile,
       "email": email,
       "password": password,
-      "image": await MultipartFile.fromFile(imagePath),
+      "image": await MultipartFile.fromFile(
+        imagePath.path,
+        filename: imagePath.path.split('/').last,
+      ),
     };
 
     return await _networkService.postRequest(

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tlc_nyc/constant/color_constant.dart';
 import 'package:tlc_nyc/service/login_service.dart';
 import 'package:tlc_nyc/service/network_service.dart';
 
@@ -15,7 +16,7 @@ class LoginController extends GetxController {
     required String mobile,
     required String email,
     required String password,
-    required String imagePath,
+    required File imagePath,
   }) async {
     try {
       isLoading.value = true;
@@ -27,14 +28,17 @@ class LoginController extends GetxController {
         password: password,
         imagePath: imagePath,
       );
-
-      print("REGISTER SUCCESS: ${response.data}");
-
-      Get.snackbar(
-        "Success",
-        response.data["message"] ?? "Registration Successful",
-        snackPosition: SnackPosition.BOTTOM,
-      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        Get.back();
+        Get.snackbar(
+          "Success",
+          response.data["message"] ?? "Registration Successful",
+          backgroundColor: primary,
+          snackPosition: SnackPosition.BOTTOM,
+          duration: Duration(seconds: 2),
+          colorText: whiteColor,
+        );
+      }
     } catch (e) {
       print("REGISTER ERROR → $e");
 

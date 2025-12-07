@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:tlc_nyc/api/api_constant.dart';
 
 class NetworkService {
   static final NetworkService _instance = NetworkService._internal();
@@ -10,7 +11,7 @@ class NetworkService {
   NetworkService._internal() {
     dio = Dio(
       BaseOptions(
-        baseUrl: "https://your-api-url.com/api/",
+        baseUrl: ApiConstant.baseUrl,
         connectTimeout: Duration(seconds: 20),
         receiveTimeout: Duration(seconds: 20),
         headers: {"Accept": "application/json"},
