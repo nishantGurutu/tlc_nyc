@@ -21,9 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   checkLoginStatus() async {
     await Future.delayed(const Duration(seconds: 2));
-    print("Checking login status... ${StorageHelper.getId()}");
     String? userId = await StorageHelper.getId();
-
     if (userId != null && userId.isNotEmpty) {
       Get.offAllNamed(Routes.BOTTOMBAR);
     } else {
