@@ -10,18 +10,20 @@ class AddQuestionAnswerBottomSheet extends StatefulWidget {
   const AddQuestionAnswerBottomSheet({super.key});
 
   @override
-  State<AddQuestionAnswerBottomSheet> createState() => _AddQuestionAnswerBottomSheetState();
+  State<AddQuestionAnswerBottomSheet> createState() =>
+      _AddQuestionAnswerBottomSheetState();
 }
 
-class _AddQuestionAnswerBottomSheetState extends State<AddQuestionAnswerBottomSheet> {
+class _AddQuestionAnswerBottomSheetState
+    extends State<AddQuestionAnswerBottomSheet> {
   final AddQuestionController controller = Get.find<AddQuestionController>();
   final TextEditingController questionController = TextEditingController();
   final TextEditingController groupCodeController = TextEditingController();
-  
+
   final List<Map<String, dynamic>> answers = [];
   final List<TextEditingController> answerControllers = [];
   final List<bool> isCorrectList = [];
-  
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String? selectedQuestionType;
   int? selectedQuestionTypeCode;
@@ -96,11 +98,7 @@ class _AddQuestionAnswerBottomSheetState extends State<AddQuestionAnswerBottomSh
                   ),
                   GestureDetector(
                     onTap: () => Get.back(),
-                    child: Icon(
-                      Icons.close,
-                      size: 24.sp,
-                      color: darkGreyColor,
-                    ),
+                    child: Icon(Icons.close, size: 24.sp, color: darkGreyColor),
                   ),
                 ],
               ),
@@ -112,89 +110,106 @@ class _AddQuestionAnswerBottomSheetState extends State<AddQuestionAnswerBottomSh
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                         Text(
-                           'Question Type',
-                           style: TextStyle(
-                             fontSize: 14.sp,
-                             fontWeight: FontWeight.w500,
-                             color: blackColor,
-                           ),
-                         ),
-                         SizedBox(height: 8.h),
-                         Container(
-                           decoration: BoxDecoration(
-                             border: Border.all(color: lightBorderColor),
-                             borderRadius: BorderRadius.circular(10.r),
-                           ),
-                           child: Obx(() {
-                             if (controller.homeController.isGroupLoading.value) {
-                               return Padding(
-                                 padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 16.h),
-                                 child: Row(
-                                   children: [
-                                     SizedBox(
-                                       width: 16.w,
-                                       height: 16.h,
-                                       child: CircularProgressIndicator(
-                                         strokeWidth: 2,
-                                         color: primary,
-                                       ),
-                                     ),
-                                     SizedBox(width: 8.w),
-                                     Text(
-                                       'Loading question types...',
-                                       style: TextStyle(
-                                         color: Colors.grey.shade600,
-                                         fontSize: 14.sp,
-                                       ),
-                                     ),
-                                   ],
-                                 ),
-                               );
-                             }
-                             return DropdownButtonHideUnderline(
-                               child: DropdownButton<String>(
-                                 value: selectedQuestionType,
-                                 hint: Padding(
-                                   padding: EdgeInsets.symmetric(horizontal: 12.w),
-                                   child: Text(
-                                     'Select Question Type',
-                                     style: TextStyle(
-                                       color: Colors.grey.shade600,
-                                       fontSize: 14.sp,
-                                     ),
-                                   ),
-                                 ),
-                                 isExpanded: true,
-                                 dropdownColor: whiteColor,
-                                 items: controller.homeController.groupListData.map((item) {
-                                   return DropdownMenuItem<String>(
-                                     value: item.qtypENAME,
-                                     child: Padding(
-                                       padding: EdgeInsets.symmetric(horizontal: 12.w),
-                                       child: Text(
-                                         item.qtypENAME ?? '',
-                                         style: TextStyle(
-                                           fontSize: 14.sp,
-                                           color: blackColor,
-                                         ),
-                                       ),
-                                     ),
-                                   );
-                                 }).toList(),
-                                 onChanged: (String? newValue) {
-                                   setState(() {
-                                     selectedQuestionType = newValue;
-                                     final selectedItem = controller.homeController.groupListData.firstWhere(
-                                       (item) => item.qtypENAME == newValue,
-                                     );
-                                     selectedQuestionTypeCode = selectedItem.qtypECODE;
-                                   });
-                                 },
-                               ),
-                             );
-                           }),
-                         ),
+                        Text(
+                          'Question Type',
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w500,
+                            color: blackColor,
+                          ),
+                        ),
+                        SizedBox(height: 8.h),
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: lightBorderColor),
+                            borderRadius: BorderRadius.circular(10.r),
+                          ),
+                          child: Obx(() {
+                            if (controller
+                                .homeController
+                                .isGroupLoading
+                                .value) {
+                              return Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 12.w,
+                                  vertical: 16.h,
+                                ),
+                                child: Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 16.w,
+                                      height: 16.h,
+                                      child: CircularProgressIndicator(
+                                        strokeWidth: 2,
+                                        color: primary,
+                                      ),
+                                    ),
+                                    SizedBox(width: 8.w),
+                                    Text(
+                                      'Loading question types...',
+                                      style: TextStyle(
+                                        color: Colors.grey.shade600,
+                                        fontSize: 14.sp,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }
+                            return DropdownButtonHideUnderline(
+                              child: DropdownButton<String>(
+                                value: selectedQuestionType,
+                                hint: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 12.w,
+                                  ),
+                                  child: Text(
+                                    'Select Question Type',
+                                    style: TextStyle(
+                                      color: Colors.grey.shade600,
+                                      fontSize: 14.sp,
+                                    ),
+                                  ),
+                                ),
+                                isExpanded: true,
+                                dropdownColor: whiteColor,
+                                items:
+                                    controller.homeController.groupListData.map(
+                                      (item) {
+                                        return DropdownMenuItem<String>(
+                                          value: item.qtypENAME,
+                                          child: Padding(
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal: 12.w,
+                                            ),
+                                            child: Text(
+                                              item.qtypENAME ?? '',
+                                              style: TextStyle(
+                                                fontSize: 14.sp,
+                                                color: blackColor,
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ).toList(),
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    selectedQuestionType = newValue;
+                                    final selectedItem = controller
+                                        .homeController
+                                        .groupListData
+                                        .firstWhere(
+                                          (item) => item.qtypENAME == newValue,
+                                        );
+                                    selectedQuestionTypeCode =
+                                        selectedItem.qtypECODE;
+                                  });
+                                },
+                              ),
+                            );
+                          }),
+                        ),
                         SizedBox(height: 16.h),
                         Text(
                           'Question Name',
@@ -205,7 +220,7 @@ class _AddQuestionAnswerBottomSheetState extends State<AddQuestionAnswerBottomSh
                           ),
                         ),
                         SizedBox(height: 8.h),
-                         CustomTextField(
+                        CustomTextField(
                           controller: questionController,
                           hintText: 'Enter question text',
                           keyboardType: TextInputType.emailAddress,
@@ -226,7 +241,10 @@ class _AddQuestionAnswerBottomSheetState extends State<AddQuestionAnswerBottomSh
                             GestureDetector(
                               onTap: _addAnswerField,
                               child: Container(
-                                padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 12.w,
+                                  vertical: 6.h,
+                                ),
                                 decoration: BoxDecoration(
                                   color: primary,
                                   borderRadius: BorderRadius.circular(6.r),
@@ -234,7 +252,11 @@ class _AddQuestionAnswerBottomSheetState extends State<AddQuestionAnswerBottomSh
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    Icon(Icons.add, color: whiteColor, size: 16.sp),
+                                    Icon(
+                                      Icons.add,
+                                      color: whiteColor,
+                                      size: 16.sp,
+                                    ),
                                     SizedBox(width: 4.w),
                                     Text(
                                       'Add Answer',
@@ -250,7 +272,7 @@ class _AddQuestionAnswerBottomSheetState extends State<AddQuestionAnswerBottomSh
                             ),
                           ],
                         ),
-                        
+
                         SizedBox(height: 12.h),
                         ...List.generate(answerControllers.length, (index) {
                           return Padding(
@@ -259,20 +281,23 @@ class _AddQuestionAnswerBottomSheetState extends State<AddQuestionAnswerBottomSh
                               children: [
                                 Expanded(
                                   child: CustomTextField(
-                          controller: answerControllers[index],
-                          hintText: 'Enter answer ${index + 1}',
-                          keyboardType: TextInputType.emailAddress,
-                          textCapitalization: TextCapitalization.sentences,
-                        ),
-                        
-                                   
+                                    controller: answerControllers[index],
+                                    hintText: 'Enter answer ${index + 1}',
+                                    keyboardType: TextInputType.emailAddress,
+                                    textCapitalization:
+                                        TextCapitalization.sentences,
+                                  ),
                                 ),
                                 SizedBox(width: 8.w),
                                 GestureDetector(
                                   onTap: () {
                                     setState(() {
                                       // First, set all answers to false
-                                      for (int i = 0; i < isCorrectList.length; i++) {
+                                      for (
+                                        int i = 0;
+                                        i < isCorrectList.length;
+                                        i++
+                                      ) {
                                         isCorrectList[i] = false;
                                       }
                                       // Then set only the selected answer to true
@@ -282,12 +307,18 @@ class _AddQuestionAnswerBottomSheetState extends State<AddQuestionAnswerBottomSh
                                   child: Container(
                                     padding: EdgeInsets.all(8.w),
                                     decoration: BoxDecoration(
-                                      color: isCorrectList[index] ? Colors.green : Colors.grey.shade300,
+                                      color:
+                                          isCorrectList[index]
+                                              ? Colors.green
+                                              : Colors.grey.shade300,
                                       borderRadius: BorderRadius.circular(6.r),
                                     ),
                                     child: Icon(
                                       Icons.check,
-                                      color: isCorrectList[index] ? whiteColor : darkGreyColor,
+                                      color:
+                                          isCorrectList[index]
+                                              ? whiteColor
+                                              : darkGreyColor,
                                       size: 16.sp,
                                     ),
                                   ),
@@ -300,7 +331,9 @@ class _AddQuestionAnswerBottomSheetState extends State<AddQuestionAnswerBottomSh
                                       padding: EdgeInsets.all(8.w),
                                       decoration: BoxDecoration(
                                         color: Colors.red.shade300,
-                                        borderRadius: BorderRadius.circular(6.r),
+                                        borderRadius: BorderRadius.circular(
+                                          6.r,
+                                        ),
                                       ),
                                       child: Icon(
                                         Icons.remove,
@@ -313,54 +346,63 @@ class _AddQuestionAnswerBottomSheetState extends State<AddQuestionAnswerBottomSh
                             ),
                           );
                         }),
-                        
+
                         SizedBox(height: 20.h),
-                         Obx(() => CustomButton(
-                           onPressed: ()async {
-                                   if (_formKey.currentState!.validate()) {
-                                     if (selectedQuestionTypeCode == null) {
-                                       Get.snackbar(
-                                         'Error',
-                                         'Please select a question type',
-                                         snackPosition: SnackPosition.BOTTOM,
-                                       );
-                                       return;
-                                     }
-                                     final answersData = <Map<String, dynamic>>[];
-                                     for (int i = 0; i < answerControllers.length; i++) {
-                                       answersData.add({
-                                         'name': answerControllers[i].text.trim(),
-                                         'isCorrect': isCorrectList[i],
-                                       });
-                                     }
-                                     
-                                     final success = await controller.addQuestionWithAnswers(
-                                       questionName: questionController.text.trim(),
-                                       
-                                       questionTypeCode: selectedQuestionTypeCode!,
-                                       answers: answersData,
-                                     );
-                                     
-                                     if (success) {
-                                       Get.back();
-                                       _clearForm();
-                                     }
-                                   }
-                                 },
-                          color: primary,
-                          text: controller.isLoading.value
-                              ? CircularProgressIndicator(color: whiteColor)
-                              : Text(
-                                  'Add Question with answers',
-                                  style: TextStyle(
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.w600,
-                                    color: whiteColor,
-                                  ),
-                                ),
-                          width: double.infinity,
-                          height: 50.h,
-                        )),
+                        Obx(
+                          () => CustomButton(
+                            onPressed: () async {
+                              if (_formKey.currentState!.validate()) {
+                                if (selectedQuestionTypeCode == null) {
+                                  Get.snackbar(
+                                    'Error',
+                                    'Please select a question type',
+                                    snackPosition: SnackPosition.BOTTOM,
+                                  );
+                                  return;
+                                }
+                                final answersData = <Map<String, dynamic>>[];
+                                for (
+                                  int i = 0;
+                                  i < answerControllers.length;
+                                  i++
+                                ) {
+                                  answersData.add({
+                                    'name': answerControllers[i].text.trim(),
+                                    'isCorrect': isCorrectList[i],
+                                  });
+                                }
+
+                                //  final success = await controller.addQuestionWithAnswers(
+                                //    questionName: questionController.text.trim(),
+
+                                //    questionTypeCode: selectedQuestionTypeCode!,
+                                //    answers: answersData,
+                                //  );
+
+                                // if (success) {
+                                //   Get.back();
+                                //   _clearForm();
+                                // }
+                              }
+                            },
+                            color: primary,
+                            text:
+                                controller.isLoading.value
+                                    ? CircularProgressIndicator(
+                                      color: whiteColor,
+                                    )
+                                    : Text(
+                                      'Add Question with answers',
+                                      style: TextStyle(
+                                        fontSize: 16.sp,
+                                        fontWeight: FontWeight.w600,
+                                        color: whiteColor,
+                                      ),
+                                    ),
+                            width: double.infinity,
+                            height: 50.h,
+                          ),
+                        ),
                       ],
                     ),
                   ),

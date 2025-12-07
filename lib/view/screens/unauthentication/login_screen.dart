@@ -195,10 +195,11 @@ class LoginScreen extends StatelessWidget {
                                   padding: EdgeInsets.symmetric(vertical: 8.h),
                                   onPressed: () {
                                     if (_key.currentState!.validate()) {
-                                      // Get.offAll(
-                                      //   () => BottomNavigationBarScreen(),
-                                      // );
-                                      Get.toNamed(Routes.BOTTOMBAR);
+                                      loginController.login(
+                                        email: emailController.text.trim(),
+                                        password: passwordController.text,
+                                      );
+                                      // Get.toNamed(Routes.BOTTOMBAR);
                                     }
                                   },
                                   color: primary,

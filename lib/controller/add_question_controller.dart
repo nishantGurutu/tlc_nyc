@@ -41,78 +41,78 @@ class AddQuestionController extends GetxController {
     }
   }
 
-  Future<bool> addQuestionWithAnswers({
-    required String questionName,
-    required int questionTypeCode,
-    required List<Map<String, dynamic>> answers,
-  }) async {
-    isLoading.value = true;
-    try {
-      final questionMast = QuestionMast(
-        questioNCODE: 0,
-        questioNNAME: questionName,
-        grPCODE: 0,
-        qtypECODE: questionTypeCode,
-        isactive: true,
-      );
+  // Future<bool> addQuestionWithAnswers({
+  //   required String questionName,
+  //   required int questionTypeCode,
+  //   required List<Map<String, dynamic>> answers,
+  // }) async {
+  //   isLoading.value = true;
+  //   try {
+  //     final questionMast = QuestionMast(
+  //       questioNCODE: 0,
+  //       questioNNAME: questionName,
+  //       grPCODE: 0,
+  //       qtypECODE: questionTypeCode,
+  //       isactive: true,
+  //     );
 
-      final answersList =
-          answers
-              .map(
-                (answer) => Answer(
-                  answerCode: 0,
-                  answerName: answer['name'],
-                  isCorrect: answer["isCorrect"],
-                ),
-              )
-              .toList();
+  //     final answersList =
+  //         answers
+  //             .map(
+  //               (answer) => Answer(
+  //                 answerCode: 0,
+  //                 answerName: answer['name'],
+  //                 isCorrect: answer["isCorrect"],
+  //               ),
+  //             )
+  //             .toList();
 
-      final questionWithAnswers = AddQuestionWithAnswersModel(
-        questionMast: questionMast,
-        answers: answersList,
-      );
+  //     final questionWithAnswers = AddQuestionWithAnswersModel(
+  //       questionMast: questionMast,
+  //       answers: answersList,
+  //     );
 
-      final result = await _addQuestionService.addQuestionWithAnswers(
-        questionWithAnswers,
-      );
+  //     // final result = await _addQuestionService.addQuestionWithAnswers(
+  //     //   questionWithAnswers,
+  //     // );
 
-      if (result) {
-        final questions = await _addQuestionService
-            .getQuestionWithAnswersByTypeCode(questionTypeCode);
+  //     // if (result) {
+  //     //   final questions = await _addQuestionService
+  //     //       .getQuestionWithAnswersByTypeCode(questionTypeCode);
 
-        if (questions != null) {
-          Get.snackbar(
-            'Success',
-            'Question with answers added successfully. Retrieved ${questions.length} questions.',
-            snackPosition: SnackPosition.BOTTOM,
-          );
-        } else {
-          Get.snackbar(
-            'Success',
-            'Question with answers added successfully, but failed to retrieve updated questions.',
-            snackPosition: SnackPosition.BOTTOM,
-          );
-        }
-      } else {
-        Get.snackbar(
-          'Error',
-          'Failed to add question with answers',
-          snackPosition: SnackPosition.BOTTOM,
-        );
-      }
+  //     //   if (questions != null) {
+  //     //     Get.snackbar(
+  //     //       'Success',
+  //     //       'Question with answers added successfully. Retrieved ${questions.length} questions.',
+  //     //       snackPosition: SnackPosition.BOTTOM,
+  //     //     );
+  //     //   } else {
+  //     //     Get.snackbar(
+  //     //       'Success',
+  //     //       'Question with answers added successfully, but failed to retrieve updated questions.',
+  //     //       snackPosition: SnackPosition.BOTTOM,
+  //     //     );
+  //     //   }
+  //     // } else {
+  //     //   Get.snackbar(
+  //     //     'Error',
+  //     //     'Failed to add question with answers',
+  //     //     snackPosition: SnackPosition.BOTTOM,
+  //     //   );
+  //     // }
 
-      return result;
-    } catch (e) {
-      Get.snackbar(
-        'Error',
-        'Error adding question with answers: $e',
-        snackPosition: SnackPosition.BOTTOM,
-      );
-      return false;
-    } finally {
-      isLoading.value = false;
-    }
-  }
+  //     // return result;
+  //   } catch (e) {
+  //     Get.snackbar(
+  //       'Error',
+  //       'Error adding question with answers: $e',
+  //       snackPosition: SnackPosition.BOTTOM,
+  //     );
+  //     return false;
+  //   } finally {
+  //     isLoading.value = false;
+  //   }
+  // }
 
   var isLoadingQuestion = false.obs;
   RxList<QuestionAnswerModel> questionAnswerList = <QuestionAnswerModel>[].obs;
@@ -124,15 +124,15 @@ class AddQuestionController extends GetxController {
   Future<void> questionAnswerListApi(int testTypeId) async {
     isLoadingQuestion.value = true;
     try {
-      final result = await AddQuestionService()
-          .getQuestionWithAnswersByTypeCode(testTypeId);
+      // final result = await AddQuestionService()
+      //     .getQuestionWithAnswersByTypeCode(testTypeId);
 
-      if (result != null) {
-        questionAnswerList.assignAll(result);
-        currentQuestionIndex.value = 0;
-        selectedAnswers.clear();
-        revealedAnswers.clear();
-      }
+      // if (result != null) {
+      //   questionAnswerList.assignAll(result);
+      //   currentQuestionIndex.value = 0;
+      //   selectedAnswers.clear();
+      //   revealedAnswers.clear();
+      // }
     } catch (e) {
       isLoadingQuestion.value = false;
     } finally {

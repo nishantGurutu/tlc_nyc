@@ -12,35 +12,41 @@ class AddQuestionService {
   }
 
   void _setupInterceptors() {
-    _dio.interceptors.add(InterceptorsWrapper(
-      onRequest: (RequestOptions options, RequestInterceptorHandler handler) {
-        print('🚀 REQUEST[${options.method}] => PATH: ${options.path}');
-        print('📋 Headers: ${options.headers}');
-        print('📦 Data: ${options.data}');
-        print('🔗 Query Parameters: ${options.queryParameters}');
-        handler.next(options);
-      },
-      onResponse: (Response response, ResponseInterceptorHandler handler) {
-        print('✅ RESPONSE[${response.statusCode}] => PATH: ${response.requestOptions.path}');
-        print('📋 Headers: ${response.headers}');
-        print('📦 Data: ${response.data}');
-        print('📊 Data Type: ${response.data.runtimeType}');
-        if (response.data is List) {
-          print('📝 List Length: ${(response.data as List).length}');
-          if ((response.data as List).isNotEmpty) {
-            print('📄 First Item: ${(response.data as List).first}');
+    _dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (RequestOptions options, RequestInterceptorHandler handler) {
+          print('🚀 REQUEST[${options.method}] => PATH: ${options.path}');
+          print('📋 Headers: ${options.headers}');
+          print('📦 Data: ${options.data}');
+          print('🔗 Query Parameters: ${options.queryParameters}');
+          handler.next(options);
+        },
+        onResponse: (Response response, ResponseInterceptorHandler handler) {
+          print(
+            '✅ RESPONSE[${response.statusCode}] => PATH: ${response.requestOptions.path}',
+          );
+          print('📋 Headers: ${response.headers}');
+          print('📦 Data: ${response.data}');
+          print('📊 Data Type: ${response.data.runtimeType}');
+          if (response.data is List) {
+            print('📝 List Length: ${(response.data as List).length}');
+            if ((response.data as List).isNotEmpty) {
+              print('📄 First Item: ${(response.data as List).first}');
+            }
           }
-        }
-        handler.next(response);
-      },
-      onError: (DioException error, ErrorInterceptorHandler handler) {
-        print('❌ ERROR[${error.response?.statusCode}] => PATH: ${error.requestOptions.path}');
-        print('📋 Error Message: ${error.message}');
-        print('📦 Error Data: ${error.response?.data}');
-        print('📋 Error Headers: ${error.response?.headers}');
-        handler.next(error);
-      },
-    ));
+          handler.next(response);
+        },
+        onError: (DioException error, ErrorInterceptorHandler handler) {
+          print(
+            '❌ ERROR[${error.response?.statusCode}] => PATH: ${error.requestOptions.path}',
+          );
+          print('📋 Error Message: ${error.message}');
+          print('📦 Error Data: ${error.response?.data}');
+          print('📋 Error Headers: ${error.response?.headers}');
+          handler.next(error);
+        },
+      ),
+    );
   }
 
   Future<bool> addQuestionType(AddQuestionTypeModel questionType) async {
@@ -48,11 +54,7 @@ class AddQuestionService {
       final response = await _dio.post(
         '${ApiConstant.baseUrl}${ApiConstant.addQuestionType}',
         data: questionType.toJson(),
-        options: Options(
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        ),
+        options: Options(headers: {'Content-Type': 'application/json'}),
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
@@ -66,16 +68,14 @@ class AddQuestionService {
     }
   }
 
-  Future<bool> addQuestionWithAnswers(AddQuestionWithAnswersModel questionWithAnswers) async {
+  Future<bool> addQuestionWithAnswers(
+    AddQuestionWithAnswersModel questionWithAnswers,
+  ) async {
     try {
       final response = await _dio.post(
         '${ApiConstant.baseUrl}${ApiConstant.addQuestionWithAnswers}',
         data: questionWithAnswers.toJson(),
-        options: Options(
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        ),
+        options: Options(headers: {'Content-Type': 'application/json'}),
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
@@ -89,36 +89,40 @@ class AddQuestionService {
     }
   }
 
-  Future<List<QuestionAnswerModel>?> getQuestionWithAnswersByTypeCode(int qtypeCode) async {
+  Future<List<QuestionAnswerModel>?> getQuestionWithAnswersByTypeCode(
+    int qtypeCode,
+  ) async {
     try {
-      print('🔍 Calling getQuestionWithAnswersByTypeCode with QTYPE_CODE: $qtypeCode');
-      print('🌐 Full URL: ${ApiConstant.baseUrl}${ApiConstant.questionAnswerBytypeid}?QTYPE_CODE=$qtypeCode');
-      
+      print(
+        '🔍 Calling getQuestionWithAnswersByTypeCode with QTYPE_CODE: $qtypeCode',
+      );
+      print(
+        '🌐 Full URL: ${ApiConstant.baseUrl}${ApiConstant.questionAnswerBytypeid}?QTYPE_CODE=$qtypeCode',
+      );
+
       final response = await _dio.post(
         '${ApiConstant.baseUrl}${ApiConstant.questionAnswerBytypeid}?QTYPE_CODE=$qtypeCode',
-        options: Options(
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        ),
+        options: Options(headers: {'Content-Type': 'application/json'}),
       );
 
       print('📊 Response Status Code: ${response.statusCode}');
       print('📊 Response Status Message: ${response.statusMessage}');
-      
+
       if (response.statusCode == 200) {
         print('✅ Success! Processing response data...');
         print('📦 Raw Response Data: ${response.data}');
         print('📊 Data Type: ${response.data.runtimeType}');
-        
+
         if (response.data is List) {
-          print('📝 Response is a List with ${(response.data as List).length} items');
-          
+          print(
+            '📝 Response is a List with ${(response.data as List).length} items',
+          );
+
           if ((response.data as List).isEmpty) {
             print('⚠️ Warning: Response list is empty');
             return [];
           }
-          
+
           // Try to parse the first item to see its structure
           try {
             final firstItem = (response.data as List).first;
@@ -127,7 +131,7 @@ class AddQuestionService {
           } catch (e) {
             print('❌ Error accessing first item: $e');
           }
-          
+
           return (response.data as List)
               .map((item) {
                 try {
@@ -161,4 +165,3 @@ class AddQuestionService {
     }
   }
 }
-

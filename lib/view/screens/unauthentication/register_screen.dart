@@ -3,12 +3,15 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:tlc_nyc/constant/color_constant.dart';
 import 'package:tlc_nyc/constant/image_constant.dart';
 import 'package:tlc_nyc/controller/login_controller.dart';
 import 'package:tlc_nyc/routes/app_pages.dart';
+import 'package:tlc_nyc/utils/bottom_sheet.dart';
 import 'package:tlc_nyc/utils/custom_button.dart';
 import 'package:tlc_nyc/utils/custom_text_field.dart';
+import 'package:tlc_nyc/utils/image_picker_class.dart';
 import 'package:tlc_nyc/view/screens/authenticated/dash_board_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -20,7 +23,9 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   final LoginController loginController = Get.find<LoginController>();
+  final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
+  final TextEditingController mobileController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> _key = GlobalKey();
   @override
@@ -190,17 +195,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     Positioned(
                                       bottom: 7.h,
                                       right: 9.w,
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          color: primary,
-                                          shape: BoxShape.circle,
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(4.0),
-                                          child: Icon(
-                                            Icons.camera_alt,
-                                            size: 12.sp,
-                                            color: whiteColor,
+                                      child: InkWell(
+                                        onTap: () {
+                                          BottomSheetClass()
+                                              .showImagePickerSheet(context);
+                                        },
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            color: primary,
+                                            shape: BoxShape.circle,
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(4.0),
+                                            child: Icon(
+                                              Icons.camera_alt,
+                                              size: 12.sp,
+                                              color: whiteColor,
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -209,7 +220,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 ),
                                 SizedBox(height: 20.h),
                                 TaskCustomTextField(
-                                  controller: emailController,
+                                  controller: nameController,
                                   textCapitalization: TextCapitalization.none,
                                   keyboardType: TextInputType.number,
                                   data: "name".tr,
@@ -225,7 +236,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 ),
                                 SizedBox(height: 15.h),
                                 TaskCustomTextField(
-                                  controller: emailController,
+                                  controller: mobileController,
                                   textCapitalization: TextCapitalization.none,
                                   keyboardType: TextInputType.number,
                                   data: "mobileNumber".tr,
@@ -244,10 +255,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   padding: EdgeInsets.symmetric(vertical: 8.h),
                                   onPressed: () {
                                     if (_key.currentState!.validate()) {
-                                      // Get.offAll(
-                                      //   () => BottomNavigationBarScreen(),
-                                      // );
-                                      Get.toNamed(Routes.BOTTOMBAR);
+                                      loginController.register(
+                                        name: nameController.text,
+                                        mobile: mobileController.text,
+                                        email: emailController.text,
+                                        password: passwordController.text,
+                                        imagePath: '',
+                                      );
                                     }
                                   },
                                   color: primary,

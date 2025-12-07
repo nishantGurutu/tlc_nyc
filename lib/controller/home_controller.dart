@@ -19,10 +19,10 @@ class HomeController extends GetxController {
     isGroupLoading.value = true;
 
     try {
-      final result = await HomeService().questionTypeList();
-      if (result != null) {
-        groupListData.assignAll(result);
-      }
+      // final result = await HomeService().questionTypeList();
+      // if (result != null) {
+      //   groupListData.assignAll(result);
+      // }
       print('API response: ${groupListData.length} items loaded');
     } catch (e) {
       print('Error fetching or caching data: $e');
