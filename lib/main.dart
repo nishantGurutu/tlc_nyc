@@ -4,10 +4,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:tlc_nyc/constant/text_translation.dart';
 import 'package:tlc_nyc/firebase_options.dart';
+import 'package:tlc_nyc/helper/storage_helper.dart';
 import 'package:tlc_nyc/routes/app_pages.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await StorageHelper.initialize();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }

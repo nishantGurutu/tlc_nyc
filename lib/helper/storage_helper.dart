@@ -36,7 +36,7 @@ class StorageHelper {
       await _preferences?.setString(_token, token);
 
   // Get methods
-  static dynamic getId() => _preferences?.getInt(_keyId);
+  static dynamic getId() => _preferences?.getString(_keyId);
   static dynamic getName() => _preferences?.getString(_keyName);
   static dynamic getEmail() => _preferences?.getString(_keyEmail);
   static dynamic getPhone() => _preferences?.getString(_keyPhone);
