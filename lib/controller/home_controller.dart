@@ -1,7 +1,6 @@
 import 'package:get/get.dart';
 import 'package:tlc_nyc/model/test_type_model.dart';
 import 'package:tlc_nyc/routes/app_pages.dart';
-import 'package:tlc_nyc/service/home_service.dart';
 
 class HomeController extends GetxController {
   void onTestSelected({required String testType, required int testTypeId}) {

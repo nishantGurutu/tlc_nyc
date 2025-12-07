@@ -1,8 +1,10 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:tlc_nyc/constant/color_constant.dart';
 import 'package:tlc_nyc/controller/add_question_controller.dart';
+import 'package:tlc_nyc/utils/bottom_sheet.dart';
 import 'package:tlc_nyc/utils/customTextField.dart';
 import 'package:tlc_nyc/utils/custom_button.dart';
 
@@ -10,30 +12,21 @@ class AddQuestionTypeBottomSheet extends StatefulWidget {
   const AddQuestionTypeBottomSheet({super.key});
 
   @override
-  State<AddQuestionTypeBottomSheet> createState() => _AddQuestionTypeBottomSheetState();
+  State<AddQuestionTypeBottomSheet> createState() =>
+      _AddQuestionTypeBottomSheetState();
 }
 
-class _AddQuestionTypeBottomSheetState extends State<AddQuestionTypeBottomSheet> {
+class _AddQuestionTypeBottomSheetState
+    extends State<AddQuestionTypeBottomSheet> {
   final AddQuestionController controller = Get.find<AddQuestionController>();
   final TextEditingController questionTypeController = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
-    questionTypeController.dispose();
+    questionTypeController.clear();
+    controller.pickedFile.value = File('');
     super.dispose();
-  }
-
-  void _handleSubmit() async {
-    if (_formKey.currentState!.validate()) {
-      final success = await controller.addQuestionType(
-        questionTypeController.text.trim(),
-      );
-      if (success) {
-        Get.back();
-        questionTypeController.clear();
-      }
-    }
   }
 
   @override
@@ -53,7 +46,6 @@ class _AddQuestionTypeBottomSheetState extends State<AddQuestionTypeBottomSheet>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Header
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -67,11 +59,7 @@ class _AddQuestionTypeBottomSheetState extends State<AddQuestionTypeBottomSheet>
                   ),
                   GestureDetector(
                     onTap: () => Get.back(),
-                    child: Icon(
-                      Icons.close,
-                      size: 24.sp,
-                      color: darkGreyColor,
-                    ),
+                    child: Icon(Icons.close, size: 24.sp, color: darkGreyColor),
                   ),
                 ],
               ),
@@ -92,41 +80,100 @@ class _AddQuestionTypeBottomSheetState extends State<AddQuestionTypeBottomSheet>
                       ),
                       SizedBox(height: 8.h),
                       CustomTextField(
-                          controller: questionTypeController,
-                          hintText: 'Enter question type name',
-                          keyboardType: TextInputType.emailAddress,
-                          textCapitalization: TextCapitalization.sentences,
-                        ),
-                      
-                      
-                      SizedBox(height: 20.h),
-                      
+                        controller: questionTypeController,
+                        hintText: 'Enter question type name',
+                        keyboardType: TextInputType.emailAddress,
+                        textCapitalization: TextCapitalization.sentences,
+                      ),
+                      SizedBox(height: 15.h),
                       Text(
-                        'Note: qtypE_CODE will be set to 0 and isactive will be set to true automatically.',
+                        'Select Image',
                         style: TextStyle(
-                          fontSize: 12.sp,
-                          color: darkGreyColor,
-                          fontStyle: FontStyle.italic,
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w500,
+                          color: blackColor,
+                        ),
+                      ),
+                      SizedBox(height: 5.h),
+                      InkWell(
+                        onTap: () {
+                          BottomSheetClass().showImagePickerSheet(
+                            context,
+                            "question_type",
+                          );
+                        },
+                        child: Obx(
+                          () => Container(
+                            height: 50.h,
+                            width: 80.w,
+                            decoration: BoxDecoration(
+                              color: mildBorderColor,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(8.r),
+                              ),
+                              image:
+                                  controller.pickedFile.value != null
+                                      ? DecorationImage(
+                                        image: FileImage(
+                                          File(
+                                            controller.pickedFile.value.path,
+                                          ),
+                                        ),
+                                        fit: BoxFit.cover,
+                                      )
+                                      : null,
+                            ),
+                          ),
                         ),
                       ),
                       Spacer(),
-                      Obx(() => CustomButton(
-                        onPressed: _handleSubmit,
-                        color: primary,
-                        text: controller.isLoading.value
-                            ? CircularProgressIndicator(color: whiteColor)
-                            : Text(
-                                'Add Question Type',
-                                style: TextStyle(
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.w600,
-                                  color: whiteColor,
-                                ),
-                              ),
-                        width: double.infinity,
-                        height: 50.h,
+                      Obx(
+                        () => CustomButton(
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              controller.addQuestionType(
+                                questionTypeController.text.trim(),
+                                controller.pickedFile.value,
+                              );
+                            }
+                          },
+                          color: primary,
+                          text:
+                              controller.isLoading.value
+                                  ? Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SizedBox(
+                                        height: 15.h,
+                                        width: 15.w,
+
+                                        child: CircularProgressIndicator(
+                                          color: whiteColor,
+                                        ),
+                                      ),
+                                      SizedBox(width: 5),
+                                      Text(
+                                        "Loading...",
+                                        style: TextStyle(
+                                          fontSize: 12.sp,
+                                          color: whiteColor,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                  : Text(
+                                    'Add Question Type',
+                                    style: TextStyle(
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.w600,
+                                      color: whiteColor,
+                                    ),
+                                  ),
+                          width: double.infinity,
+                          height: 50.h,
+                        ),
                       ),
-                    ),
                     ],
                   ),
                 ),

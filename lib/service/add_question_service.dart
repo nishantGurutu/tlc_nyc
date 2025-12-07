@@ -1,12 +1,14 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:tlc_nyc/api/api_constant.dart';
-import 'package:tlc_nyc/model/add_question_type_model.dart';
 import 'package:tlc_nyc/model/add_question_with_answers_model.dart';
 import 'package:tlc_nyc/model/question_answer_model.dart';
+import 'package:tlc_nyc/service/network_service.dart';
 
 class AddQuestionService {
   final Dio _dio = Dio();
-
+  final NetworkService _networkService = NetworkService();
   AddQuestionService() {
     _setupInterceptors();
   }
@@ -49,22 +51,23 @@ class AddQuestionService {
     );
   }
 
-  Future<bool> addQuestionType(AddQuestionTypeModel questionType) async {
+  Future<Response> addQuestionType(String questionType, File value) async {
     try {
-      final response = await _dio.post(
-        '${ApiConstant.baseUrl}${ApiConstant.addQuestionType}',
-        data: questionType.toJson(),
-        options: Options(headers: {'Content-Type': 'application/json'}),
+      final formData = {
+        "name": questionType,
+        "image": await MultipartFile.fromFile(
+          value.path,
+          filename: value.path.split('/').last,
+        ),
+      };
+      return await _networkService.postRequest(
+        ApiConstant.addQuestionType,
+        data: formData,
+        isFormData: true,
       );
-
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        return true;
-      } else {
-        return false;
-      }
     } catch (e) {
       print('Error in AddQuestionService - addQuestionType: $e');
-      return false;
+      return Future.error(e);
     }
   }
 

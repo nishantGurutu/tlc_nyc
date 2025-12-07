@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:tlc_nyc/helper/storage_helper.dart';
 import 'package:tlc_nyc/routes/app_pages.dart';
 import 'package:tlc_nyc/service/login_service.dart';
+import 'package:tlc_nyc/service/network_service.dart';
 import 'package:tlc_nyc/utils/custom_snakbar.dart';
 
 class LoginController extends GetxController {
@@ -57,7 +58,7 @@ class LoginController extends GetxController {
         StorageHelper.setImage(response.data["user"]["image"]);
         StorageHelper.setRole(response.data["user"]["role"]);
         StorageHelper.setToken(response.data["token"]);
-
+        await NetworkService().setToken(response.data["token"]);
         CustomSnackBar.success(
           "Success",
           response.data["message"] ?? "Login Successful",

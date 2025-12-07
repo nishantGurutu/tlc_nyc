@@ -72,8 +72,8 @@ class NetworkService {
   // -------------------------------------------
   // TOKEN MANAGEMENT
   // -------------------------------------------
-  void setToken(String token) {
-    dio.options.headers["Authorization"] = "Bearer ${StorageHelper.getToken()}";
+  Future<void> setToken(String token) async {
+    dio.options.headers["Authorization"] = "Bearer $token";
   }
 
   void clearToken() {
@@ -97,6 +97,20 @@ class NetworkService {
   // -------------------------------------------
   // POST
   // -------------------------------------------
+  // Future<Response> postRequest(
+  //   String endpoint, {
+  //   dynamic data,
+  //   bool isFormData = false,
+  // }) async {
+  //   try {
+  //     return await dio.post(
+  //       endpoint,
+  //       data: isFormData ? FormData.fromMap(data) : data,
+  //     );
+  //   } catch (e) {
+  //     rethrow;
+  //   }
+  // }
   Future<Response> postRequest(
     String endpoint, {
     dynamic data,
@@ -106,6 +120,9 @@ class NetworkService {
       return await dio.post(
         endpoint,
         data: isFormData ? FormData.fromMap(data) : data,
+        options: Options(
+          contentType: isFormData ? "multipart/form-data" : "application/json",
+        ),
       );
     } catch (e) {
       rethrow;

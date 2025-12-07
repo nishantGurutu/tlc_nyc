@@ -3,11 +3,12 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:tlc_nyc/controller/add_question_controller.dart';
 import 'package:tlc_nyc/controller/login_controller.dart';
 import 'package:tlc_nyc/utils/image_picker_class.dart';
 
 class BottomSheetClass {
-  void showImagePickerSheet(BuildContext context) {
+  void showImagePickerSheet(BuildContext context, String from) {
     Get.bottomSheet(
       SafeArea(
         child: Container(
@@ -34,7 +35,7 @@ class BottomSheetClass {
                 children: [
                   InkWell(
                     onTap: () {
-                      selectImage(ImageSource.gallery);
+                      selectImage(ImageSource.gallery, from);
                       Get.back();
                     },
                     child: Row(
@@ -48,7 +49,7 @@ class BottomSheetClass {
                   const SizedBox(width: 40),
                   InkWell(
                     onTap: () {
-                      selectImage(ImageSource.camera);
+                      selectImage(ImageSource.camera, from);
                       Get.back();
                     },
                     child: Row(
@@ -68,13 +69,19 @@ class BottomSheetClass {
     );
   }
 
-  final LoginController loginController = Get.find<LoginController>();
-  Future<void> selectImage(ImageSource source) async {
+  Future<void> selectImage(ImageSource source, String from) async {
     final File? file = await ImagePickerHelper.pickImage(source);
 
     if (file != null) {
-      loginController.pickedFile.value = file;
-      loginController.selectedImagePath.value = file.path;
+      if (from == "register") {
+        final LoginController loginController = Get.find<LoginController>();
+        loginController.pickedFile.value = file;
+        loginController.selectedImagePath.value = file.path;
+      } else if (from == "question_type") {
+        final AddQuestionController addQuestionController =
+            Get.find<AddQuestionController>();
+        addQuestionController.pickedFile.value = file;
+      }
     }
   }
 }

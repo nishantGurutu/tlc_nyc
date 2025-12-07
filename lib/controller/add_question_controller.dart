@@ -1,9 +1,10 @@
+import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tlc_nyc/controller/home_controller.dart';
-import 'package:tlc_nyc/model/add_question_type_model.dart';
-import 'package:tlc_nyc/model/add_question_with_answers_model.dart';
 import 'package:tlc_nyc/model/question_answer_model.dart';
 import 'package:tlc_nyc/service/add_question_service.dart';
+import 'package:tlc_nyc/utils/custom_snakbar.dart';
 
 class AddQuestionController extends GetxController {
   final AddQuestionService _addQuestionService = AddQuestionService();
@@ -12,30 +13,26 @@ class AddQuestionController extends GetxController {
   var questionTypes = <String>[].obs;
   var selectedQuestionType = ''.obs;
   var selectedGroupCode = 0.obs;
+  Rx<File> pickedFile = File('').obs;
 
-  Future<bool> addQuestionType(String questionTypeName) async {
+  Future<void> addQuestionType(String questionTypeName, File value) async {
     isLoading.value = true;
     try {
-      final questionType = AddQuestionTypeModel(
-        qtypECODE: 0,
-        qtypENAME: questionTypeName,
-        isactive: true,
+      final response = await _addQuestionService.addQuestionType(
+        questionTypeName,
+        value,
       );
 
-      final result = await _addQuestionService.addQuestionType(questionType);
-
-      if (result) {
-        await homeController.questionTypeListApi();
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        Navigator.pop(Get.context!);
+        CustomSnackBar.success("Success", response.data["message"]);
       }
-
-      return result;
     } catch (e) {
       Get.snackbar(
         'Error',
         'Error adding question type: $e',
         snackPosition: SnackPosition.BOTTOM,
       );
-      return false;
     } finally {
       isLoading.value = false;
     }

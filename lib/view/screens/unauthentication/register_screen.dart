@@ -227,7 +227,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         child: InkWell(
                                           onTap: () {
                                             BottomSheetClass()
-                                                .showImagePickerSheet(context);
+                                                .showImagePickerSheet(
+                                                  context,
+                                                  "register",
+                                                );
                                           },
                                           child: Container(
                                             decoration: BoxDecoration(
