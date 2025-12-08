@@ -1,7 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:tlc_nyc/api/api_constant.dart';
-import 'package:tlc_nyc/helper/storage_helper.dart';
-import 'package:tlc_nyc/utils/custom_snakbar.dart';
 
 class NetworkService {
   static final NetworkService _instance = NetworkService._internal();
@@ -19,7 +17,6 @@ class NetworkService {
         headers: {"Accept": "application/json"},
       ),
     );
-
     _addInterceptors();
   }
 
@@ -37,14 +34,6 @@ class NetworkService {
         },
 
         onResponse: (response, handler) {
-          CustomSnackBar.success(
-            "Success",
-            response.data["message"] ?? "Registration Successful",
-          );
-          print(
-            "\n✅ RESPONSE → ${response.statusCode} ${response.requestOptions.uri}",
-          );
-          print("Data: ${response.data}");
           handler.next(response);
         },
 

@@ -25,6 +25,7 @@ class AddQuestionController extends GetxController {
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         Navigator.pop(Get.context!);
+        await homeController.questionTypeListApi();
         CustomSnackBar.success("Success", response.data["message"]);
       }
     } catch (e) {
