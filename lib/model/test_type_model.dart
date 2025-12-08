@@ -1,17 +1,17 @@
 class QuestionTypeListModel {
   bool? status;
   String? message;
-  List<QuestionTypeList>? data;
+  List<QuestionTypeList>? questionTypeData;
 
-  QuestionTypeListModel({this.status, this.message, this.data});
+  QuestionTypeListModel({this.status, this.message, this.questionTypeData});
 
   QuestionTypeListModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     message = json['message'];
     if (json['data'] != null) {
-      data = <QuestionTypeList>[];
+      questionTypeData = <QuestionTypeList>[];
       json['data'].forEach((v) {
-        data!.add(new QuestionTypeList.fromJson(v));
+        questionTypeData!.add(new QuestionTypeList.fromJson(v));
       });
     }
   }
@@ -20,8 +20,8 @@ class QuestionTypeListModel {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['status'] = this.status;
     data['message'] = this.message;
-    if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
+    if (this.questionTypeData != null) {
+      data['data'] = this.questionTypeData!.map((v) => v.toJson()).toList();
     }
     return data;
   }

@@ -6,10 +6,15 @@ import 'package:tlc_nyc/constant/text_translation.dart';
 import 'package:tlc_nyc/firebase_options.dart';
 import 'package:tlc_nyc/helper/storage_helper.dart';
 import 'package:tlc_nyc/routes/app_pages.dart';
+import 'package:tlc_nyc/service/network_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await StorageHelper.initialize();
+  String? token = await StorageHelper.getToken();
+  if (token != null) {
+    await NetworkService().setToken(token);
+  }
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(const MyApp());
 }

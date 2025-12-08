@@ -20,7 +20,11 @@ class HomeController extends GetxController {
     try {
       final response = await HomeService().questionTypeList();
       if (response.statusCode == 200 || response.statusCode == 201) {
-        // groupListData.assignAll(result);
+        List<dynamic> list = response.data["data"];
+        groupListData.assignAll(
+          list.map((e) => QuestionTypeList.fromJson(e)).toList(),
+        );
+        print("Loaded: ${groupListData.length} items");
       }
       print('API response: ${groupListData.length} items loaded');
     } catch (e) {
