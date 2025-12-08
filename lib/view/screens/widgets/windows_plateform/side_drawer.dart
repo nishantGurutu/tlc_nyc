@@ -30,13 +30,11 @@ class _WindowsDashboardScreenState extends State<WindowsDashboardScreen> {
       backgroundColor: const Color(0xfff6f9ff),
       body: Row(
         children: [
-          // Sidebar Navigation
           Container(
             width: 280.w,
             color: const Color(0xfff4f7fe),
             child: Column(
               children: [
-                // Header with user info
                 Container(
                   padding: EdgeInsets.all(20.w),
                   decoration: BoxDecoration(
@@ -72,16 +70,11 @@ class _WindowsDashboardScreenState extends State<WindowsDashboardScreen> {
                       SizedBox(height: 4.h),
                       Text(
                         "Test Preparation Platform",
-                        style: TextStyle(
-                          fontSize: 12.sp,
-                          color: darkGreyColor,
-                        ),
+                        style: TextStyle(fontSize: 12.sp, color: darkGreyColor),
                       ),
                     ],
                   ),
                 ),
-                
-                // Navigation Menu
                 Expanded(
                   child: ListView(
                     padding: EdgeInsets.symmetric(vertical: 20.h),
@@ -97,12 +90,9 @@ class _WindowsDashboardScreenState extends State<WindowsDashboardScreen> {
               ],
             ),
           ),
-
-          // Main Content Area
           Expanded(
             child: Column(
               children: [
-                // Top App Bar
                 Container(
                   height: 60.h,
                   padding: EdgeInsets.symmetric(horizontal: 20.w),
@@ -128,7 +118,10 @@ class _WindowsDashboardScreenState extends State<WindowsDashboardScreen> {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 12.w,
+                          vertical: 6.h,
+                        ),
                         decoration: BoxDecoration(
                           color: primary,
                           borderRadius: BorderRadius.circular(20.r),
@@ -136,7 +129,11 @@ class _WindowsDashboardScreenState extends State<WindowsDashboardScreen> {
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(Icons.workspace_premium, color: Colors.white, size: 16.sp),
+                            Icon(
+                              Icons.workspace_premium,
+                              color: Colors.white,
+                              size: 16.sp,
+                            ),
                             SizedBox(width: 4.w),
                             Text(
                               "TLC NYC",
@@ -152,11 +149,7 @@ class _WindowsDashboardScreenState extends State<WindowsDashboardScreen> {
                     ],
                   ),
                 ),
-
-                // Content Area
-                Expanded(
-                  child: _buildContent(),
-                ),
+                Expanded(child: _buildContent()),
               ],
             ),
           ),
@@ -251,7 +244,6 @@ class _WindowsDashboardScreenState extends State<WindowsDashboardScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Welcome Card
             Container(
               width: double.infinity,
               padding: EdgeInsets.all(24.w),
@@ -297,17 +289,18 @@ class _WindowsDashboardScreenState extends State<WindowsDashboardScreen> {
                       ),
                       SizedBox(width: 16.w),
                       Expanded(
-                        child: _buildStatCard("Completed", "8", Icons.check_circle),
+                        child: _buildStatCard(
+                          "Completed",
+                          "8",
+                          Icons.check_circle,
+                        ),
                       ),
                     ],
                   ),
                 ],
               ),
             ),
-
             SizedBox(height: 24.h),
-
-            // Quick Actions
             Text(
               "Quick Actions",
               style: TextStyle(
@@ -317,7 +310,6 @@ class _WindowsDashboardScreenState extends State<WindowsDashboardScreen> {
               ),
             ),
             SizedBox(height: 16.h),
-
             Row(
               children: [
                 Expanded(
@@ -356,7 +348,6 @@ class _WindowsDashboardScreenState extends State<WindowsDashboardScreen> {
         if (controller.isGroupLoading.value) {
           return Center(child: CircularProgressIndicator());
         }
-
         return GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
@@ -367,7 +358,7 @@ class _WindowsDashboardScreenState extends State<WindowsDashboardScreen> {
           itemCount: controller.groupListData.length,
           itemBuilder: (context, index) {
             final testType = controller.groupListData[index];
-            return _buildTestCard(testType.qtypENAME ?? "", index);
+            return _buildTestCard(testType.name ?? "", index);
           },
         );
       }),
@@ -394,11 +385,12 @@ class _WindowsDashboardScreenState extends State<WindowsDashboardScreen> {
             setState(() {
               selectedTestIndex = index;
             });
-            // Navigate to test screen
-            Get.to(() => WindowsTestScreen(
-              testName: testName,
-              testTypeId: controller.groupListData[index].qtypECODE ?? 0,
-            ));
+            Get.to(
+              () => WindowsTestScreen(
+                testName: testName,
+                testTypeId: controller.groupListData[index].sId ?? '',
+              ),
+            );
           },
           borderRadius: BorderRadius.circular(12.r),
           child: Padding(
@@ -406,11 +398,7 @@ class _WindowsDashboardScreenState extends State<WindowsDashboardScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(
-                  Icons.quiz,
-                  size: 32.sp,
-                  color: primary,
-                ),
+                Icon(Icons.quiz, size: 32.sp, color: primary),
                 SizedBox(height: 8.h),
                 Text(
                   testName,
@@ -424,10 +412,7 @@ class _WindowsDashboardScreenState extends State<WindowsDashboardScreen> {
                 SizedBox(height: 4.h),
                 Text(
                   "Click to start",
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    color: darkGreyColor,
-                  ),
+                  style: TextStyle(fontSize: 12.sp, color: darkGreyColor),
                 ),
               ],
             ),
@@ -457,10 +442,7 @@ class _WindowsDashboardScreenState extends State<WindowsDashboardScreen> {
             SizedBox(height: 8.h),
             Text(
               "Coming Soon",
-              style: TextStyle(
-                fontSize: 16.sp,
-                color: darkGreyColor,
-              ),
+              style: TextStyle(fontSize: 16.sp, color: darkGreyColor),
             ),
           ],
         ),
@@ -499,7 +481,12 @@ class _WindowsDashboardScreenState extends State<WindowsDashboardScreen> {
     );
   }
 
-  Widget _buildActionCard(String title, IconData icon, Color color, VoidCallback onTap) {
+  Widget _buildActionCard(
+    String title,
+    IconData icon,
+    Color color,
+    VoidCallback onTap,
+  ) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,

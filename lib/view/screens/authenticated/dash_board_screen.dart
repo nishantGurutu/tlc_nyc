@@ -71,14 +71,14 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                         itemBuilder: (context, index) {
                           return GestureDetector(
                             onTap: () {
-                              controller.onTestSelected(
-                                testType:
-                                    controller.groupListData[index].qtypENAME ??
-                                    "",
-                                testTypeId:
-                                    controller.groupListData[index].qtypECODE ??
-                                    0,
-                              );
+                              // controller.onTestSelected(
+                              //   testType:
+                              //       controller.groupListData[index].sId??
+                              //       "",
+                              //   testTypeId:
+                              //       controller.groupListData[index]. ??
+                              //       0,
+                              // );
                             },
                             child: Padding(
                               padding: EdgeInsets.symmetric(
@@ -103,9 +103,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        controller
-                                                .groupListData[index]
-                                                .qtypENAME ??
+                                        controller.groupListData[index].name ??
                                             "",
                                         style: TextStyle(
                                           fontSize: 16.sp,

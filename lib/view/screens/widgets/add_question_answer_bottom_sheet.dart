@@ -26,13 +26,12 @@ class _AddQuestionAnswerBottomSheetState
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String? selectedQuestionType;
-  int? selectedQuestionTypeCode;
+  String? selectedQuestionTypeCode;
 
   @override
   void initState() {
     super.initState();
     _addAnswerField();
-    // Set the first answer as correct by default
     if (isCorrectList.isNotEmpty) {
       isCorrectList[0] = true;
     }
@@ -177,13 +176,13 @@ class _AddQuestionAnswerBottomSheetState
                                     controller.homeController.groupListData.map(
                                       (item) {
                                         return DropdownMenuItem<String>(
-                                          value: item.qtypENAME,
+                                          value: item.name,
                                           child: Padding(
                                             padding: EdgeInsets.symmetric(
                                               horizontal: 12.w,
                                             ),
                                             child: Text(
-                                              item.qtypENAME ?? '',
+                                              item.name ?? '',
                                               style: TextStyle(
                                                 fontSize: 14.sp,
                                                 color: blackColor,
@@ -200,10 +199,9 @@ class _AddQuestionAnswerBottomSheetState
                                         .homeController
                                         .groupListData
                                         .firstWhere(
-                                          (item) => item.qtypENAME == newValue,
+                                          (item) => item.name == newValue,
                                         );
-                                    selectedQuestionTypeCode =
-                                        selectedItem.qtypECODE;
+                                    selectedQuestionTypeCode = selectedItem.sId;
                                   });
                                 },
                               ),
@@ -272,7 +270,6 @@ class _AddQuestionAnswerBottomSheetState
                             ),
                           ],
                         ),
-
                         SizedBox(height: 12.h),
                         ...List.generate(answerControllers.length, (index) {
                           return Padding(
@@ -292,7 +289,6 @@ class _AddQuestionAnswerBottomSheetState
                                 GestureDetector(
                                   onTap: () {
                                     setState(() {
-                                      // First, set all answers to false
                                       for (
                                         int i = 0;
                                         i < isCorrectList.length;
@@ -300,7 +296,6 @@ class _AddQuestionAnswerBottomSheetState
                                       ) {
                                         isCorrectList[i] = false;
                                       }
-                                      // Then set only the selected answer to true
                                       isCorrectList[index] = true;
                                     });
                                   },
@@ -346,7 +341,6 @@ class _AddQuestionAnswerBottomSheetState
                             ),
                           );
                         }),
-
                         SizedBox(height: 20.h),
                         Obx(
                           () => CustomButton(
@@ -371,18 +365,6 @@ class _AddQuestionAnswerBottomSheetState
                                     'isCorrect': isCorrectList[i],
                                   });
                                 }
-
-                                //  final success = await controller.addQuestionWithAnswers(
-                                //    questionName: questionController.text.trim(),
-
-                                //    questionTypeCode: selectedQuestionTypeCode!,
-                                //    answers: answersData,
-                                //  );
-
-                                // if (success) {
-                                //   Get.back();
-                                //   _clearForm();
-                                // }
                               }
                             },
                             color: primary,
@@ -428,7 +410,6 @@ class _AddQuestionAnswerBottomSheetState
     answerControllers.clear();
     isCorrectList.clear();
     _addAnswerField();
-    // Set the first answer as correct by default
     if (isCorrectList.isNotEmpty) {
       isCorrectList[0] = true;
     }

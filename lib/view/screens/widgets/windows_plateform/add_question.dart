@@ -10,7 +10,8 @@ class WindowsAddQuestionScreen extends StatefulWidget {
   const WindowsAddQuestionScreen({super.key});
 
   @override
-  State<WindowsAddQuestionScreen> createState() => _WindowsAddQuestionScreenState();
+  State<WindowsAddQuestionScreen> createState() =>
+      _WindowsAddQuestionScreenState();
 }
 
 class _WindowsAddQuestionScreenState extends State<WindowsAddQuestionScreen> {
@@ -57,10 +58,7 @@ class _WindowsAddQuestionScreenState extends State<WindowsAddQuestionScreen> {
                 SizedBox(height: 8.h),
                 Text(
                   "Create and manage questions for your tests",
-                  style: TextStyle(
-                    fontSize: 16.sp,
-                    color: darkGreyColor,
-                  ),
+                  style: TextStyle(fontSize: 16.sp, color: darkGreyColor),
                 ),
               ],
             ),
@@ -133,11 +131,7 @@ class _WindowsAddQuestionScreenState extends State<WindowsAddQuestionScreen> {
                     color: color.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(12.r),
                   ),
-                  child: Icon(
-                    icon,
-                    size: 32.sp,
-                    color: color,
-                  ),
+                  child: Icon(icon, size: 32.sp, color: color),
                 ),
                 SizedBox(height: 16.h),
                 Text(
@@ -152,10 +146,7 @@ class _WindowsAddQuestionScreenState extends State<WindowsAddQuestionScreen> {
                 SizedBox(height: 8.h),
                 Text(
                   description,
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                    color: darkGreyColor,
-                  ),
+                  style: TextStyle(fontSize: 14.sp, color: darkGreyColor),
                   textAlign: TextAlign.center,
                 ),
               ],
@@ -169,79 +160,81 @@ class _WindowsAddQuestionScreenState extends State<WindowsAddQuestionScreen> {
   void _showAddQuestionTypeDialog() {
     showDialog(
       context: context,
-      builder: (context) => Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16.r),
-        ),
-        child: Container(
-          width: 500.w,
-          padding: EdgeInsets.all(24.w),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
+      builder:
+          (context) => Dialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.r),
+            ),
+            child: Container(
+              width: 500.w,
+              padding: EdgeInsets.all(24.w),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.category, color: primary, size: 24.sp),
-                  SizedBox(width: 12.w),
-                  Text(
-                    "Add Question Type",
-                    style: TextStyle(
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.bold,
-                      color: blackColor,
-                    ),
+                  Row(
+                    children: [
+                      Icon(Icons.category, color: primary, size: 24.sp),
+                      SizedBox(width: 12.w),
+                      Text(
+                        "Add Question Type",
+                        style: TextStyle(
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.bold,
+                          color: blackColor,
+                        ),
+                      ),
+                    ],
                   ),
+                  SizedBox(height: 20.h),
+                  AddQuestionTypeBottomSheet(),
                 ],
               ),
-              SizedBox(height: 20.h),
-              AddQuestionTypeBottomSheet(),
-            ],
+            ),
           ),
-        ),
-      ),
     );
   }
 
   void _showAddQuestionAnswerDialog() {
     showDialog(
       context: context,
-      builder: (context) => Dialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16.r),
-        ),
-        child: Container(
-          width: 600.w,
-          padding: EdgeInsets.all(24.w),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
+      builder:
+          (context) => Dialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16.r),
+            ),
+            child: Container(
+              width: 600.w,
+              padding: EdgeInsets.all(24.w),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  Icon(Icons.quiz, color: Colors.green, size: 24.sp),
-                  SizedBox(width: 12.w),
-                  Text(
-                    "Add Question & Answer",
-                    style: TextStyle(
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.bold,
-                      color: blackColor,
-                    ),
+                  Row(
+                    children: [
+                      Icon(Icons.quiz, color: Colors.green, size: 24.sp),
+                      SizedBox(width: 12.w),
+                      Text(
+                        "Add Question & Answer",
+                        style: TextStyle(
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.bold,
+                          color: blackColor,
+                        ),
+                      ),
+                    ],
                   ),
+                  SizedBox(height: 20.h),
+                  AddQuestionAnswerBottomSheet(),
                 ],
               ),
-              SizedBox(height: 20.h),
-              AddQuestionAnswerBottomSheet(),
-            ],
+            ),
           ),
-        ),
-      ),
     );
   }
 }
 
 class WindowsTestScreen extends StatefulWidget {
   final String testName;
-  final int testTypeId;
+  final String testTypeId;
 
   const WindowsTestScreen({
     super.key,
@@ -299,13 +292,15 @@ class _WindowsTestScreenState extends State<WindowsTestScreen> {
                         ),
                       ),
                       SizedBox(height: 4.h),
-                      Obx(() => Text(
-                        "Question ${controller.currentQuestionIndex.value + 1} of ${controller.questionAnswerList.length}",
-                        style: TextStyle(
-                          fontSize: 14.sp,
-                          color: Colors.white.withOpacity(0.9),
+                      Obx(
+                        () => Text(
+                          "Question ${controller.currentQuestionIndex.value + 1} of ${controller.questionAnswerList.length}",
+                          style: TextStyle(
+                            fontSize: 14.sp,
+                            color: Colors.white.withOpacity(0.9),
+                          ),
                         ),
-                      )),
+                      ),
                     ],
                   ),
                 ),
@@ -318,7 +313,11 @@ class _WindowsTestScreenState extends State<WindowsTestScreen> {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.quiz_outlined, size: 48.sp, color: Colors.grey),
+                            Icon(
+                              Icons.quiz_outlined,
+                              size: 48.sp,
+                              color: Colors.grey,
+                            ),
                             SizedBox(height: 16.h),
                             Text(
                               "No Questions Available",
@@ -337,9 +336,11 @@ class _WindowsTestScreenState extends State<WindowsTestScreen> {
                       padding: EdgeInsets.all(16.w),
                       itemCount: controller.questionAnswerList.length,
                       itemBuilder: (context, index) {
-                        final isCurrent = controller.currentQuestionIndex.value == index;
-                        final isAnswered = controller.selectedAnswers.containsKey(index);
-                        
+                        final isCurrent =
+                            controller.currentQuestionIndex.value == index;
+                        final isAnswered = controller.selectedAnswers
+                            .containsKey(index);
+
                         return Container(
                           margin: EdgeInsets.only(bottom: 8.h),
                           child: Material(
@@ -352,10 +353,16 @@ class _WindowsTestScreenState extends State<WindowsTestScreen> {
                               child: Container(
                                 padding: EdgeInsets.all(12.w),
                                 decoration: BoxDecoration(
-                                  color: isCurrent ? primary.withOpacity(0.1) : Colors.grey.shade50,
+                                  color:
+                                      isCurrent
+                                          ? primary.withOpacity(0.1)
+                                          : Colors.grey.shade50,
                                   borderRadius: BorderRadius.circular(8.r),
                                   border: Border.all(
-                                    color: isCurrent ? primary : Colors.grey.shade300,
+                                    color:
+                                        isCurrent
+                                            ? primary
+                                            : Colors.grey.shade300,
                                     width: isCurrent ? 2 : 1,
                                   ),
                                 ),
@@ -365,8 +372,13 @@ class _WindowsTestScreenState extends State<WindowsTestScreen> {
                                       width: 24.w,
                                       height: 24.h,
                                       decoration: BoxDecoration(
-                                        color: isAnswered ? Colors.green : Colors.grey.shade300,
-                                        borderRadius: BorderRadius.circular(12.r),
+                                        color:
+                                            isAnswered
+                                                ? Colors.green
+                                                : Colors.grey.shade300,
+                                        borderRadius: BorderRadius.circular(
+                                          12.r,
+                                        ),
                                       ),
                                       child: Center(
                                         child: Text(
@@ -385,13 +397,21 @@ class _WindowsTestScreenState extends State<WindowsTestScreen> {
                                         "Question ${index + 1}",
                                         style: TextStyle(
                                           fontSize: 14.sp,
-                                          fontWeight: isCurrent ? FontWeight.w600 : FontWeight.w500,
-                                          color: isCurrent ? primary : blackColor,
+                                          fontWeight:
+                                              isCurrent
+                                                  ? FontWeight.w600
+                                                  : FontWeight.w500,
+                                          color:
+                                              isCurrent ? primary : blackColor,
                                         ),
                                       ),
                                     ),
                                     if (isAnswered)
-                                      Icon(Icons.check_circle, color: Colors.green, size: 16.sp),
+                                      Icon(
+                                        Icons.check_circle,
+                                        color: Colors.green,
+                                        size: 16.sp,
+                                      ),
                                   ],
                                 ),
                               ),
@@ -407,10 +427,12 @@ class _WindowsTestScreenState extends State<WindowsTestScreen> {
                 Container(
                   padding: EdgeInsets.all(16.w),
                   child: Obx(() {
-                    final progress = controller.questionAnswerList.isEmpty 
-                        ? 0.0 
-                        : (controller.currentQuestionIndex.value + 1) / controller.questionAnswerList.length;
-                    
+                    final progress =
+                        controller.questionAnswerList.isEmpty
+                            ? 0.0
+                            : (controller.currentQuestionIndex.value + 1) /
+                                controller.questionAnswerList.length;
+
                     return Column(
                       children: [
                         LinearProgressIndicator(
@@ -447,7 +469,11 @@ class _WindowsTestScreenState extends State<WindowsTestScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.quiz_outlined, size: 64.sp, color: Colors.grey),
+                      Icon(
+                        Icons.quiz_outlined,
+                        size: 64.sp,
+                        color: Colors.grey,
+                      ),
                       SizedBox(height: 16.h),
                       Text(
                         'No Questions Available',
@@ -470,8 +496,11 @@ class _WindowsTestScreenState extends State<WindowsTestScreen> {
                 );
               }
 
-              final questionData = controller.questionAnswerList[controller.currentQuestionIndex.value];
-              
+              final questionData =
+                  controller.questionAnswerList[controller
+                      .currentQuestionIndex
+                      .value];
+
               return Container(
                 padding: EdgeInsets.all(24.w),
                 child: Column(
@@ -523,8 +552,11 @@ class _WindowsTestScreenState extends State<WindowsTestScreen> {
                         itemCount: questionData.answers?.length ?? 0,
                         itemBuilder: (context, answerIndex) {
                           final answer = questionData.answers![answerIndex];
-                          final selectedAnswer = controller.selectedAnswers[controller.currentQuestionIndex.value];
-                          
+                          final selectedAnswer =
+                              controller.selectedAnswers[controller
+                                  .currentQuestionIndex
+                                  .value];
+
                           Color borderColor = Colors.grey.shade300;
                           IconData? icon;
                           Color iconColor = Colors.transparent;
@@ -560,7 +592,10 @@ class _WindowsTestScreenState extends State<WindowsTestScreen> {
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(12.r),
-                                    border: Border.all(color: borderColor, width: 2),
+                                    border: Border.all(
+                                      color: borderColor,
+                                      width: 2,
+                                    ),
                                     boxShadow: [
                                       BoxShadow(
                                         color: Colors.grey.shade200,
@@ -575,20 +610,26 @@ class _WindowsTestScreenState extends State<WindowsTestScreen> {
                                         width: 32.w,
                                         height: 32.h,
                                         decoration: BoxDecoration(
-                                          color: selectedAnswer == answerIndex 
-                                              ? primary 
-                                              : Colors.grey.shade200,
-                                          borderRadius: BorderRadius.circular(16.r),
+                                          color:
+                                              selectedAnswer == answerIndex
+                                                  ? primary
+                                                  : Colors.grey.shade200,
+                                          borderRadius: BorderRadius.circular(
+                                            16.r,
+                                          ),
                                         ),
                                         child: Center(
                                           child: Text(
-                                            String.fromCharCode(65 + answerIndex),
+                                            String.fromCharCode(
+                                              65 + answerIndex,
+                                            ),
                                             style: TextStyle(
                                               fontSize: 14.sp,
                                               fontWeight: FontWeight.bold,
-                                              color: selectedAnswer == answerIndex 
-                                                  ? Colors.white 
-                                                  : Colors.grey[600],
+                                              color:
+                                                  selectedAnswer == answerIndex
+                                                      ? Colors.white
+                                                      : Colors.grey[600],
                                             ),
                                           ),
                                         ),
@@ -606,7 +647,11 @@ class _WindowsTestScreenState extends State<WindowsTestScreen> {
                                       ),
                                       if (icon != null) ...[
                                         SizedBox(width: 8.w),
-                                        Icon(icon, color: iconColor, size: 24.sp),
+                                        Icon(
+                                          icon,
+                                          color: iconColor,
+                                          size: 24.sp,
+                                        ),
                                       ],
                                     ],
                                   ),
@@ -632,7 +677,10 @@ class _WindowsTestScreenState extends State<WindowsTestScreen> {
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.grey.shade600,
                                 foregroundColor: Colors.white,
-                                padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 12.h),
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 24.w,
+                                  vertical: 12.h,
+                                ),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8.r),
                                 ),
@@ -643,27 +691,33 @@ class _WindowsTestScreenState extends State<WindowsTestScreen> {
 
                           ElevatedButton.icon(
                             onPressed: () {
-                              if (controller.currentQuestionIndex.value == controller.questionAnswerList.length - 1) {
+                              if (controller.currentQuestionIndex.value ==
+                                  controller.questionAnswerList.length - 1) {
                                 _showSubmitDialog();
                               } else {
                                 controller.goToNextQuestion();
                               }
                             },
                             icon: Icon(
-                              controller.currentQuestionIndex.value == controller.questionAnswerList.length - 1
+                              controller.currentQuestionIndex.value ==
+                                      controller.questionAnswerList.length - 1
                                   ? Icons.check
                                   : Icons.arrow_forward,
                               size: 18.sp,
                             ),
                             label: Text(
-                              controller.currentQuestionIndex.value == controller.questionAnswerList.length - 1
+                              controller.currentQuestionIndex.value ==
+                                      controller.questionAnswerList.length - 1
                                   ? "Submit"
                                   : "Next",
                             ),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: primary,
                               foregroundColor: Colors.white,
-                              padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 12.h),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 24.w,
+                                vertical: 12.h,
+                              ),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8.r),
                               ),
@@ -685,57 +739,57 @@ class _WindowsTestScreenState extends State<WindowsTestScreen> {
   void _showSubmitDialog() {
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12.r),
-        ),
-        title: Text(
-          "Submit Test",
-          style: TextStyle(
-            fontSize: 18.sp,
-            fontWeight: FontWeight.bold,
-            color: blackColor,
-          ),
-        ),
-        content: Text(
-          "Are you sure you want to submit your test? You cannot change your answers after submission.",
-          style: TextStyle(
-            fontSize: 14.sp,
-            color: darkGreyColor,
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text(
-              "Cancel",
-              style: TextStyle(color: Colors.grey[600]),
+      builder:
+          (context) => AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.r),
             ),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-              // Navigate to results screen
-              Get.to(() => WindowsTestResultScreen(
-                testName: widget.testName,
-                testTypeId: widget.testTypeId,
-              ));
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: primary,
-              foregroundColor: Colors.white,
+            title: Text(
+              "Submit Test",
+              style: TextStyle(
+                fontSize: 18.sp,
+                fontWeight: FontWeight.bold,
+                color: blackColor,
+              ),
             ),
-            child: Text("Submit"),
+            content: Text(
+              "Are you sure you want to submit your test? You cannot change your answers after submission.",
+              style: TextStyle(fontSize: 14.sp, color: darkGreyColor),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(),
+                child: Text(
+                  "Cancel",
+                  style: TextStyle(color: Colors.grey[600]),
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  // Navigate to results screen
+                  Get.to(
+                    () => WindowsTestResultScreen(
+                      testName: widget.testName,
+                      testTypeId: widget.testTypeId,
+                    ),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: primary,
+                  foregroundColor: Colors.white,
+                ),
+                child: Text("Submit"),
+              ),
+            ],
           ),
-        ],
-      ),
     );
   }
 }
 
 class WindowsTestResultScreen extends StatelessWidget {
   final String testName;
-  final int testTypeId;
+  final String testTypeId;
 
   const WindowsTestResultScreen({
     super.key,
@@ -746,7 +800,7 @@ class WindowsTestResultScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AddQuestionController controller = Get.find<AddQuestionController>();
-    
+
     return Scaffold(
       backgroundColor: const Color(0xfff6f9ff),
       body: Center(
@@ -768,13 +822,17 @@ class WindowsTestResultScreen extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
-                controller.hasPassed() ? Icons.celebration : Icons.sentiment_dissatisfied,
+                controller.hasPassed()
+                    ? Icons.celebration
+                    : Icons.sentiment_dissatisfied,
                 size: 64.sp,
                 color: controller.hasPassed() ? Colors.green : Colors.red,
               ),
               SizedBox(height: 16.h),
               Text(
-                controller.hasPassed() ? "Congratulations!" : "Better Luck Next Time",
+                controller.hasPassed()
+                    ? "Congratulations!"
+                    : "Better Luck Next Time",
                 style: TextStyle(
                   fontSize: 24.sp,
                   fontWeight: FontWeight.bold,
@@ -784,13 +842,10 @@ class WindowsTestResultScreen extends StatelessWidget {
               SizedBox(height: 8.h),
               Text(
                 "Test: $testName",
-                style: TextStyle(
-                  fontSize: 18.sp,
-                  color: darkGreyColor,
-                ),
+                style: TextStyle(fontSize: 18.sp, color: darkGreyColor),
               ),
               SizedBox(height: 24.h),
-              
+
               // Results Grid
               Row(
                 children: [
@@ -822,9 +877,9 @@ class WindowsTestResultScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              
+
               SizedBox(height: 24.h),
-              
+
               // Percentage
               Container(
                 padding: EdgeInsets.all(20.w),
@@ -836,10 +891,7 @@ class WindowsTestResultScreen extends StatelessWidget {
                   children: [
                     Text(
                       "Your Score",
-                      style: TextStyle(
-                        fontSize: 16.sp,
-                        color: darkGreyColor,
-                      ),
+                      style: TextStyle(fontSize: 16.sp, color: darkGreyColor),
                     ),
                     SizedBox(height: 8.h),
                     Text(
@@ -856,15 +908,16 @@ class WindowsTestResultScreen extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 14.sp,
                         fontWeight: FontWeight.bold,
-                        color: controller.hasPassed() ? Colors.green : Colors.red,
+                        color:
+                            controller.hasPassed() ? Colors.green : Colors.red,
                       ),
                     ),
                   ],
                 ),
               ),
-              
+
               SizedBox(height: 24.h),
-              
+
               // Action Buttons
               Row(
                 children: [
@@ -886,10 +939,12 @@ class WindowsTestResultScreen extends StatelessWidget {
                       onPressed: () {
                         // Retake test
                         Get.back();
-                        Get.to(() => WindowsTestScreen(
-                          testName: testName,
-                          testTypeId: testTypeId,
-                        ));
+                        Get.to(
+                          () => WindowsTestScreen(
+                            testName: testName,
+                            testTypeId: testTypeId,
+                          ),
+                        );
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: primary,
@@ -911,7 +966,12 @@ class WindowsTestResultScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildResultCard(String title, String value, Color color, IconData icon) {
+  Widget _buildResultCard(
+    String title,
+    String value,
+    Color color,
+    IconData icon,
+  ) {
     return Container(
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
@@ -930,13 +990,7 @@ class WindowsTestResultScreen extends StatelessWidget {
               color: color,
             ),
           ),
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: 12.sp,
-              color: darkGreyColor,
-            ),
-          ),
+          Text(title, style: TextStyle(fontSize: 12.sp, color: darkGreyColor)),
         ],
       ),
     );

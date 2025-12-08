@@ -18,7 +18,7 @@ class _TestScreenState extends State<TestScreen> {
   final AddQuestionController controller = Get.find<AddQuestionController>();
   @override
   initState() {
-    controller.questionAnswerListApi(widget.testTypeId);
+    controller.questionAnswerListApi(widget.testTypeId.toString());
     super.initState();
   }
 
