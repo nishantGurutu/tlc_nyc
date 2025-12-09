@@ -103,6 +103,16 @@ class AddQuestionController extends GetxController {
     }
   }
 
+  void nextQuestion() {
+    if (currentQuestionIndex.value < questionAnswerList.length - 1) {
+      currentQuestionIndex.value++;
+    }
+  }
+
+  void resetQuestionIndex() {
+    currentQuestionIndex.value = 0;
+  }
+
   void selectOption(int questionIndex, int answerIndex) {
     selectedAnswers[questionIndex] = answerIndex;
   }

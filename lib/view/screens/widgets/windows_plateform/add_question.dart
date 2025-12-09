@@ -252,7 +252,7 @@ class _WindowsTestScreenState extends State<WindowsTestScreen> {
   @override
   void initState() {
     super.initState();
-    controller.questionAnswerListApi(widget.testTypeId);
+    controller.questionAnswerListApi(typeId: widget.testTypeId);
   }
 
   @override
