@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:tlc_nyc/constant/color_constant.dart';
 import 'package:tlc_nyc/controller/add_question_controller.dart';
 import 'package:tlc_nyc/controller/home_controller.dart';
+import 'package:tlc_nyc/helper/storage_helper.dart';
 import 'package:tlc_nyc/view/screens/authenticated/add_question_screen.dart';
 import 'package:tlc_nyc/view/screens/authenticated/test_intro.dart';
 
@@ -43,24 +44,25 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
         ),
         backgroundColor: primary,
         actions: [
-          Padding(
-            padding: EdgeInsets.only(right: 12.w),
-            child: GestureDetector(
-              onTap: () {
-                Get.to(() => AddScreen());
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(20.r)),
-                  color: whiteColor,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(3.0),
-                  child: Icon(Icons.add),
+          if (StorageHelper.getRole().toString().toLowerCase() == 'admin')
+            Padding(
+              padding: EdgeInsets.only(right: 12.w),
+              child: GestureDetector(
+                onTap: () {
+                  Get.to(() => AddScreen());
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(20.r)),
+                    color: whiteColor,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(3.0),
+                    child: Icon(Icons.add),
+                  ),
                 ),
               ),
             ),
-          ),
         ],
       ),
       backgroundColor: background,
