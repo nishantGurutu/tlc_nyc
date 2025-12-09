@@ -103,9 +103,25 @@ class AddQuestionController extends GetxController {
     }
   }
 
+  // void nextQuestion() {
+  //   if (currentQuestionIndex.value < questionAnswerList.length - 1) {
+  //     currentQuestionIndex.value++;
+  //   }
+  // }
+
   void nextQuestion() {
     if (currentQuestionIndex.value < questionAnswerList.length - 1) {
       currentQuestionIndex.value++;
+      selectedOption.value = "";
+      showAnswer.value = false;
+    }
+  }
+
+  void previousQuestion() {
+    if (currentQuestionIndex.value > 0) {
+      currentQuestionIndex.value--;
+      selectedOption.value = "";
+      showAnswer.value = false;
     }
   }
 
@@ -132,6 +148,10 @@ class AddQuestionController extends GetxController {
       currentQuestionIndex.value--;
     }
   }
+
+  var selectedOption = "".obs;
+  var showAnswer = false.obs;
+  // Result Calculation Methods
 
   int getCorrectAnswers() {
     int correct = 0;

@@ -108,10 +108,27 @@ class _TestScreenState extends State<TestScreen> {
                     ),
                   ),
                   SizedBox(height: 24),
-                  optionTile("A", question.optionA),
-                  optionTile("B", question.optionB),
-                  optionTile("C", question.optionC),
-                  optionTile("D", question.optionD),
+                  optionTile(
+                    "A",
+                    question.optionA,
+                    question.correctOption ?? "",
+                  ),
+                  optionTile(
+                    "B",
+                    question.optionB,
+                    question.correctOption ?? "",
+                  ),
+                  optionTile(
+                    "C",
+                    question.optionC,
+                    question.correctOption ?? "",
+                  ),
+                  optionTile(
+                    "D",
+                    question.optionD,
+                    question.correctOption ?? "",
+                  ),
+
                   Spacer(),
                   Row(
                     children: [
@@ -125,7 +142,7 @@ class _TestScreenState extends State<TestScreen> {
                                       minimumSize: Size(double.infinity, 50),
                                     ),
                                     onPressed: () {
-                                      controller.currentQuestionIndex.value--;
+                                      controller.previousQuestion();
                                     },
                                     child: Text(
                                       "Previous",
@@ -146,14 +163,15 @@ class _TestScreenState extends State<TestScreen> {
                             minimumSize: Size(double.infinity, 50),
                           ),
                           onPressed: () {
+                            if (!controller.showAnswer.value) {
+                              controller.showAnswer.value = true;
+                              return;
+                            }
                             if (controller.currentQuestionIndex.value <
                                 controller.questionAnswerList.length - 1) {
                               controller.nextQuestion();
                             } else {
-                              Get.snackbar(
-                                "Completed",
-                                "You have reached the last question",
-                              );
+                              confirmDialog(context, widget.testTypeName);
                             }
                           },
                           child: Text(
@@ -176,25 +194,57 @@ class _TestScreenState extends State<TestScreen> {
     );
   }
 
-  Widget optionTile(String label, String? text) {
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.all(14),
-      margin: EdgeInsets.only(bottom: 10),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: Colors.grey.shade300),
-        color: Colors.white,
-      ),
-      child: Text(
-        "$label. $text",
-        style: TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-          color: Colors.grey[700],
+  Widget optionTile(
+    String optionKey,
+    String? optionValue,
+    String correctOption,
+  ) {
+    return Obx(() {
+      bool isSelected = controller.selectedOption.value == optionKey;
+      bool isCorrect = optionKey == correctOption;
+      Color borderColor = Colors.grey.shade300;
+      Color bgColor = Colors.white;
+      if (controller.showAnswer.value) {
+        if (isCorrect) {
+          borderColor = Colors.green;
+          bgColor = Colors.green.shade50;
+        } else if (isSelected && !isCorrect) {
+          borderColor = Colors.red;
+          bgColor = Colors.red.shade50;
+        }
+      } else {
+        if (isSelected) {
+          borderColor = primary;
+          bgColor = primary.withOpacity(0.15);
+        }
+      }
+
+      return GestureDetector(
+        onTap: () {
+          if (!controller.showAnswer.value) {
+            controller.selectedOption.value = optionKey;
+          }
+        },
+        child: Container(
+          width: double.infinity,
+          padding: EdgeInsets.all(14),
+          margin: EdgeInsets.only(bottom: 12),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: borderColor, width: 2),
+            color: bgColor,
+          ),
+          child: Text(
+            "$optionKey. $optionValue",
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.grey[700],
+            ),
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 
   Future<void> confirmDialog(BuildContext context, String testNumber) async {
@@ -237,7 +287,7 @@ class _TestScreenState extends State<TestScreen> {
                           InkWell(
                             onTap: () {
                               Get.back();
-                              Get.to(() => TestResultScreen(testNumber));
+                              Get.offAll(() => TestResultScreen(testNumber));
                             },
                             child: Container(
                               height: 30.h,

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:tlc_nyc/constant/color_constant.dart';
 import 'package:tlc_nyc/constant/image_constant.dart';
 import 'package:tlc_nyc/controller/add_question_controller.dart';
+import 'package:tlc_nyc/routes/app_pages.dart';
 
 class TestResultScreen extends StatelessWidget {
   final String testNumber;
@@ -11,12 +12,11 @@ class TestResultScreen extends StatelessWidget {
   final AddQuestionController controller = Get.find<AddQuestionController>();
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: AppBar(
         leading: GestureDetector(
           onTap: () {
-            Get.back();
+            Get.offAllNamed(Routes.BOTTOMBAR);
           },
           child: Container(
             margin: EdgeInsets.all(10.w),
@@ -33,7 +33,10 @@ class TestResultScreen extends StatelessWidget {
             ),
           ),
         ),
-        title: Text('testResult'.tr, style: const TextStyle(color: Colors.white)),
+        title: Text(
+          'testResult'.tr,
+          style: const TextStyle(color: Colors.white),
+        ),
         centerTitle: true,
         backgroundColor: primary,
       ),
@@ -47,16 +50,6 @@ class TestResultScreen extends StatelessWidget {
               final wrongAnswers = controller.getWrongAnswers();
               final percentage = controller.getPercentage();
               final hasPassed = controller.hasPassed();
-              
-              // Debug logging
-              print('📊 Test Result Debug:');
-              print('📊 Total Questions: ${controller.questionAnswerList.length}');
-              print('📊 Selected Answers: ${controller.selectedAnswers}');
-              print('📊 Correct Answers: $correctAnswers');
-              print('📊 Wrong Answers: $wrongAnswers');
-              print('📊 Percentage: $percentage%');
-              print('📊 Has Passed: $hasPassed');
-              
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
