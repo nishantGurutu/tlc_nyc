@@ -78,8 +78,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                     children: [
                       Expanded(
                         child: ListView.builder(
-                          physics:
-                              AlwaysScrollableScrollPhysics(), // important!
+                          physics: AlwaysScrollableScrollPhysics(),
                           itemCount: controller.groupListData.length,
                           itemBuilder: (context, index) {
                             return GestureDetector(

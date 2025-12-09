@@ -202,21 +202,33 @@ class _TestScreenState extends State<TestScreen> {
     return Obx(() {
       bool isSelected = controller.selectedOption.value == optionKey;
       bool isCorrect = optionKey == correctOption;
+
       Color borderColor = Colors.grey.shade300;
       Color bgColor = Colors.white;
+
+      IconData? icon;
+      Color iconColor = Colors.transparent;
+
       if (controller.showAnswer.value) {
         if (isCorrect) {
           borderColor = Colors.green;
           bgColor = Colors.green.shade50;
+          icon = Icons.check;
+          iconColor = Colors.green;
         } else if (isSelected && !isCorrect) {
           borderColor = Colors.red;
           bgColor = Colors.red.shade50;
+          icon = Icons.close;
+          iconColor = Colors.red;
+        } else {
+          icon = null;
         }
       } else {
         if (isSelected) {
           borderColor = primary;
           bgColor = primary.withOpacity(0.15);
         }
+        icon = null;
       }
 
       return GestureDetector(
@@ -234,13 +246,21 @@ class _TestScreenState extends State<TestScreen> {
             border: Border.all(color: borderColor, width: 2),
             color: bgColor,
           ),
-          child: Text(
-            "$optionKey. $optionValue",
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: Colors.grey[700],
-            ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "$optionKey. $optionValue",
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey[700],
+                ),
+              ),
+
+              // SHOW icon only when not null
+              if (icon != null) Icon(icon, color: iconColor, size: 22),
+            ],
           ),
         ),
       );
