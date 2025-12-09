@@ -768,12 +768,12 @@ class _WindowsTestScreenState extends State<WindowsTestScreen> {
                 onPressed: () {
                   Navigator.of(context).pop();
                   // Navigate to results screen
-                  Get.to(
-                    () => WindowsTestResultScreen(
-                      testName: widget.testName,
-                      testTypeId: widget.testTypeId,
-                    ),
-                  );
+                  // Get.to(
+                  //   () => WindowsTestResultScreen(
+                  //     testName: widget.testName,
+                  //     testTypeId: widget.testTypeId,
+                  //   ),
+                  // );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: primary,
@@ -787,212 +787,212 @@ class _WindowsTestScreenState extends State<WindowsTestScreen> {
   }
 }
 
-class WindowsTestResultScreen extends StatelessWidget {
-  final String testName;
-  final String testTypeId;
+// class WindowsTestResultScreen extends StatelessWidget {
+//   final String testName;
+//   final String testTypeId;
 
-  const WindowsTestResultScreen({
-    super.key,
-    required this.testName,
-    required this.testTypeId,
-  });
+//   const WindowsTestResultScreen({
+//     super.key,
+//     required this.testName,
+//     required this.testTypeId,
+//   });
 
-  @override
-  Widget build(BuildContext context) {
-    final AddQuestionController controller = Get.find<AddQuestionController>();
+//   @override
+//   Widget build(BuildContext context) {
+//     final AddQuestionController controller = Get.find<AddQuestionController>();
 
-    return Scaffold(
-      backgroundColor: const Color(0xfff6f9ff),
-      body: Center(
-        child: Container(
-          width: 600.w,
-          padding: EdgeInsets.all(32.w),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(16.r),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.shade200,
-                blurRadius: 20,
-                offset: Offset(0, 10),
-              ),
-            ],
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                controller.hasPassed()
-                    ? Icons.celebration
-                    : Icons.sentiment_dissatisfied,
-                size: 64.sp,
-                color: controller.hasPassed() ? Colors.green : Colors.red,
-              ),
-              SizedBox(height: 16.h),
-              Text(
-                controller.hasPassed()
-                    ? "Congratulations!"
-                    : "Better Luck Next Time",
-                style: TextStyle(
-                  fontSize: 24.sp,
-                  fontWeight: FontWeight.bold,
-                  color: controller.hasPassed() ? Colors.green : Colors.red,
-                ),
-              ),
-              SizedBox(height: 8.h),
-              Text(
-                "Test: $testName",
-                style: TextStyle(fontSize: 18.sp, color: darkGreyColor),
-              ),
-              SizedBox(height: 24.h),
+//     return Scaffold(
+//       backgroundColor: const Color(0xfff6f9ff),
+//       body: Center(
+//         child: Container(
+//           width: 600.w,
+//           padding: EdgeInsets.all(32.w),
+//           decoration: BoxDecoration(
+//             color: Colors.white,
+//             borderRadius: BorderRadius.circular(16.r),
+//             boxShadow: [
+//               BoxShadow(
+//                 color: Colors.grey.shade200,
+//                 blurRadius: 20,
+//                 offset: Offset(0, 10),
+//               ),
+//             ],
+//           ),
+//           child: Column(
+//             mainAxisSize: MainAxisSize.min,
+//             children: [
+//               Icon(
+//                 controller.hasPassed()
+//                     ? Icons.celebration
+//                     : Icons.sentiment_dissatisfied,
+//                 size: 64.sp,
+//                 color: controller.hasPassed() ? Colors.green : Colors.red,
+//               ),
+//               SizedBox(height: 16.h),
+//               Text(
+//                 controller.hasPassed()
+//                     ? "Congratulations!"
+//                     : "Better Luck Next Time",
+//                 style: TextStyle(
+//                   fontSize: 24.sp,
+//                   fontWeight: FontWeight.bold,
+//                   color: controller.hasPassed() ? Colors.green : Colors.red,
+//                 ),
+//               ),
+//               SizedBox(height: 8.h),
+//               Text(
+//                 "Test: $testName",
+//                 style: TextStyle(fontSize: 18.sp, color: darkGreyColor),
+//               ),
+//               SizedBox(height: 24.h),
 
-              // Results Grid
-              Row(
-                children: [
-                  Expanded(
-                    child: _buildResultCard(
-                      "Correct",
-                      "${controller.getCorrectAnswers()}",
-                      Colors.green,
-                      Icons.check_circle,
-                    ),
-                  ),
-                  SizedBox(width: 16.w),
-                  Expanded(
-                    child: _buildResultCard(
-                      "Wrong",
-                      "${controller.getWrongAnswers()}",
-                      Colors.red,
-                      Icons.cancel,
-                    ),
-                  ),
-                  SizedBox(width: 16.w),
-                  Expanded(
-                    child: _buildResultCard(
-                      "Unanswered",
-                      "${controller.getUnansweredQuestions()}",
-                      Colors.orange,
-                      Icons.help_outline,
-                    ),
-                  ),
-                ],
-              ),
+//               // Results Grid
+//               Row(
+//                 children: [
+//                   Expanded(
+//                     child: _buildResultCard(
+//                       "Correct",
+//                       "${controller.getCorrectAnswers()}",
+//                       Colors.green,
+//                       Icons.check_circle,
+//                     ),
+//                   ),
+//                   SizedBox(width: 16.w),
+//                   Expanded(
+//                     child: _buildResultCard(
+//                       "Wrong",
+//                       "${controller.getWrongAnswers()}",
+//                       Colors.red,
+//                       Icons.cancel,
+//                     ),
+//                   ),
+//                   SizedBox(width: 16.w),
+//                   Expanded(
+//                     child: _buildResultCard(
+//                       "Unanswered",
+//                       "${controller.getUnansweredQuestions()}",
+//                       Colors.orange,
+//                       Icons.help_outline,
+//                     ),
+//                   ),
+//                 ],
+//               ),
 
-              SizedBox(height: 24.h),
+//               SizedBox(height: 24.h),
 
-              // Percentage
-              Container(
-                padding: EdgeInsets.all(20.w),
-                decoration: BoxDecoration(
-                  color: primary.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(12.r),
-                ),
-                child: Column(
-                  children: [
-                    Text(
-                      "Your Score",
-                      style: TextStyle(fontSize: 16.sp, color: darkGreyColor),
-                    ),
-                    SizedBox(height: 8.h),
-                    Text(
-                      "${controller.getPercentage().toStringAsFixed(1)}%",
-                      style: TextStyle(
-                        fontSize: 32.sp,
-                        fontWeight: FontWeight.bold,
-                        color: primary,
-                      ),
-                    ),
-                    SizedBox(height: 8.h),
-                    Text(
-                      controller.hasPassed() ? "PASSED" : "FAILED",
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.bold,
-                        color:
-                            controller.hasPassed() ? Colors.green : Colors.red,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+//               // Percentage
+//               Container(
+//                 padding: EdgeInsets.all(20.w),
+//                 decoration: BoxDecoration(
+//                   color: primary.withOpacity(0.1),
+//                   borderRadius: BorderRadius.circular(12.r),
+//                 ),
+//                 child: Column(
+//                   children: [
+//                     Text(
+//                       "Your Score",
+//                       style: TextStyle(fontSize: 16.sp, color: darkGreyColor),
+//                     ),
+//                     SizedBox(height: 8.h),
+//                     Text(
+//                       "${controller.getPercentage().toStringAsFixed(1)}%",
+//                       style: TextStyle(
+//                         fontSize: 32.sp,
+//                         fontWeight: FontWeight.bold,
+//                         color: primary,
+//                       ),
+//                     ),
+//                     SizedBox(height: 8.h),
+//                     Text(
+//                       controller.hasPassed() ? "PASSED" : "FAILED",
+//                       style: TextStyle(
+//                         fontSize: 14.sp,
+//                         fontWeight: FontWeight.bold,
+//                         color:
+//                             controller.hasPassed() ? Colors.green : Colors.red,
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//               ),
 
-              SizedBox(height: 24.h),
+//               SizedBox(height: 24.h),
 
-              // Action Buttons
-              Row(
-                children: [
-                  Expanded(
-                    child: OutlinedButton(
-                      onPressed: () => Get.back(),
-                      style: OutlinedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(vertical: 12.h),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.r),
-                        ),
-                      ),
-                      child: Text("Back to Tests"),
-                    ),
-                  ),
-                  SizedBox(width: 16.w),
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        // Retake test
-                        Get.back();
-                        Get.to(
-                          () => WindowsTestScreen(
-                            testName: testName,
-                            testTypeId: testTypeId,
-                          ),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: primary,
-                        foregroundColor: Colors.white,
-                        padding: EdgeInsets.symmetric(vertical: 12.h),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.r),
-                        ),
-                      ),
-                      child: Text("Retake Test"),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+//               // Action Buttons
+//               Row(
+//                 children: [
+//                   Expanded(
+//                     child: OutlinedButton(
+//                       onPressed: () => Get.back(),
+//                       style: OutlinedButton.styleFrom(
+//                         padding: EdgeInsets.symmetric(vertical: 12.h),
+//                         shape: RoundedRectangleBorder(
+//                           borderRadius: BorderRadius.circular(8.r),
+//                         ),
+//                       ),
+//                       child: Text("Back to Tests"),
+//                     ),
+//                   ),
+//                   SizedBox(width: 16.w),
+//                   Expanded(
+//                     child: ElevatedButton(
+//                       onPressed: () {
+//                         // Retake test
+//                         Get.back();
+//                         Get.to(
+//                           () => WindowsTestScreen(
+//                             testName: testName,
+//                             testTypeId: testTypeId,
+//                           ),
+//                         );
+//                       },
+//                       style: ElevatedButton.styleFrom(
+//                         backgroundColor: primary,
+//                         foregroundColor: Colors.white,
+//                         padding: EdgeInsets.symmetric(vertical: 12.h),
+//                         shape: RoundedRectangleBorder(
+//                           borderRadius: BorderRadius.circular(8.r),
+//                         ),
+//                       ),
+//                       child: Text("Retake Test"),
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ],
+//           ),
+//         ),
+//       ),
+//     );
+//   }
 
-  Widget _buildResultCard(
-    String title,
-    String value,
-    Color color,
-    IconData icon,
-  ) {
-    return Container(
-      padding: EdgeInsets.all(16.w),
-      decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(8.r),
-      ),
-      child: Column(
-        children: [
-          Icon(icon, color: color, size: 24.sp),
-          SizedBox(height: 8.h),
-          Text(
-            value,
-            style: TextStyle(
-              fontSize: 20.sp,
-              fontWeight: FontWeight.bold,
-              color: color,
-            ),
-          ),
-          Text(title, style: TextStyle(fontSize: 12.sp, color: darkGreyColor)),
-        ],
-      ),
-    );
-  }
-}
+//   Widget _buildResultCard(
+//     String title,
+//     String value,
+//     Color color,
+//     IconData icon,
+//   ) {
+//     return Container(
+//       padding: EdgeInsets.all(16.w),
+//       decoration: BoxDecoration(
+//         color: color.withOpacity(0.1),
+//         borderRadius: BorderRadius.circular(8.r),
+//       ),
+//       child: Column(
+//         children: [
+//           Icon(icon, color: color, size: 24.sp),
+//           SizedBox(height: 8.h),
+//           Text(
+//             value,
+//             style: TextStyle(
+//               fontSize: 20.sp,
+//               fontWeight: FontWeight.bold,
+//               color: color,
+//             ),
+//           ),
+//           Text(title, style: TextStyle(fontSize: 12.sp, color: darkGreyColor)),
+//         ],
+//       ),
+//     );
+//   }
+// }

@@ -106,22 +106,46 @@ class AddQuestionController extends GetxController {
   // void nextQuestion() {
   //   if (currentQuestionIndex.value < questionAnswerList.length - 1) {
   //     currentQuestionIndex.value++;
+  //     selectedOption.value = "";
+  //     showAnswer.value = false;
   //   }
   // }
 
   void nextQuestion() {
-    if (currentQuestionIndex.value < questionAnswerList.length - 1) {
+    int index = currentQuestionIndex.value;
+
+    // If answer is not revealed yet, reveal it first
+    if (!showAnswer.value) {
+      showAnswer.value = true;
+      return;
+    }
+
+    // Now move to next question
+    if (index < questionAnswerList.length - 1) {
       currentQuestionIndex.value++;
-      selectedOption.value = "";
-      showAnswer.value = false;
+
+      // Always show previous answer when user goes back or forward
+      showAnswer.value = selectedAnswers.containsKey(
+        currentQuestionIndex.value,
+      );
     }
   }
 
+  // void previousQuestion() {
+  //   if (currentQuestionIndex.value > 0) {
+  //     currentQuestionIndex.value--;
+  //     selectedOption.value = "";
+  //     showAnswer.value = true;
+  //   }
+  // }
   void previousQuestion() {
     if (currentQuestionIndex.value > 0) {
       currentQuestionIndex.value--;
-      selectedOption.value = "";
-      showAnswer.value = false;
+
+      // Restore "showAnswer" state for that question
+      showAnswer.value = selectedAnswers.containsKey(
+        currentQuestionIndex.value,
+      );
     }
   }
 
@@ -150,52 +174,55 @@ class AddQuestionController extends GetxController {
   }
 
   var selectedOption = "".obs;
-  var showAnswer = false.obs;
-  // Result Calculation Methods
+  // var showAnswer = false.obs;
 
+  // var selectedAnswers = <int, String>{}.obs; // questionIndex → selectedOption
+  var showAnswer = false.obs; // show correct/wrong
+
+  // Result Calculation Methods
   int getCorrectAnswers() {
     int correct = 0;
 
     for (int i = 0; i < questionAnswerList.length; i++) {
       if (selectedAnswers.containsKey(i)) {
-        final questionData = questionAnswerList[i];
-        final selectedAnswerIndex = selectedAnswers[i]!;
-        final selectedAnswer = questionData.correctOption?[selectedAnswerIndex];
+        int selectedIndex = selectedAnswers[i]!;
+        int correctIndex = "ABCD".indexOf(questionAnswerList[i].correctOption!);
 
-        if (selectedAnswer?.isEmpty == true) {
+        if (selectedIndex == correctIndex) {
           correct++;
         }
       }
     }
+
     return correct;
   }
 
   int getWrongAnswers() {
     int wrong = 0;
+
     for (int i = 0; i < questionAnswerList.length; i++) {
       if (selectedAnswers.containsKey(i)) {
-        final questionData = questionAnswerList[i];
-        final selectedAnswerIndex = selectedAnswers[i]!;
-        final selectedAnswer = questionData.correctOption?[selectedAnswerIndex];
+        int selectedIndex = selectedAnswers[i]!;
+        int correctIndex = "ABCD".indexOf(questionAnswerList[i].correctOption!);
 
-        if (selectedAnswer?.isEmpty != true) {
+        if (selectedIndex != correctIndex) {
           wrong++;
         }
       }
     }
+
     return wrong;
   }
 
-  int getUnansweredQuestions() {
-    return questionAnswerList.length - selectedAnswers.length;
-  }
-
   double getPercentage() {
-    if (questionAnswerList.isEmpty) return 0.0;
-    return (getCorrectAnswers() / questionAnswerList.length) * 100;
+    int total = questionAnswerList.length;
+    int correct = getCorrectAnswers();
+
+    if (total == 0) return 0;
+    return (correct / total) * 100;
   }
 
   bool hasPassed() {
-    return getPercentage() >= 70.0;
+    return getPercentage() >= 40; // pass criteria
   }
 }

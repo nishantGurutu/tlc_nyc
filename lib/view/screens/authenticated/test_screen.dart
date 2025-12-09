@@ -58,6 +58,7 @@ class _TestScreenState extends State<TestScreen> {
           if (controller.isLoadingQuestion.value) {
             return const Center(child: CircularProgressIndicator());
           }
+
           if (controller.questionAnswerList.isEmpty) {
             return Center(
               child: Column(
@@ -80,11 +81,13 @@ class _TestScreenState extends State<TestScreen> {
               ),
             );
           }
+
           return Obx(() {
             final question =
                 controller.questionAnswerList[controller
                     .currentQuestionIndex
                     .value];
+
             return Padding(
               padding: EdgeInsets.all(16),
               child: Column(
@@ -108,53 +111,35 @@ class _TestScreenState extends State<TestScreen> {
                     ),
                   ),
                   SizedBox(height: 24),
-                  optionTile(
-                    "A",
-                    question.optionA,
-                    question.correctOption ?? "",
-                  ),
-                  optionTile(
-                    "B",
-                    question.optionB,
-                    question.correctOption ?? "",
-                  ),
-                  optionTile(
-                    "C",
-                    question.optionC,
-                    question.correctOption ?? "",
-                  ),
-                  optionTile(
-                    "D",
-                    question.optionD,
-                    question.correctOption ?? "",
-                  ),
-
+                  optionTile(0, question.optionA, question.correctOption ?? ""),
+                  optionTile(1, question.optionB, question.correctOption ?? ""),
+                  optionTile(2, question.optionC, question.correctOption ?? ""),
+                  optionTile(3, question.optionD, question.correctOption ?? ""),
                   Spacer(),
                   Row(
                     children: [
                       Expanded(
-                        child: Obx(
-                          () =>
-                              controller.currentQuestionIndex.value > 0
-                                  ? ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: primary,
-                                      minimumSize: Size(double.infinity, 50),
+                        child:
+                            controller.currentQuestionIndex.value > 0
+                                ? ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: primary,
+                                    minimumSize: Size(double.infinity, 50),
+                                  ),
+                                  onPressed: () {
+                                    controller.previousQuestion();
+                                  },
+                                  child: Text(
+                                    "Previous",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: whiteColor,
                                     ),
-                                    onPressed: () {
-                                      controller.previousQuestion();
-                                    },
-                                    child: Text(
-                                      "Previous",
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        color: whiteColor,
-                                      ),
-                                    ),
-                                  )
-                                  : SizedBox.shrink(),
-                        ),
+                                  ),
+                                )
+                                : SizedBox.shrink(),
                       ),
+
                       SizedBox(width: 10),
                       Expanded(
                         child: ElevatedButton(
@@ -195,20 +180,20 @@ class _TestScreenState extends State<TestScreen> {
   }
 
   Widget optionTile(
-    String optionKey,
+    int optionIndex,
     String? optionValue,
     String correctOption,
   ) {
     return Obx(() {
-      bool isSelected = controller.selectedOption.value == optionKey;
-      bool isCorrect = optionKey == correctOption;
-
+      int qIndex = controller.currentQuestionIndex.value;
+      int correctIndex = "ABCD".indexOf(correctOption);
+      int? savedIndex = controller.selectedAnswers[qIndex];
+      bool isSelected = savedIndex == optionIndex;
+      bool isCorrect = optionIndex == correctIndex;
       Color borderColor = Colors.grey.shade300;
       Color bgColor = Colors.white;
-
       IconData? icon;
       Color iconColor = Colors.transparent;
-
       if (controller.showAnswer.value) {
         if (isCorrect) {
           borderColor = Colors.green;
@@ -220,25 +205,21 @@ class _TestScreenState extends State<TestScreen> {
           bgColor = Colors.red.shade50;
           icon = Icons.close;
           iconColor = Colors.red;
-        } else {
-          icon = null;
         }
       } else {
         if (isSelected) {
           borderColor = primary;
           bgColor = primary.withOpacity(0.15);
         }
-        icon = null;
       }
 
       return GestureDetector(
         onTap: () {
           if (!controller.showAnswer.value) {
-            controller.selectedOption.value = optionKey;
+            controller.selectedAnswers[qIndex] = optionIndex;
           }
         },
         child: Container(
-          width: double.infinity,
           padding: EdgeInsets.all(14),
           margin: EdgeInsets.only(bottom: 12),
           decoration: BoxDecoration(
@@ -250,7 +231,7 @@ class _TestScreenState extends State<TestScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                "$optionKey. $optionValue",
+                "${"ABCD"[optionIndex]}. $optionValue",
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -258,7 +239,6 @@ class _TestScreenState extends State<TestScreen> {
                 ),
               ),
 
-              // SHOW icon only when not null
               if (icon != null) Icon(icon, color: iconColor, size: 22),
             ],
           ),
