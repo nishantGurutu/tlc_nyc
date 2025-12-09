@@ -5,10 +5,9 @@ import 'package:tlc_nyc/constant/color_constant.dart';
 import 'package:tlc_nyc/routes/app_pages.dart';
 
 class TestIntroScreen extends StatelessWidget {
-  final String testType =
-      Get.arguments['testNumber']; // Get the testType from arguments
-  final int testTypeId = Get.arguments['testTypeId'];
-  TestIntroScreen({super.key});
+  final String typeId;
+  final String typeName;
+  TestIntroScreen({super.key, required this.typeId, required this.typeName});
 
   @override
   Widget build(BuildContext context) {
@@ -168,8 +167,8 @@ class TestIntroScreen extends StatelessWidget {
                       Get.toNamed(
                         Routes.TEST,
                         arguments: {
-                          'testNumber': testType,
-                          'testTypeId': testTypeId,
+                          'testTypeId': typeId,
+                          'testTypeName': typeName,
                         },
                       );
 

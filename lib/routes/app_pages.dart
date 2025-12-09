@@ -47,7 +47,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.TESTINTRO,
-      page: () => TestIntroScreen(),
+      page: () => TestIntroScreen(typeId: '', typeName: ''),
       binding: TestIntroBinding(),
     ),
     GetPage(

@@ -348,23 +348,54 @@ class _AddQuestionAnswerBottomSheetState
                               if (_formKey.currentState!.validate()) {
                                 if (selectedQuestionTypeCode == null) {
                                   Get.snackbar(
-                                    'Error',
-                                    'Please select a question type',
-                                    snackPosition: SnackPosition.BOTTOM,
+                                    "Error",
+                                    "Please select question type",
                                   );
                                   return;
                                 }
-                                final answersData = <Map<String, dynamic>>[];
-                                for (
-                                  int i = 0;
-                                  i < answerControllers.length;
-                                  i++
-                                ) {
-                                  answersData.add({
-                                    'name': answerControllers[i].text.trim(),
-                                    'isCorrect': isCorrectList[i],
-                                  });
+
+                                if (!isCorrectList.contains(true)) {
+                                  Get.snackbar(
+                                    "Error",
+                                    "Select one correct answer",
+                                  );
+                                  return;
                                 }
+
+                                // Build option list
+                                String optionA =
+                                    answerControllers.length > 0
+                                        ? answerControllers[0].text
+                                        : "";
+                                String optionB =
+                                    answerControllers.length > 1
+                                        ? answerControllers[1].text
+                                        : "";
+                                String optionC =
+                                    answerControllers.length > 2
+                                        ? answerControllers[2].text
+                                        : "";
+                                String optionD =
+                                    answerControllers.length > 3
+                                        ? answerControllers[3].text
+                                        : "";
+
+                                // Find correct option index
+                                int correctIndex = isCorrectList.indexWhere(
+                                  (e) => e == true,
+                                );
+                                String correct =
+                                    ["A", "B", "C", "D"][correctIndex];
+
+                                controller.addQuestionAnswer(
+                                  questionTypeId: selectedQuestionTypeCode!,
+                                  questionText: questionController.text.trim(),
+                                  optionA: optionA,
+                                  optionB: optionB,
+                                  optionC: optionC,
+                                  optionD: optionD,
+                                  correctOption: correct,
+                                );
                               }
                             },
                             color: primary,

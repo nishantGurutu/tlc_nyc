@@ -39,27 +39,65 @@ class AddQuestionController extends GetxController {
     }
   }
 
+  Future<void> addQuestionAnswer({
+    required String questionTypeId,
+    required String questionText,
+    required String optionA,
+    required String optionB,
+    required String optionC,
+    required String optionD,
+    required String correctOption,
+  }) async {
+    isLoading.value = true;
+
+    final body = {
+      "questionTypeId": questionTypeId,
+      "questionText": questionText,
+      "optionA": optionA,
+      "optionB": optionB,
+      "optionC": optionC,
+      "optionD": optionD,
+      "correctOption": correctOption,
+    };
+
+    try {
+      final response = await _addQuestionService.addQuestionAnswer(body);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        Navigator.pop(Get.context!);
+        CustomSnackBar.success("Success", response.data["message"]);
+      }
+    } catch (e) {
+      Get.snackbar(
+        "Error",
+        "Error adding question: $e",
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
   var isLoadingQuestion = false.obs;
-  RxList<QuestionAnswerModel> questionAnswerList = <QuestionAnswerModel>[].obs;
+  RxList<QuestionAnswerList> questionAnswerList = <QuestionAnswerList>[].obs;
 
   var currentQuestionIndex = 0.obs;
   var selectedAnswers = <int, int>{}.obs;
   var revealedAnswers = <int, bool>{}.obs;
 
-  Future<void> questionAnswerListApi(String testTypeId) async {
+  Future<void> questionAnswerListApi({required String typeId}) async {
     isLoadingQuestion.value = true;
     try {
-      // final result = await AddQuestionService()
-      //     .getQuestionWithAnswersByTypeCode(testTypeId);
-
-      // if (result != null) {
-      //   questionAnswerList.assignAll(result);
-      //   currentQuestionIndex.value = 0;
-      //   selectedAnswers.clear();
-      //   revealedAnswers.clear();
-      // }
+      final response = await _addQuestionService.questionTypeList(typeId);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        List<dynamic> list = response.data["list"] ?? [];
+        questionAnswerList.assignAll(
+          list.map((e) => QuestionAnswerList.fromJson(e)).toList(),
+        );
+        print('Total items: ${questionAnswerList.length}');
+      }
     } catch (e) {
-      isLoadingQuestion.value = false;
+      print('exception data $e');
     } finally {
       isLoadingQuestion.value = false;
     }
@@ -92,9 +130,9 @@ class AddQuestionController extends GetxController {
       if (selectedAnswers.containsKey(i)) {
         final questionData = questionAnswerList[i];
         final selectedAnswerIndex = selectedAnswers[i]!;
-        final selectedAnswer = questionData.answers?[selectedAnswerIndex];
+        final selectedAnswer = questionData.correctOption?[selectedAnswerIndex];
 
-        if (selectedAnswer?.isCorrect == true) {
+        if (selectedAnswer?.isEmpty == true) {
           correct++;
         }
       }
@@ -108,9 +146,9 @@ class AddQuestionController extends GetxController {
       if (selectedAnswers.containsKey(i)) {
         final questionData = questionAnswerList[i];
         final selectedAnswerIndex = selectedAnswers[i]!;
-        final selectedAnswer = questionData.answers?[selectedAnswerIndex];
+        final selectedAnswer = questionData.correctOption?[selectedAnswerIndex];
 
-        if (selectedAnswer?.isCorrect != true) {
+        if (selectedAnswer?.isEmpty != true) {
           wrong++;
         }
       }

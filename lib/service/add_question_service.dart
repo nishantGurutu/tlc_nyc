@@ -71,6 +71,19 @@ class AddQuestionService {
     }
   }
 
+  Future<Response> addQuestionAnswer(Map<String, dynamic> body) async {
+    try {
+      return await _networkService.postRequest(
+        ApiConstant.addQuestionWithAnswers,
+        data: body,
+        isFormData: false,
+      );
+    } catch (e) {
+      print("Error in AddQuestionService - addQuestionAnswer: $e");
+      return Future.error(e);
+    }
+  }
+
   Future<bool> addQuestionWithAnswers(
     AddQuestionWithAnswersModel questionWithAnswers,
   ) async {
@@ -89,6 +102,17 @@ class AddQuestionService {
     } catch (e) {
       print('Error in AddQuestionService - addQuestionWithAnswers: $e');
       return false;
+    }
+  }
+
+  Future<Response> questionTypeList(String typeId) async {
+    try {
+      return await _networkService.getRequest(
+        "${ApiConstant.questionAnswerBytypeid}/$typeId",
+      );
+    } catch (e) {
+      print('Error in AddQuestionService - addQuestionType: $e');
+      return Future.error(e);
     }
   }
 

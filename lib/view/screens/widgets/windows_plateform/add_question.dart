@@ -532,14 +532,14 @@ class _WindowsTestScreenState extends State<WindowsTestScreen> {
                             ),
                           ),
                           SizedBox(height: 8.h),
-                          Text(
-                            questionData.questionMast?.questioNNAME ?? '',
-                            style: TextStyle(
-                              fontSize: 18.sp,
-                              fontWeight: FontWeight.bold,
-                              color: blackColor,
-                            ),
-                          ),
+                          // Text(
+                          //   questionData.list? ?? '',
+                          //   style: TextStyle(
+                          //     fontSize: 18.sp,
+                          //     fontWeight: FontWeight.bold,
+                          //     color: blackColor,
+                          //   ),
+                          // ),
                         ],
                       ),
                     ),
@@ -547,121 +547,121 @@ class _WindowsTestScreenState extends State<WindowsTestScreen> {
                     SizedBox(height: 20.h),
 
                     // Answer Options
-                    Expanded(
-                      child: ListView.builder(
-                        itemCount: questionData.answers?.length ?? 0,
-                        itemBuilder: (context, answerIndex) {
-                          final answer = questionData.answers![answerIndex];
-                          final selectedAnswer =
-                              controller.selectedAnswers[controller
-                                  .currentQuestionIndex
-                                  .value];
+                    // Expanded(
+                    //   child: ListView.builder(
+                    //     itemCount: questionData.answers?.length ?? 0,
+                    //     itemBuilder: (context, answerIndex) {
+                    //       final answer = questionData.answers![answerIndex];
+                    //       final selectedAnswer =
+                    //           controller.selectedAnswers[controller
+                    //               .currentQuestionIndex
+                    //               .value];
 
-                          Color borderColor = Colors.grey.shade300;
-                          IconData? icon;
-                          Color iconColor = Colors.transparent;
+                    //       Color borderColor = Colors.grey.shade300;
+                    //       IconData? icon;
+                    //       Color iconColor = Colors.transparent;
 
-                          if (selectedAnswer != null) {
-                            if (answerIndex == selectedAnswer) {
-                              if (answer.isCorrect == true) {
-                                borderColor = Colors.green;
-                                icon = Icons.check_circle;
-                                iconColor = Colors.green;
-                              } else {
-                                borderColor = Colors.red;
-                                icon = Icons.cancel;
-                                iconColor = Colors.red;
-                              }
-                            }
-                          }
+                    //       if (selectedAnswer != null) {
+                    //         if (answerIndex == selectedAnswer) {
+                    //           if (answer.isCorrect == true) {
+                    //             borderColor = Colors.green;
+                    //             icon = Icons.check_circle;
+                    //             iconColor = Colors.green;
+                    //           } else {
+                    //             borderColor = Colors.red;
+                    //             icon = Icons.cancel;
+                    //             iconColor = Colors.red;
+                    //           }
+                    //         }
+                    //       }
 
-                          return Container(
-                            margin: EdgeInsets.only(bottom: 12.h),
-                            child: Material(
-                              color: Colors.transparent,
-                              child: InkWell(
-                                onTap: () {
-                                  controller.selectOption(
-                                    controller.currentQuestionIndex.value,
-                                    answerIndex,
-                                  );
-                                },
-                                borderRadius: BorderRadius.circular(12.r),
-                                child: Container(
-                                  padding: EdgeInsets.all(16.w),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(12.r),
-                                    border: Border.all(
-                                      color: borderColor,
-                                      width: 2,
-                                    ),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: Colors.grey.shade200,
-                                        blurRadius: 4,
-                                        offset: Offset(0, 2),
-                                      ),
-                                    ],
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Container(
-                                        width: 32.w,
-                                        height: 32.h,
-                                        decoration: BoxDecoration(
-                                          color:
-                                              selectedAnswer == answerIndex
-                                                  ? primary
-                                                  : Colors.grey.shade200,
-                                          borderRadius: BorderRadius.circular(
-                                            16.r,
-                                          ),
-                                        ),
-                                        child: Center(
-                                          child: Text(
-                                            String.fromCharCode(
-                                              65 + answerIndex,
-                                            ),
-                                            style: TextStyle(
-                                              fontSize: 14.sp,
-                                              fontWeight: FontWeight.bold,
-                                              color:
-                                                  selectedAnswer == answerIndex
-                                                      ? Colors.white
-                                                      : Colors.grey[600],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(width: 16.w),
-                                      Expanded(
-                                        child: Text(
-                                          answer.answerName ?? '',
-                                          style: TextStyle(
-                                            fontSize: 16.sp,
-                                            fontWeight: FontWeight.w500,
-                                            color: blackColor,
-                                          ),
-                                        ),
-                                      ),
-                                      if (icon != null) ...[
-                                        SizedBox(width: 8.w),
-                                        Icon(
-                                          icon,
-                                          color: iconColor,
-                                          size: 24.sp,
-                                        ),
-                                      ],
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
+                    //       return Container(
+                    //         margin: EdgeInsets.only(bottom: 12.h),
+                    //         child: Material(
+                    //           color: Colors.transparent,
+                    //           child: InkWell(
+                    //             onTap: () {
+                    //               controller.selectOption(
+                    //                 controller.currentQuestionIndex.value,
+                    //                 answerIndex,
+                    //               );
+                    //             },
+                    //             borderRadius: BorderRadius.circular(12.r),
+                    //             child: Container(
+                    //               padding: EdgeInsets.all(16.w),
+                    //               decoration: BoxDecoration(
+                    //                 color: Colors.white,
+                    //                 borderRadius: BorderRadius.circular(12.r),
+                    //                 border: Border.all(
+                    //                   color: borderColor,
+                    //                   width: 2,
+                    //                 ),
+                    //                 boxShadow: [
+                    //                   BoxShadow(
+                    //                     color: Colors.grey.shade200,
+                    //                     blurRadius: 4,
+                    //                     offset: Offset(0, 2),
+                    //                   ),
+                    //                 ],
+                    //               ),
+                    //               child: Row(
+                    //                 children: [
+                    //                   Container(
+                    //                     width: 32.w,
+                    //                     height: 32.h,
+                    //                     decoration: BoxDecoration(
+                    //                       color:
+                    //                           selectedAnswer == answerIndex
+                    //                               ? primary
+                    //                               : Colors.grey.shade200,
+                    //                       borderRadius: BorderRadius.circular(
+                    //                         16.r,
+                    //                       ),
+                    //                     ),
+                    //                     child: Center(
+                    //                       child: Text(
+                    //                         String.fromCharCode(
+                    //                           65 + answerIndex,
+                    //                         ),
+                    //                         style: TextStyle(
+                    //                           fontSize: 14.sp,
+                    //                           fontWeight: FontWeight.bold,
+                    //                           color:
+                    //                               selectedAnswer == answerIndex
+                    //                                   ? Colors.white
+                    //                                   : Colors.grey[600],
+                    //                         ),
+                    //                       ),
+                    //                     ),
+                    //                   ),
+                    //                   SizedBox(width: 16.w),
+                    //                   Expanded(
+                    //                     child: Text(
+                    //                       answer.answerName ?? '',
+                    //                       style: TextStyle(
+                    //                         fontSize: 16.sp,
+                    //                         fontWeight: FontWeight.w500,
+                    //                         color: blackColor,
+                    //                       ),
+                    //                     ),
+                    //                   ),
+                    //                   if (icon != null) ...[
+                    //                     SizedBox(width: 8.w),
+                    //                     Icon(
+                    //                       icon,
+                    //                       color: iconColor,
+                    //                       size: 24.sp,
+                    //                     ),
+                    //                   ],
+                    //                 ],
+                    //               ),
+                    //             ),
+                    //           ),
+                    //         ),
+                    //       );
+                    //     },
+                    //   ),
+                    // ),
 
                     // Navigation Buttons
                     Container(
