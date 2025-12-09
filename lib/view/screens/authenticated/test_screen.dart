@@ -58,7 +58,6 @@ class _TestScreenState extends State<TestScreen> {
           if (controller.isLoadingQuestion.value) {
             return const Center(child: CircularProgressIndicator());
           }
-
           if (controller.questionAnswerList.isEmpty) {
             return Center(
               child: Column(
@@ -81,19 +80,16 @@ class _TestScreenState extends State<TestScreen> {
               ),
             );
           }
-
           return Obx(() {
             final question =
                 controller.questionAnswerList[controller
                     .currentQuestionIndex
                     .value];
-
             return Padding(
               padding: EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Question Number
                   Text(
                     "Question ${controller.currentQuestionIndex.value + 1} / ${controller.questionAnswerList.length}",
                     style: TextStyle(
@@ -103,8 +99,6 @@ class _TestScreenState extends State<TestScreen> {
                     ),
                   ),
                   SizedBox(height: 16),
-
-                  // Question Text
                   Text(
                     question.questionText ?? "",
                     style: TextStyle(
@@ -114,16 +108,11 @@ class _TestScreenState extends State<TestScreen> {
                     ),
                   ),
                   SizedBox(height: 24),
-
-                  // Options
                   optionTile("A", question.optionA),
                   optionTile("B", question.optionB),
                   optionTile("C", question.optionC),
                   optionTile("D", question.optionD),
-
                   Spacer(),
-
-                  // Next Button
                   Row(
                     children: [
                       Expanded(
@@ -136,17 +125,7 @@ class _TestScreenState extends State<TestScreen> {
                                       minimumSize: Size(double.infinity, 50),
                                     ),
                                     onPressed: () {
-                                      if (controller
-                                              .currentQuestionIndex
-                                              .value >
-                                          0) {
-                                        controller.currentQuestionIndex.value--;
-                                      } else {
-                                        Get.snackbar(
-                                          "Alert",
-                                          "This is the first question",
-                                        );
-                                      }
+                                      controller.currentQuestionIndex.value--;
                                     },
                                     child: Text(
                                       "Previous",
@@ -159,10 +138,7 @@ class _TestScreenState extends State<TestScreen> {
                                   : SizedBox.shrink(),
                         ),
                       ),
-
                       SizedBox(width: 10),
-
-                      // NEXT BUTTON
                       Expanded(
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
