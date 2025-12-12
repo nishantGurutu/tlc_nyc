@@ -114,8 +114,26 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                     ),
                                     child: Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.start,
                                       children: [
+                                        Container(
+                                          height: 30.h,
+                                          width: 40.w,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.all(
+                                              Radius.circular(5.r),
+                                            ),
+                                            image: DecorationImage(
+                                              image: NetworkImage(
+                                                controller
+                                                        .groupListData[index]
+                                                        .image ??
+                                                    '',
+                                              ),
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ),
                                         Text(
                                           controller
                                                   .groupListData[index]
@@ -127,6 +145,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> {
                                             color: blackColor,
                                           ),
                                         ),
+                                        Spacer(),
                                         Icon(Icons.arrow_right),
                                       ],
                                     ),

@@ -191,28 +191,32 @@ class LoginScreen extends StatelessWidget {
                                   hintText: "enterPassword".tr,
                                 ),
                                 SizedBox(height: 15.h),
-                                CustomButton(
-                                  padding: EdgeInsets.symmetric(vertical: 8.h),
-                                  onPressed: () {
-                                    if (_key.currentState!.validate()) {
-                                      loginController.login(
-                                        email: emailController.text.trim(),
-                                        password: passwordController.text,
-                                      );
-                                      // Get.toNamed(Routes.BOTTOMBAR);
-                                    }
-                                  },
-                                  color: primary,
-                                  text: Text(
-                                    'login'.tr,
-                                    style: TextStyle(
-                                      fontSize: 12.sp,
-                                      color: whiteColor,
-                                      fontWeight: FontWeight.w500,
+                                Obx(
+                                  () => CustomButton(
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: 8.h,
                                     ),
+                                    onPressed: () {
+                                      if (_key.currentState!.validate()) {
+                                        loginController.login(
+                                          email: emailController.text.trim(),
+                                          password: passwordController.text,
+                                        );
+                                        // Get.toNamed(Routes.BOTTOMBAR);
+                                      }
+                                    },
+                                    color: primary,
+                                    text: Text(
+                                      'login'.tr,
+                                      style: TextStyle(
+                                        fontSize: 12.sp,
+                                        color: whiteColor,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                    width: double.infinity,
+                                    height: 35.h,
                                   ),
-                                  width: double.infinity,
-                                  height: 35.h,
                                 ),
                                 SizedBox(height: 10.h),
                                 Row(
